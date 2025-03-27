@@ -39,5 +39,14 @@ namespace Monster
         {
             stateMachine.Anim.SetBool(animHash, false);
         }
+        
+        protected float GetNormalizedTime(string animationName)
+        {
+            var currentAnimState = stateMachine.Anim.GetCurrentAnimatorStateInfo(0);
+            if (currentAnimState.IsName(animationName))
+                return currentAnimState.normalizedTime % 1;
+            else
+                return 0;
+        }
     }
 }

@@ -18,16 +18,20 @@ namespace Monster
         public float AtkDelay { get; set; } = 2f;
         public float MoveSpeed { get; set; } = 1.5f;
         public float MoveSpeedModifier { get; set; } = 1f;
+
+        public Test gridTest;
         //
 
-        private IdleState idleState;
-        private WalkState walkState;
+        public MonsterIdleState idleState { get; private set; }
+        public MonsterWalkState walkState { get; private set; }
+        public MonsterAttackState attackState { get; private set; }
 
         public void Start()
         {
             // 초기화
-            idleState = new IdleState(this);
-            walkState = new WalkState(this);
+            idleState = new MonsterIdleState(this);
+            walkState = new MonsterWalkState(this);
+            attackState = new MonsterAttackState(this);
             
             ChangeState(walkState);
         }

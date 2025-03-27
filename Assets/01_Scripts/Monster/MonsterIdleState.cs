@@ -4,9 +4,9 @@ using UnityEngine;
 
 namespace Monster
 {
-    public class IdleState : MonsterBaseState
+    public class MonsterIdleState : MonsterBaseState
     {
-        public IdleState(MonsterStateMachine stateMachine) : base(stateMachine) { }
+        public MonsterIdleState(MonsterStateMachine stateMachine) : base(stateMachine) { }
         private readonly int hashIdle = Animator.StringToHash("Idle");
         
         public override void Enter()
