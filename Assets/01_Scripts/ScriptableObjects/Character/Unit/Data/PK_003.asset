@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc077319dde33f844a52f51645bf87c4, type: 3}
+  m_Name: PK_003
+  m_EditorClassIdentifier: 
+  unitID: PK_003
+  unitName: "\uC131\uAE30\uC0AC"
+  unitHP: 100
+  unitAtk: 50
+  unitAtkRange: 1
+  unitAtkDelay: 1
+  unitSummonCost: 50
+  unitCoolDown: 3
+  unitAtkType: 0
