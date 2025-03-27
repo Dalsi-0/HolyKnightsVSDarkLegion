@@ -7,49 +7,26 @@ public interface IDamageable
     void TakeDamage(float damage);
 }
 
-// 애니메이션 이벤트를 받을 컴포넌트
-public class AnimationEventReceiver : MonoBehaviour
+public class PlayerUnit : MonoBehaviour, IDamageable
 {
-    private PlayerUnit playerUnit;
-
-    private void Start()
-    {
-        // 부모 오브젝트에서 PlayerUnit 찾기
-        playerUnit = GetComponentInParent<PlayerUnit>();
-        if (playerUnit == null)
-        {
-            Debug.LogError("PlayerUnit을 찾을 수 없습니다!");
-        }
-    }
-
-    // 애니메이션 이벤트에서 호출될 메서드
-    public void OnAttackAnimationEvent()
-    {
-        if (playerUnit != null)
-        {
-            playerUnit.OnAttackAnimationEventReceived();
-        }
-    }
-}
-
-public class PlayerUnit : MonoBehaviour
-{
+    [SerializeField] private UnitSO unitData;  // 유닛 데이터 참조
     [SerializeField] private GameObject projectilePrefab;  // 투사체 프리팹
     [SerializeField] private Transform firePoint;  // 발사 위치
-    [SerializeField] private float detectionRange = 10f;  // 적 감지 범위
     [SerializeField] private LayerMask enemyLayer;  // 적 레이어
     
     private Animator animator;
     private Vector3 targetPosition; // 목표 위치 저장용
     private Transform currentTarget; // 현재 타겟
     private float attackCooldown = 0f; // 공격 쿨다운
-    [SerializeField] private float attackRate = 1f; // 초당 공격 횟수
+    private float currentHP; // 현재 체력
 
     private void Start()
     {
         animator = GetComponentInChildren<Animator>();
         
         // 초기 설정 체크
+        if (unitData == null)
+            Debug.LogError("UnitData가 할당되지 않았습니다!");
         if (projectilePrefab == null)
             Debug.LogError("ProjectilePrefab이 할당되지 않았습니다!");
         if (animator == null)
@@ -61,6 +38,9 @@ public class PlayerUnit : MonoBehaviour
         {
             animatorObj.AddComponent<AnimationEventReceiver>();
         }
+
+        // 초기 체력 설정
+        currentHP = unitData.UnitHP;
     }
 
     private void Update()
@@ -77,7 +57,7 @@ public class PlayerUnit : MonoBehaviour
         }
 
         // 가장 가까운 적 찾기
-        Collider2D[] enemies = Physics2D.OverlapCircleAll(transform.position, detectionRange, enemyLayer);
+        Collider2D[] enemies = Physics2D.OverlapCircleAll(transform.position, unitData.UnitAtkRange, enemyLayer);
         float closestDistance = float.MaxValue;
         Transform closestEnemy = null;
 
@@ -100,7 +80,7 @@ public class PlayerUnit : MonoBehaviour
             if (attackCooldown <= 0)
             {
                 animator.SetBool("IsAttack", true);
-                attackCooldown = 1f / attackRate; // 공격 속도에 따른 쿨다운 설정
+                attackCooldown = unitData.UnitAtkDelay; // 공격 딜레이 설정
             }
         }
         else
@@ -133,15 +113,34 @@ public class PlayerUnit : MonoBehaviour
             GameObject projectileObj = Instantiate(projectilePrefab, spawnPosition, Quaternion.identity);
             if (projectileObj.TryGetComponent<Projectile>(out var projectile))
             {
-                projectile.Initialize(direction);
+                projectile.Initialize(direction, unitData.UnitAtk); // 유닛 공격력 전달
             }
         }
+    }
+
+    public void TakeDamage(float damage)
+    {
+        currentHP -= damage;
+        
+        if (currentHP <= 0)
+        {
+            Die();
+        }
+    }
+
+    private void Die()
+    {
+        // 사망 처리 로직
+        Destroy(gameObject);
     }
 
     // 기즈모로 감지 범위 시각화
     private void OnDrawGizmosSelected()
     {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, detectionRange);
+        if (unitData != null)
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(transform.position, unitData.UnitAtkRange);
+        }
     }
 }
