@@ -85,7 +85,7 @@ public class UnitCard : MonoBehaviour, IDragHandler, IPointerEnterHandler, IPoin
         }
         ;
     }
-    
+
     // 소환 성공 후 그림자 활성화
     public void ActiveTimer()
     {
@@ -177,7 +177,7 @@ public class UnitCard : MonoBehaviour, IDragHandler, IPointerEnterHandler, IPoin
         if (canSpawn && fullCoast)
         {
             // 특정 거리 이상이면 스폰 시간 갱신
-            if (Vector2.Distance(rt.anchoredPosition, originPos) >= 200f)
+            if (Vector2.Distance(rt.anchoredPosition, originPos) >= 100f)
             {
                 // 콜백 실행
                 OnEndDragActin?.Invoke(unitID, Camera.main.ScreenToWorldPoint(Input.mousePosition));

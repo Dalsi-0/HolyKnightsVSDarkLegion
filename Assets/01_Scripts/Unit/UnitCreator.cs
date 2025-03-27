@@ -18,6 +18,11 @@ public class UnitCreator : MonoBehaviour
     private List<UnitCard> cardList; // 유닛 데이터 목록
     public UnityAction<int> CoastAction; // 코스트 변동시 호출 함수
 
+    [Header("Map Info")]
+    public Vector2 startPos; // 좌하단 기준 좌표
+    public Vector2 tileSize; // 타일 총 칸
+    public Vector2 stepSize; // 중심점 간 간격
+
 
 
     void Start()
@@ -64,6 +69,45 @@ public class UnitCreator : MonoBehaviour
 
     public void TryCreatUnit(string unitID, Vector3 pos)
     {
+        // 2d여서 z값 보정
+        pos.z = 0;
+        // 좌표 범위를 유효한지 검사
+        if (pos.x < startPos.x - stepSize.x / 2)
+        {
+            Debug.Log("x 범위 부족");
+            return;
+        }
+        else if (pos.x > startPos.x + stepSize.x * (tileSize.x - 1) + stepSize.x / 2)
+        {
+            Debug.Log("x 범위 초과");
+            return;
+        }
+        else if (pos.y > startPos.y + stepSize.y * (tileSize.y - 1) + stepSize.y / 2)
+        {
+            Debug.Log("y 범위 초과");
+            return;
+        }
+        else if (pos.y < startPos.y - stepSize.y / 2)
+        {
+            Debug.Log("y 범위 부족");
+            return;
+        }
+
+        // 가장 가까운 중심점 계산
+
+        // 좌표별 차이
+        float disX = Mathf.Sqrt((startPos.x - pos.x) * (startPos.x - pos.x));
+        float disY = Mathf.Sqrt((startPos.y - pos.y) * (startPos.y - pos.y));
+
+        // 0.5이상은 올리고 미만은 내림, 간격 추가
+        float nearX = Mathf.Floor(disX / stepSize.x + 0.5f);
+        float nearY = Mathf.Floor(disY / stepSize.y + 0.5f);
+
+        Debug.Log(nearX + " / " + nearY);
+        pos.x = startPos.x + stepSize.x * nearX;
+        pos.y = startPos.y + stepSize.y * nearY;
+
+        // 모든 조건을 만족하면 자원 체크
         if (ChangeMoney(-(int)DataManager.Instance.GetUnitData(unitID).UnitSummonCost))
         {
             // 소환 성공한 카드의 쿨타임 진행
@@ -74,11 +118,10 @@ public class UnitCreator : MonoBehaviour
                     cardList[i].ActiveTimer();
                 }
             }
-            // 2d여서 z값 보정
-            pos.z = 0;
 
-            // 엔티티 소환
-            Debug.Log(deckList[unitID].UnitName + ": " + pos);
+
+            // 근처의 중심에 엔티티 소환
+            //Debug.Log(deckList[unitID].UnitName + ": " + pos);
             Instantiate(unitPrefab, pos, Quaternion.identity);
         }
         else
