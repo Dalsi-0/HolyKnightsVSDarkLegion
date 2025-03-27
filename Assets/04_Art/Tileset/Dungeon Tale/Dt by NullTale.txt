@@ -1,0 +1,13 @@
+Copyright (c) 2024 NullTale
+author's asset with artistic lighting system
+
+• license CC BY-ND 4.0 - https://creativecommons.org/licenses/by-nd/4.0/deed.en 
+ (creative common no derivatives)
+
+• sprites  - https://nulltale.itch.io/dungeon-story
+• lighting - https://github.com/NullTale/LutLight2D
+
+• links
+ ml: nulltale@gmail.com
+ sm: https://x.com/nulltale
+ ds: https://discord.gg/CkdQvtA5un
