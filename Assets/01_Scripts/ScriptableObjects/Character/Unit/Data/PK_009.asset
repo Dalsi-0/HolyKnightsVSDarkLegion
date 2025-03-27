@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bc077319dde33f844a52f51645bf87c4, type: 3}
-  m_Name: PK_002
+  m_Name: PK_009
   m_EditorClassIdentifier: 
-  unitID: PK_002
-  unitName: "\uC6A9\uBCD1"
+  unitID: PK_009
+  unitName: "\uAD81\uC218"
   unitHP: 100
-  unitAtk: 8
+  unitAtk: 9
   unitAtkRange: 50
   unitAtkDelay: 1
-  unitSummonCost: 100
+  unitSummonCost: 200
   unitCoolDown: 3
   unitAtkType: 0
