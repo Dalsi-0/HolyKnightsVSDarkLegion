@@ -130,4 +130,5 @@ public class PlayerUnit : MonoBehaviour, IDamageable
     public Transform GetCurrentTarget() => _currentTarget;
     public void SetCurrentTarget(Transform target) => _currentTarget = target;
     public UnitAnimationController GetAnimationController() => _animationController;
+    public UnitSO GetUnitData() => unitData;
 }
