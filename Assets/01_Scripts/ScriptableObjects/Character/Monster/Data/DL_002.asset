@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   monsterID: DL_002
   monsterName: "\uC2A4\uCF08\uB808\uD1A4"
-  monsterHP: 10
-  monsterAtk: 1
+  monsterHP: 80
+  monsterAtk: 50
   monsterAtkRange: 1
-  monsterAtkDelay: 1
-  monsterMoveSpeed: 1
+  monsterAtkDelay: 2
+  monsterMoveSpeed: 1.1
   monsterAtkType: 0

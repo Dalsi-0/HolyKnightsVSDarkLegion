@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unitID: PK_003
   unitName: "\uC131\uAE30\uC0AC"
-  unitHP: 100
-  unitAtk: 50
+  unitHP: 150
+  unitAtk: 5
   unitAtkRange: 1
-  unitAtkDelay: 1
+  unitAtkDelay: 3
   unitSummonCost: 50
-  unitCoolDown: 3
+  unitCoolDown: 7
   unitAtkType: 0
