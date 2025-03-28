@@ -37,6 +37,7 @@ namespace Monster
         public void Start()
         {
             // 초기화
+            GridSensor.Init(this);
             IdleState = new MonsterIdleState(this);
             WalkState = new MonsterWalkState(this);
             AttackState = new MonsterAttackState(this);
