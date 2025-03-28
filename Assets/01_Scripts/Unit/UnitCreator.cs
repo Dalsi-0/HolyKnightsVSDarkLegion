@@ -20,8 +20,10 @@ public class UnitCreator : MonoBehaviour
 
     [Header("Map Info")]
     public Vector2 startPos; // 좌하단 기준 좌표
-    public Vector2 tileSize; // 타일 총 칸
+    public Vector2Int tileSize; // 타일 총 칸
     public Vector2 stepSize; // 중심점 간 간격
+
+    private bool[,] tileInfo; // 타일위에 소환 가능 여부, false는 이미 유닛 있음
 
 
 
@@ -30,10 +32,22 @@ public class UnitCreator : MonoBehaviour
         coastText.text = "0";
         deckList = new(deckSize);
         cardList = new(deckSize);
+        tileInfo = new bool[tileSize.x, tileSize.y];
+        // 모든 값을 true로 초기화
+        for (int i = 0; i < tileInfo.GetLength(0); i++)
+        {
+            for (int j = 0; j < tileInfo.GetLength(1); j++)
+            {
+                tileInfo[i, j] = true;
+            }
+        }
+
         for (int i = 0; i < deckNameList.Count; i++)
         {
             // 이름으로 데이터 불러오기
             UnitSO unit = DataManager.Instance.GetUnitData(deckNameList[i]);
+            if (unit == null)
+                Debug.LogError("Datamanager에 데이터가 존재하지 않습니다.");
             deckList[unit.UnitID] = unit;
 
             // 카드 생성 및 세팅
@@ -100,15 +114,22 @@ public class UnitCreator : MonoBehaviour
         float disY = Mathf.Sqrt((startPos.y - pos.y) * (startPos.y - pos.y));
 
         // 0.5이상은 올리고 미만은 내림, 간격 추가
-        float nearX = Mathf.Floor(disX / stepSize.x + 0.5f);
-        float nearY = Mathf.Floor(disY / stepSize.y + 0.5f);
+        int nearX = (int)Mathf.Floor(disX / stepSize.x + 0.5f);
+        int nearY = (int)Mathf.Floor(disY / stepSize.y + 0.5f);
 
         Debug.Log(nearX + " / " + nearY);
         pos.x = startPos.x + stepSize.x * nearX;
         pos.y = startPos.y + stepSize.y * nearY;
 
+
+        // 소환 가능한 칸인지 판별
+        if (!tileInfo[nearX, nearY])
+        {
+            Debug.Log("이미 유닛 있음");
+            return;
+        }
         // 모든 조건을 만족하면 자원 체크
-        if (ChangeMoney(-(int)DataManager.Instance.GetUnitData(unitID).UnitSummonCost))
+        if (ChangeMoney(-(int)deckList[unitID].UnitSummonCost))
         {
             // 소환 성공한 카드의 쿨타임 진행
             for (int i = 0; i < cardList.Count; i++)
@@ -123,10 +144,12 @@ public class UnitCreator : MonoBehaviour
             // 근처의 중심에 엔티티 소환
             //Debug.Log(deckList[unitID].UnitName + ": " + pos);
             Instantiate(unitPrefab, pos, Quaternion.identity);
+            // 배열에 저장
+            tileInfo[nearX, nearY] = false;
         }
         else
         {
-            Debug.Log("소환 실패");
+            Debug.Log("비용 부족");
         }
 
     }
