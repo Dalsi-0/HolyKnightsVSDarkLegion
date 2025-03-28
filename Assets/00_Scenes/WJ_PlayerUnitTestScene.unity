@@ -383,6 +383,7 @@ GameObject:
   - component: {fileID: 217033973}
   - component: {fileID: 217033974}
   - component: {fileID: 217033975}
+  - component: {fileID: 217033976}
   m_Layer: 0
   m_Name: EnemyDummy
   m_TagString: Player
@@ -475,6 +476,33 @@ MonoBehaviour:
   canUseSkill: 1
   skillCooldown: 5
   manaRecoveryAmount: 10
+--- !u!50 &217033976
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 217033971}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &707981606
 GameObject:
   m_ObjectHideFlags: 0
@@ -1644,7 +1672,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1350044667691402954, guid: fdc654505bc909847b4191a1a56fd99a, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -8.316
       objectReference: {fileID: 0}
     - target: {fileID: 1350044667691402954, guid: fdc654505bc909847b4191a1a56fd99a, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1688,7 +1716,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4644417527521517400, guid: fdc654505bc909847b4191a1a56fd99a, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

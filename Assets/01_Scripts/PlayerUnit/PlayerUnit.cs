@@ -113,7 +113,38 @@ public class PlayerUnit : MonoBehaviour, IDamageable
 
     public void OnSkillAnimationEvent()
     {
-        _skillController.ExecuteSkillEffect();
+        _skillController.OnSkillEffectEvent();
+    }
+
+    public void ExecuteSpecificSkill()
+    {
+        if (_skillController != null)
+        {
+            _skillController.TryUseSkill();
+        }
+    }
+    public void OnSkillStartEvent()
+    {
+        if (_skillController != null)
+        {
+            _skillController.OnSkillStartEvent();
+        }
+    }
+
+    public void OnSkillEffectEvent()
+    {
+        if (_skillController != null)
+        {
+            _skillController.OnSkillEffectEvent();
+        }
+    }
+
+    public void OnSkillEndEvent()
+    {
+        if (_skillController != null)
+        {
+            _skillController.OnSkillEndEvent();
+        }
     }
 
     // 기즈모로 감지 범위 시각화
