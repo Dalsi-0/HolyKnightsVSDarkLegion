@@ -37,6 +37,7 @@ public class UnitCard : MonoBehaviour, IDragHandler, IPointerEnterHandler, IPoin
     {
         // 시작 위치 저장
         //originPos = rt.anchoredPosition;
+        // layout의 자식으로 들어가므로 1 프레임후 위치 저장
         StartCoroutine(InitializeOriginPosition());
 
         if (shadowImage != null)
@@ -182,10 +183,7 @@ public class UnitCard : MonoBehaviour, IDragHandler, IPointerEnterHandler, IPoin
                 // 콜백 실행
                 OnEndDragActin?.Invoke(unitID, Camera.main.ScreenToWorldPoint(Input.mousePosition));
             }
-            else
-            {
-                Debug.Log("스폰 취소");
-            }
+
             // 원위치로 이동
             rt.anchoredPosition = originPos;
             canvasGroup.blocksRaycasts = true;
