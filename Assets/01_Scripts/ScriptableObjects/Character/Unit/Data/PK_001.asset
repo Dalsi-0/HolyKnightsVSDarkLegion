@@ -20,4 +20,4 @@ MonoBehaviour:
   unitAtkDelay: 5
   unitSummonCost: 50
   unitCoolDown: 5
-  unitAtkType: 0
+  unitAtkType: 2
