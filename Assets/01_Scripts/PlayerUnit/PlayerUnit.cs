@@ -1,6 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
+public enum UnitState
+{
+    Idle,
+    Dead,
+    Hurt,
+    BasicAttack,
+    UsingSkill
+}
 
 public interface IDamageable
 {
@@ -9,120 +18,80 @@ public interface IDamageable
 
 public class PlayerUnit : MonoBehaviour, IDamageable
 {
-    [SerializeField] private UnitSO unitData;  // 유닛 데이터 참조
-    [SerializeField] private GameObject projectilePrefab;  // 투사체 프리팹
-    [SerializeField] private Transform firePoint;  // 발사 위치
-    [SerializeField] private LayerMask enemyLayer;  // 적 레이어
-    
-    private Animator animator;
-    private Vector3 targetPosition; // 목표 위치 저장용
-    private Transform currentTarget; // 현재 타겟
-    private float attackCooldown = 0f; // 공격 쿨다운
-    private float currentHP; // 현재 체력
+    [SerializeField] private UnitSO unitData;
+    [SerializeField] private GameObject projectilePrefab;
+    [SerializeField] private Transform firePoint;
+    [SerializeField] private GameObject skillEffectPrefab;
+    [SerializeField] private LayerMask enemyLayer;
+
+    [Header("유닛 설정")]
+    [SerializeField] private bool canUseBasicAttack = true;
+    [SerializeField] private bool canUseSkill = true;
+    [SerializeField] private float skillCooldown = 5f;
+    [SerializeField] private float manaRecoveryAmount = 10f;
+
+    private UnitState _currentState = UnitState.Idle;
+    private float _currentHP;
+    private Transform _currentTarget;
+
+    // 컴포넌트들
+    private UnitAnimationController _animationController;
+    private UnitAttackController _attackController;
+    private UnitSkillController _skillController;
+    private UnitStateController _stateController;
+
+    private void Awake()
+    {
+        InitializeComponents();
+    }
 
     private void Start()
     {
-        animator = GetComponentInChildren<Animator>();
-        
-        // 초기 설정 체크
-        if (unitData == null)
-            Debug.LogError("UnitData가 할당되지 않았습니다!");
-        if (projectilePrefab == null)
-            Debug.LogError("ProjectilePrefab이 할당되지 않았습니다!");
-        if (animator == null)
-            Debug.LogError("Animator를 찾을 수 없습니다!");
-
-        // AnimationEventReceiver 컴포넌트가 없다면 추가
-        var animatorObj = animator.gameObject;
-        if (animatorObj.GetComponent<AnimationEventReceiver>() == null)
-        {
-            animatorObj.AddComponent<AnimationEventReceiver>();
-        }
-
-        // 초기 체력 설정
-        currentHP = unitData.UnitHP;
+        ValidateReferences();
+        _currentHP = unitData.UnitHP;
     }
 
     private void Update()
     {
-        DetectAndAttackEnemy();
+        _stateController.UpdateState();
     }
 
-    private void DetectAndAttackEnemy()
+    private void InitializeComponents()
     {
-        // 쿨다운 감소
-        if (attackCooldown > 0)
-        {
-            attackCooldown -= Time.deltaTime;
-        }
+        // 각 책임별 컴포넌트 초기화
+        _animationController = gameObject.AddComponent<UnitAnimationController>();
+        _attackController = gameObject.AddComponent<UnitAttackController>();
+        _skillController = gameObject.AddComponent<UnitSkillController>();
+        _stateController = gameObject.AddComponent<UnitStateController>();
 
-        // 가장 가까운 적 찾기
-        Collider2D[] enemies = Physics2D.OverlapCircleAll(transform.position, unitData.UnitAtkRange, enemyLayer);
-        float closestDistance = float.MaxValue;
-        Transform closestEnemy = null;
-
-        foreach (var enemy in enemies)
-        {
-            float distance = Vector2.Distance(transform.position, enemy.transform.position);
-            if (distance < closestDistance)
-            {
-                closestDistance = distance;
-                closestEnemy = enemy.transform;
-            }
-        }
-
-        // 적이 감지되면 공격 상태 설정
-        if (closestEnemy != null)
-        {
-            currentTarget = closestEnemy;
-            targetPosition = closestEnemy.position;
-            
-            if (attackCooldown <= 0)
-            {
-                animator.SetBool("IsAttack", true);
-                attackCooldown = unitData.UnitAtkDelay; // 공격 딜레이 설정
-            }
-        }
-        else
-        {
-            currentTarget = null;
-            animator.SetBool("IsAttack", false);
-        }
+        // 컴포넌트 설정
+        _animationController.Initialize(this);
+        _attackController.Initialize(this, unitData, projectilePrefab, firePoint, enemyLayer);
+        _skillController.Initialize(this, unitData, skillEffectPrefab, manaRecoveryAmount, skillCooldown);
+        _stateController.Initialize(this, _attackController, _skillController, canUseBasicAttack, canUseSkill);
     }
 
-    // 애니메이션 이벤트 수신 메서드
-    public void OnAttackAnimationEventReceived()
+    private void ValidateReferences()
     {
-        if (currentTarget != null) // 타겟이 있을 때만 발사
-        {
-            FireProjectile();
-        }
+        if (unitData == null)
+            Debug.LogError("UnitData가 할당되지 않았습니다!");
+        if (projectilePrefab == null)
+            Debug.LogError("ProjectilePrefab이 할당되지 않았습니다!");
     }
 
-    private void FireProjectile()
+    // 상태 관리
+    public UnitState CurrentState
     {
-        if (projectilePrefab != null && currentTarget != null)
-        {
-            // 발사 위치 설정
-            Vector3 spawnPosition = firePoint != null ? firePoint.position : transform.position;
-
-            // 타겟 방향으로 발사 방향 계산
-            Vector2 direction = ((Vector2)(currentTarget.position - spawnPosition)).normalized;
-
-            // 투사체 생성 및 초기화
-            GameObject projectileObj = Instantiate(projectilePrefab, spawnPosition, Quaternion.identity);
-            if (projectileObj.TryGetComponent<Projectile>(out var projectile))
-            {
-                projectile.Initialize(direction, unitData.UnitAtk); // 유닛 공격력 전달
-            }
-        }
+        get => _currentState;
+        set => _currentState = value;
     }
 
+    // IDamageable 인터페이스 구현
     public void TakeDamage(float damage)
     {
-        currentHP -= damage;
-        
-        if (currentHP <= 0)
+        _currentHP -= damage;
+        _animationController.SetHitAnimation();
+        if (_currentHP <= 0)
         {
             Die();
         }
@@ -130,8 +99,21 @@ public class PlayerUnit : MonoBehaviour, IDamageable
 
     private void Die()
     {
-        // 사망 처리 로직
-        Destroy(gameObject);
+        _currentState = UnitState.Dead;
+        _animationController.TriggerDeathAnimation();
+        // 추가 죽음 처리 로직
+        Destroy(gameObject, 1f); // 애니메이션 재생 시간 고려
+    }
+
+    // 애니메이션 이벤트 수신 메서드 (브릿지 역할)
+    public void OnAttackAnimationEventReceived()
+    {
+        _attackController.FireProjectile();
+    }
+
+    public void OnSkillAnimationEvent()
+    {
+        _skillController.ExecuteSkillEffect();
     }
 
     // 기즈모로 감지 범위 시각화
@@ -143,4 +125,9 @@ public class PlayerUnit : MonoBehaviour, IDamageable
             Gizmos.DrawWireSphere(transform.position, unitData.UnitAtkRange);
         }
     }
+
+    // 필요한 접근자 메서드들
+    public Transform GetCurrentTarget() => _currentTarget;
+    public void SetCurrentTarget(Transform target) => _currentTarget = target;
+    public UnitAnimationController GetAnimationController() => _animationController;
 }

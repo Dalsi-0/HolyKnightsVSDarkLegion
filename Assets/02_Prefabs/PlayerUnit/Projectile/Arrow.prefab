@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6960014335773151968}
   - component: {fileID: 6430014087307348558}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: Arrow01(32x32)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: 3907625678534024634}
   - component: {fileID: 1462245792399387311}
   - component: {fileID: 3854887279584001850}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: Arrow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -205,4 +205,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 10
   lifetime: 3
-  damage: 10

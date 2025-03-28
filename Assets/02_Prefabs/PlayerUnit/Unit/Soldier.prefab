@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1344023532401079424}
   - component: {fileID: 843297007893044869}
   - component: {fileID: 498808915675523193}
+  - component: {fileID: 2309152717543517432}
   m_Layer: 0
   m_Name: Model
   m_TagString: Untagged
@@ -106,6 +107,18 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &2309152717543517432
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1330669260379873261}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71afbbca1454d6e4c8696008324298f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4644417527521517400
 GameObject:
   m_ObjectHideFlags: 0
@@ -115,6 +128,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1350044667691402954}
+  - component: {fileID: 1582508736563317122}
+  - component: {fileID: 3761268669447127713}
+  - component: {fileID: 7456815032621890487}
+  - component: {fileID: 469552352051844059}
+  - component: {fileID: 7192873688131371660}
   m_Layer: 4
   m_Name: Soldier
   m_TagString: Untagged
@@ -139,6 +157,77 @@ Transform:
   - {fileID: 9001062046756068614}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1582508736563317122
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4644417527521517400}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4297627705b42494baf7d74292f384f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unitData: {fileID: 11400000, guid: e28a7262502e74f4a89016cc07542a4a, type: 2}
+  projectilePrefab: {fileID: 8905324314553288908, guid: b6399f9b1c9ed1246a6602be69b0d159, type: 3}
+  firePoint: {fileID: 9001062046756068614}
+  skillEffectPrefab: {fileID: 0}
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 1
+  canUseBasicAttack: 1
+  canUseSkill: 1
+  skillCooldown: 5
+  manaRecoveryAmount: 10
+--- !u!114 &3761268669447127713
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4644417527521517400}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46e344ed01ffdf1408c7ccd1dedc31a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &7456815032621890487
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4644417527521517400}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65d8f9e26cc057e41b36861a3125f908, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &469552352051844059
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4644417527521517400}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 045680f4cfee6da4cad0b989b52cb384, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &7192873688131371660
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4644417527521517400}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d54ad2cdb8eabc741b3294dacf946e16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6872081973523943767
 GameObject:
   m_ObjectHideFlags: 0
@@ -149,7 +238,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9001062046756068614}
   m_Layer: 0
-  m_Name: ObjectContainer
+  m_Name: FirePoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
