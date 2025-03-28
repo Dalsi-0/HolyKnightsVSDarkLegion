@@ -21,7 +21,7 @@ public class CharacterDataDownloader : MonoBehaviour
     private DataManager dataManager;
 
 #if UNITY_EDITOR
-    public void StartDownload()
+    public void StartDownload(bool forUnit)
     {
         dataManager = FindObjectOfType<DataManager>();
         if (dataManager == null)
@@ -30,7 +30,11 @@ public class CharacterDataDownloader : MonoBehaviour
             return;
         }
 
-        StartCoroutine(DownloadUnitData());
+        if (forUnit)
+        {
+            StartCoroutine(DownloadUnitData());
+            return;
+        }
         StartCoroutine(DownloadMonsterData());
     }
     private string ConvertTSVToJson(string tsv)
@@ -88,52 +92,44 @@ public class CharacterDataDownloader : MonoBehaviour
             JObject row = (JObject)jsonData[i];
 
             string unitID = row["ID"]?.ToString() ?? "";
-            string unitName = row["name"]?.ToString() ?? "";
+            string unitName = row["Name"]?.ToString() ?? "";
             float unitHP = float.TryParse(row["HP"]?.ToString(), out float hp) ? hp : 0;
             float unitAtk = float.TryParse(row["Atk"]?.ToString(), out float atk) ? atk : 0;
             float unitAtkRange = float.TryParse(row["AtkRange"]?.ToString(), out float atkRange) ? atkRange : 0;
             float unitAtkDelay = float.TryParse(row["AtkDelay"]?.ToString(), out float atkDelay) ? atkDelay : 0;
             float unitSummonCost = float.TryParse(row["SummonCost"]?.ToString(), out float summonCost) ? summonCost : 0;
             float unitCoolDown = float.TryParse(row["CoolDown"]?.ToString(), out float coolDown) ? coolDown : 0;
+            ATK_TYPE unitAtkType = Enum.TryParse<ATK_TYPE>(row["AtkType"]?.ToString(), out ATK_TYPE result) ? result : ATK_TYPE.MELEE;
 
-            UnitSO abilityData = new UnitSO();
+            UnitSO unitData = new UnitSO();
 
-
-            /*
             if (i < unitSOData.Count)
             {
-                abilityData = unitSOData[i];
+                unitData = unitSOData[i];
             }
             else
             {
-                abilityData = CreateNewAbilityDataSO(abilityName);
-                unitSOData.Add(abilityData);
-            }
-            
-            if (renameFiles)
-            {
-                RenameScriptableObjectFile(abilityData, abilityName);
+                unitData = CreateNewUnitDataSO(unitID);
+                unitSOData.Add(unitData);
             }
 
-            abilityData.SetData(abilityEnum, abilityName, description, rankEnum, isUpgraded, values);*/
-            EditorUtility.SetDirty(abilityData);
-
+            unitData.SetData(unitID, unitName, unitHP, unitAtk, unitAtkRange, unitAtkDelay, unitSummonCost, unitCoolDown, unitAtkType);
+            EditorUtility.SetDirty(unitData);
         }
+
         AssetDatabase.SaveAssets();
         AssetDatabase.Refresh();
     }
 
     private void ClearAllUnitSOData()
     {
-        string folderPath = "Assets/08_Data/ScriptableObjects/Abilities";
-
-        if (!Directory.Exists(folderPath))
+        if (!Directory.Exists(unitSODataFolderPath))
         {
             Debug.LogWarning("SO not found");
             return;
         }
 
-        string[] files = Directory.GetFiles(folderPath, "*.asset");
+        string[] files = Directory.GetFiles(unitSODataFolderPath, "*.asset");
 
         foreach (string file in files)
         {
@@ -143,9 +139,27 @@ public class CharacterDataDownloader : MonoBehaviour
         AssetDatabase.SaveAssets();
         AssetDatabase.Refresh();
     }
+
+    private UnitSO CreateNewUnitDataSO(string fileName)
+    {
+        UnitSO newSO = ScriptableObject.CreateInstance<UnitSO>();
+
+        if (!Directory.Exists(unitSODataFolderPath))
+        {
+            Directory.CreateDirectory(unitSODataFolderPath);
+        }
+
+        string assetPath = $"{unitSODataFolderPath}/{fileName}.asset";
+        AssetDatabase.CreateAsset(newSO, assetPath);
+        AssetDatabase.SaveAssets();
+        AssetDatabase.Refresh();
+
+        return newSO;
+    }
+
     private void ApplyUnitSOData()
     {
-     //   abilityRepositoy.SetabilityDataSOs(abilityDataSO.ToArray());
+        dataManager.SetUnitDatas(unitSOData);
     }
 
     #endregion
@@ -169,23 +183,59 @@ public class CharacterDataDownloader : MonoBehaviour
             string json = ConvertTSVToJson(tsvText);
 
             JArray jsonData = JArray.Parse(json);
-           // ApplyDataToSO(jsonData);
+            ApplyMonsterDataToSO(jsonData);
         }
 
-      //  ApplyMonsterDataSO();
+        ApplyMonsterSOData();
+    }
+
+    private void ApplyMonsterDataToSO(JArray jsonData)
+    {
+        ClearAllMonsterSOData();
+        unitSOData.Clear();
+
+        for (int i = 0; i < jsonData.Count; i++)
+        {
+            JObject row = (JObject)jsonData[i];
+
+            string monsterID = row["ID"]?.ToString() ?? "";
+            string monsterName = row["Name"]?.ToString() ?? "";
+            float monsterHP = float.TryParse(row["HP"]?.ToString(), out float hp) ? hp : 0;
+            float monsterAtk = float.TryParse(row["Atk"]?.ToString(), out float atk) ? atk : 0;
+            float monsterAtkRange = float.TryParse(row["AtkRange"]?.ToString(), out float atkRange) ? atkRange : 0;
+            float monsterAtkDelay = float.TryParse(row["AtkDelay"]?.ToString(), out float atkDelay) ? atkDelay : 0;
+            float monsterMoveSpeed = float.TryParse(row["MoveSpeed"]?.ToString(), out float moveSpeed) ? moveSpeed : 0;
+            ATK_TYPE monsterAtkType = Enum.TryParse<ATK_TYPE>(row["AtkType"]?.ToString(), out ATK_TYPE result) ? result : ATK_TYPE.MELEE;
+
+            MonsterSO monsterData = new MonsterSO();
+
+            if (i < monsterSOData.Count)
+            {
+                monsterData = monsterSOData[i];
+            }
+            else
+            {
+                monsterData = CreateNewMonsterDataSO(monsterID);
+                monsterSOData.Add(monsterData);
+            }
+
+            monsterData.SetData(monsterID, monsterName, monsterHP, monsterAtk, monsterAtkRange, monsterAtkDelay, monsterMoveSpeed, monsterAtkType);     
+            EditorUtility.SetDirty(monsterData);
+        }
+
+        AssetDatabase.SaveAssets();
+        AssetDatabase.Refresh();
     }
 
     private void ClearAllMonsterSOData()
     {
-        string folderPath = "Assets/08_Data/ScriptableObjects/Abilities";
-
-        if (!Directory.Exists(folderPath))
+        if (!Directory.Exists(monsterSODataFolderPath))
         {
             Debug.LogWarning("SO not found");
             return;
         }
 
-        string[] files = Directory.GetFiles(folderPath, "*.asset");
+        string[] files = Directory.GetFiles(monsterSODataFolderPath, "*.asset");
 
         foreach (string file in files)
         {
@@ -196,46 +246,29 @@ public class CharacterDataDownloader : MonoBehaviour
         AssetDatabase.Refresh();
     }
 
-    #endregion
-
-#endif
-
-
-
-
-
-
-
-    /*
-    private void RenameScriptableObjectFile(AbilityDataSO so, string newFileName)
+    private MonsterSO CreateNewMonsterDataSO(string fileName)
     {
-        string path = AssetDatabase.GetAssetPath(so);
-        string newPath = Path.GetDirectoryName(path) + "/" + newFileName + ".asset";
+        MonsterSO newSO = ScriptableObject.CreateInstance<MonsterSO>();
 
-        if (path != newPath)
+        if (!Directory.Exists(monsterSODataFolderPath))
         {
-            AssetDatabase.RenameAsset(path, newFileName);
-
-            AssetDatabase.SaveAssets();
-            AssetDatabase.Refresh();
-        }
-    }*/
-    /*
-    private AbilityDataSO CreateNewAbilityDataSO(string fileName)
-    {
-        AbilityDataSO newSO = ScriptableObject.CreateInstance<AbilityDataSO>();
-
-        string folderPath = "Assets/08_Data/ScriptableObjects/Abilities";
-        if (!Directory.Exists(folderPath))
-        {
-            Directory.CreateDirectory(folderPath);
+            Directory.CreateDirectory(monsterSODataFolderPath);
         }
 
-        string assetPath = $"{folderPath}/{fileName}.asset";
+        string assetPath = $"{monsterSODataFolderPath}/{fileName}.asset";
         AssetDatabase.CreateAsset(newSO, assetPath);
         AssetDatabase.SaveAssets();
         AssetDatabase.Refresh();
 
         return newSO;
-    }*/
+    }
+
+    private void ApplyMonsterSOData()
+    {
+        dataManager.SetMonsterDatas(monsterSOData);
+    }
+
+    #endregion
+
+#endif
 }

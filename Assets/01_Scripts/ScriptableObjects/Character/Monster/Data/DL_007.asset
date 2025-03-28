@@ -9,15 +9,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bc077319dde33f844a52f51645bf87c4, type: 3}
-  m_Name: PK_002
+  m_Script: {fileID: 11500000, guid: e5b9559b901bd5d45992a1795343df5e, type: 3}
+  m_Name: DL_007
   m_EditorClassIdentifier: 
-  unitID: PK_002
-  unitName: "\uC6A9\uBCD1"
-  unitHP: 100
-  unitAtk: 8
-  unitAtkRange: 50
-  unitAtkDelay: 1
-  unitSummonCost: 100
-  unitCoolDown: 3
-  unitAtkType: 0
+  monsterID: DL_007
+  monsterName: "\uC5D8\uB9AC\uD2B8 \uC624\uD06C"
+  monsterHP: 150
+  monsterAtk: 50
+  monsterAtkRange: 2
+  monsterAtkDelay: 3
+  monsterMoveSpeed: 1.1
+  monsterAtkType: 0
