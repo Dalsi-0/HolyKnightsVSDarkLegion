@@ -7,7 +7,7 @@ public class UnitSkillController : MonoBehaviour
     private GameObject _skillEffectPrefab;
     private float _manaRecoveryAmount;
     private float _skillCooldown;
-    private float _currentSkillCooldown = 0f;
+    private float _currentSkillCooldown = 5f;
 
     public void Initialize(PlayerUnit playerUnit, UnitSO unitData, GameObject skillEffectPrefab, float manaRecoveryAmount, float skillCooldown)
     {
@@ -31,12 +31,18 @@ public class UnitSkillController : MonoBehaviour
 
     public void TryUseSkill()
     {
+        // 쿨타임이 끝났는지 먼저 확인
+        if (!CanUseSkill())
+            return;
         // 여기서 각 유닛 타입에 맞는 스킬 로직 실행
         if (_unitData.UnitAttackType == ATK_TYPE.SPECIAL)
         {
             UseRecoverySkill();
         }
-        // 다른 스킬 타입들...
+        else if (_unitData.UnitAttackType == ATK_TYPE.MELEE)
+        {
+            // 다른 스킬 타입...
+        }
     }
 
     private void UseRecoverySkill()
