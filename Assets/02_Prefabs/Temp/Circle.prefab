@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5042979480903808325}
   - component: {fileID: 3685801600140926129}
+  - component: {fileID: 5319935145986656503}
   m_Layer: 0
   m_Name: Circle
   m_TagString: Untagged
@@ -84,3 +85,26 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &5319935145986656503
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6202499625561800962}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4297627705b42494baf7d74292f384f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unitData: {fileID: 11400000, guid: 9a0dc2d0a653dc64b834602097ff9d58, type: 2}
+  projectilePrefab: {fileID: 0}
+  firePoint: {fileID: 0}
+  skillEffectPrefab: {fileID: 0}
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  canUseBasicAttack: 1
+  canUseSkill: 1
+  skillCooldown: 5
+  manaRecoveryAmount: 10

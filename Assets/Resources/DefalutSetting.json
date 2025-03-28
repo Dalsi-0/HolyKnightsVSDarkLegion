@@ -1,0 +1,45 @@
+{
+    "AllCard": [
+        {
+            "unitID": "PK_001",
+            "canUse": true
+        },
+        {
+            "unitID": "PK_002",
+            "canUse": true
+        },
+        {
+            "unitID": "PK_003",
+            "canUse": true
+        },
+        {
+            "unitID": "PK_004",
+            "canUse": false
+        },
+        {
+            "unitID": "PK_005",
+            "canUse": false
+        },
+        {
+            "unitID": "PK_006",
+            "canUse": false
+        },
+        {
+            "unitID": "PK_007",
+            "canUse": false
+        },
+        {
+            "unitID": "PK_008",
+            "canUse": false
+        },
+        {
+            "unitID": "PK_009",
+            "canUse": false
+        }
+    ],
+    "InHandCard": [
+        "PK_001",
+        "PK_002",
+        "PK_003"
+    ]
+}

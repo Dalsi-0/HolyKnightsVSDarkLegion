@@ -22,7 +22,7 @@ public class DeckCard : MonoBehaviour
             clickButton.onClick.AddListener(ActCallback);
     }
 
-    public void Setup(UnitSO unit, bool hideShadow)
+    public void Setup(UnitSO unit, bool active)
     {
         // 이미지 설정
         if (uniyImage != null)
@@ -32,12 +32,12 @@ public class DeckCard : MonoBehaviour
         // 데이터 설정
         coastText.text = unit.UnitSummonCost.ToString();
         unitID = unit.UnitID;
-        shadowImage.enabled = !hideShadow;
+        clickButton.interactable = active;
+        shadowImage.enabled = !active;
     }
 
     public void ActCallback()
     {
-        Debug.Log(unitID);
         ClickAction?.Invoke(unitID);
     }
 }

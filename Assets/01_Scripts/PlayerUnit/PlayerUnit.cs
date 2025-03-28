@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Events;
 public enum UnitState
 {
     Idle,
@@ -33,6 +34,7 @@ public class PlayerUnit : MonoBehaviour, IDamageable
     private UnitState _currentState = UnitState.Idle;
     private float _currentHP;
     private Transform _currentTarget;
+    public UnityAction<PlayerUnit> OnDie;
 
     // 컴포넌트들
     private UnitAnimationController _animationController;
@@ -102,9 +104,13 @@ public class PlayerUnit : MonoBehaviour, IDamageable
         _currentState = UnitState.Dead;
         _animationController.TriggerDeathAnimation();
         // 추가 죽음 처리 로직
+        OnDie?.Invoke(this);
         Destroy(gameObject, 1f); // 애니메이션 재생 시간 고려
     }
-
+    void OnDisable()
+    {
+        Die();
+    }
     // 애니메이션 이벤트 수신 메서드 (브릿지 역할)
     public void OnAttackAnimationEventReceived()
     {

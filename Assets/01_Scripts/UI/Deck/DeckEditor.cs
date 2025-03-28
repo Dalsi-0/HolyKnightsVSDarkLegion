@@ -36,22 +36,26 @@ public class DeckEditor : MonoBehaviour
         // 소지 카드 생성
         if (unitCreator != null)
         {
-            Dictionary<string, bool> ownedCards = DeckManager.Instance.GetOwne();
-            foreach (var card in ownedCards)
+            List<string> ownedCards = DeckManager.Instance.GetInHand();
+            for (int i = 0; i < ownedCards.Count; i++)
             {
-                if (card.Value)
-                    unitCreator.SpawnUnitCard(card.Key);
+                unitCreator.SpawnUnitCard(ownedCards[i]);
             }
         }
     }
     public void AddCard(string unitID)
     {
+        // 덱 카드 눌렀을 때 호출, 소지 카드 추가
         unitCreator.SpawnUnitCard(unitID);
     }
     public void Submit()
     {
         // 편집 모드 해제
         unitCreator.SetEdit(false);
-        gameObject.SetActive(false);
+        SetActive(false);
+    }
+    public void SetActive(bool active)
+    {
+        gameObject.SetActive(active);
     }
 }

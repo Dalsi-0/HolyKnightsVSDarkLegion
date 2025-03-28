@@ -3956,37 +3956,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 637369022}
   m_CullTransparentMesh: 1
---- !u!1 &710680470
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 710680471}
-  m_Layer: 0
-  m_Name: UnitManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &710680471
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 710680470}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 242.80183, y: 800.836, z: -2.898863}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &889520573
 GameObject:
   m_ObjectHideFlags: 0
@@ -4400,7 +4369,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c0c13d2086486b48a1767f8d9f60a12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unitPrefab: {fileID: 4644417527521517400, guid: fdc654505bc909847b4191a1a56fd99a, type: 3}
+  unitPrefab: {fileID: 6202499625561800962, guid: d5851ee44aa8ab04cbd7247d3aed454c, type: 3}
   startPos: {x: -11.5, y: -7.5}
   tileSize: {x: 9, y: 5}
   stepSize: {x: 3, y: 3}
@@ -14601,5 +14570,4 @@ SceneRoots:
   - {fileID: 283382882}
   - {fileID: 2143767074}
   - {fileID: 378285515}
-  - {fileID: 710680471}
   - {fileID: 1282016127}
