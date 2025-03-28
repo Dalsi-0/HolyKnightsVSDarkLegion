@@ -7,8 +7,9 @@ public class MonsterSO : ScriptableObject
     [SerializeField] private string monsterName;
     [SerializeField] private float monsterHP;
     [SerializeField] private float monsterAtk;
-    [SerializeField] private float monsterAtkRange;
+    [SerializeField] private int monsterAtkRange;
     [SerializeField] private float monsterAtkDelay;
+    [SerializeField] private ATTACK_RANGE_TYPE monsterAttackRangeType;
     [SerializeField] private float monsterMoveSpeed;
     [SerializeField] private ATK_TYPE monsterAtkType;
 
@@ -17,12 +18,13 @@ public class MonsterSO : ScriptableObject
     public string MonsterName => monsterName;
     public float MonsterHP => monsterHP;
     public float MonsterAtk => monsterAtk;
-    public float MonsterAtkRange => monsterAtkRange;
+    public int MonsterAtkRange => monsterAtkRange;
     public float MonsterAtkDelay => monsterAtkDelay;
+    public ATTACK_RANGE_TYPE MonsterAttackRangeType => monsterAttackRangeType;
     public float MonsterMoveSpeed => monsterMoveSpeed;
     public ATK_TYPE MonsterAttackType => monsterAtkType;
 
-    public void SetData(string id, string name, float hp, float atk, float atkRange, float atkDelay, float moveSpeed, ATK_TYPE atkType)
+    public void SetData(string id, string name, float hp, float atk, int atkRange, float atkDelay, ATTACK_RANGE_TYPE attackRangeType, float moveSpeed, ATK_TYPE atkType)
     {
         monsterID = id;
         monsterName = name;
@@ -30,6 +32,7 @@ public class MonsterSO : ScriptableObject
         monsterAtk = atk;
         monsterAtkRange = atkRange;
         monsterAtkDelay = atkDelay;
+        monsterAttackRangeType = attackRangeType;
         monsterMoveSpeed = moveSpeed;
         monsterAtkType = atkType;
     }
