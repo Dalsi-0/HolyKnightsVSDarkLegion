@@ -8,6 +8,7 @@ public class DataManager : Singleton<DataManager>
     // Temporary use
     [SerializeField] List<UnitSO> listUnitSODatas;
     [SerializeField] List<MonsterSO> listMonsterSODatas;
+    [SerializeField] StageSO stageSOData;
     //
 
     private Dictionary<string, UnitSO> UnitSODatas;
@@ -54,6 +55,11 @@ public class DataManager : Singleton<DataManager>
         {
             listMonsterSODatas = dataList as List<MonsterSO>;
         }
+    }
+
+    public void SetStageDatas(StageSO data)
+    {
+        stageSOData = data;
     }
 
 
