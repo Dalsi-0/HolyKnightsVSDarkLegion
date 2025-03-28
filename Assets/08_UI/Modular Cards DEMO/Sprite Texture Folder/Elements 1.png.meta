@@ -165,13 +165,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Elements_2
+      name: Elements_2_Fit
       rect:
         serializedVersion: 2
-        x: 256
-        y: 384
-        width: 128
-        height: 128
+        x: 303
+        y: 431
+        width: 34
+        height: 34
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -375,13 +375,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Elements_12
+      name: Elements_12_Fit
       rect:
         serializedVersion: 2
-        x: 0
-        y: 128
-        width: 128
-        height: 128
+        x: 22
+        y: 181
+        width: 86
+        height: 27
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -396,13 +396,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Elements_13
+      name: Elements_13_Fit
       rect:
         serializedVersion: 2
-        x: 128
-        y: 128
-        width: 128
-        height: 128
+        x: 150
+        y: 181
+        width: 84
+        height: 21
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -417,13 +417,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Elements_14
+      name: Elements_14_Fit
       rect:
         serializedVersion: 2
-        x: 256
-        y: 128
-        width: 128
-        height: 128
+        x: 281
+        y: 173
+        width: 78
+        height: 51
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -438,13 +438,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Elements_15
+      name: Elements_15_Fit
       rect:
         serializedVersion: 2
-        x: 384
-        y: 128
-        width: 128
-        height: 128
+        x: 414
+        y: 150
+        width: 68
+        height: 79
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -459,13 +459,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Elements_16
+      name: Elements_16_Fit
       rect:
         serializedVersion: 2
-        x: 512
-        y: 128
-        width: 128
-        height: 128
+        x: 546
+        y: 143
+        width: 59
+        height: 95
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -480,7 +480,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Elements_17
+      name: Elements_17_Fit
       rect:
         serializedVersion: 2
         x: 671
@@ -501,13 +501,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Elements_18
+      name: Elements_18_Fit
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 128
-        height: 128
+        x: 21
+        y: 54
+        width: 86
+        height: 26
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -522,13 +522,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Elements_19
+      name: Elements_19_Fit
       rect:
         serializedVersion: 2
-        x: 128
-        y: 0
-        width: 128
-        height: 128
+        x: 151
+        y: 55
+        width: 82
+        height: 17
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -543,13 +543,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Elements_20
+      name: Elements_20_Fit
       rect:
         serializedVersion: 2
-        x: 256
-        y: 0
-        width: 128
-        height: 128
+        x: 281
+        y: 47
+        width: 78
+        height: 50
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -564,13 +564,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Elements_21
+      name: Elements_21_Fit
       rect:
         serializedVersion: 2
-        x: 384
-        y: 0
-        width: 128
-        height: 128
+        x: 427
+        y: 43
+        width: 42
+        height: 42
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -585,13 +585,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Elements_22
+      name: Elements_22_Fit
       rect:
         serializedVersion: 2
-        x: 512
-        y: 0
-        width: 128
-        height: 128
+        x: 555
+        y: 37
+        width: 42
+        height: 59
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -606,13 +606,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Elements_23
+      name: Elements_23_Fit
       rect:
         serializedVersion: 2
-        x: 640
-        y: 0
-        width: 128
-        height: 128
+        x: 671
+        y: 47
+        width: 66
+        height: 50
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -622,6 +622,27 @@ TextureImporter:
       bones: []
       spriteID: 46344b460406f994e8a616fb7e7edddb
       internalID: -1362087771
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Elements 1_0
+      rect:
+        serializedVersion: 2
+        x: 272
+        y: 105
+        width: 6
+        height: 5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cb91c7774ea08044e9d70cce416019b2
+      internalID: -797671478
       vertices: []
       indices: 
       edges: []
@@ -637,23 +658,24 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
+      Elements 1_0: -797671478
       Elements_0: -1461499335
       Elements_1: -1308927029
       Elements_10: -1007645456
       Elements_11: 1821689698
-      Elements_12: -1431562146
-      Elements_13: -690418764
-      Elements_14: -1097064367
-      Elements_15: -644079835
-      Elements_16: -115618660
-      Elements_17: -979160946
-      Elements_18: 1676786992
-      Elements_19: 206463226
-      Elements_2: -1858916832
-      Elements_20: -616770807
-      Elements_21: -534945398
-      Elements_22: 692197501
-      Elements_23: -1362087771
+      Elements_12_Fit: -1431562146
+      Elements_13_Fit: -690418764
+      Elements_14_Fit: -1097064367
+      Elements_15_Fit: -644079835
+      Elements_16_Fit: -115618660
+      Elements_17_Fit: -979160946
+      Elements_18_Fit: 1676786992
+      Elements_19_Fit: 206463226
+      Elements_20_Fit: -616770807
+      Elements_21_Fit: -534945398
+      Elements_22_Fit: 692197501
+      Elements_23_Fit: -1362087771
+      Elements_2_Fit: -1858916832
       Elements_3: 312120295
       Elements_4: -2085814236
       Elements_5: 45502439

@@ -230,6 +230,7 @@ MonoBehaviour:
   shadowImage: {fileID: 261398730631659346}
   unitImage: {fileID: 3622782852056210527}
   coastText: {fileID: 2816997649237146457}
+  unitID: 
 --- !u!225 &6706738380108623622
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -516,7 +517,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 11, y: -18}
+  m_AnchoredPosition: {x: 12.5, y: -15.5}
   m_SizeDelta: {x: 70, y: 70}
   m_Pivot: {x: 1, y: 0}
 --- !u!222 &568250199255789474

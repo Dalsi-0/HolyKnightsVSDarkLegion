@@ -80,6 +80,15 @@ public class DeckManager : Singleton<DeckManager>
             }
         }
     }
+
+    public Dictionary<string, bool> GetAllCard()
+    {
+        return deck;
+    }
+    public Dictionary<string, bool> GetOwne()
+    {
+        return ownedCards;
+    }
 }
 [Serializable]
 public class Wrapper<T>

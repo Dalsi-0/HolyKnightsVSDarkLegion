@@ -25,16 +25,16 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 370741819827499787}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 2422966189015638601}
+  m_Father: {fileID: 1470583369414532747}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 16.8}
+  m_AnchoredPosition: {x: -335, y: 16.8}
   m_SizeDelta: {x: 200, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1377270968160210597
@@ -105,6 +105,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2422966189015638601}
+  - {fileID: 1579290957907087388}
   - {fileID: 3815686237261933841}
   - {fileID: 3718286930510689684}
   m_Father: {fileID: 0}
@@ -130,15 +131,18 @@ MonoBehaviour:
   cardPrefab: {fileID: 3735397260655540834, guid: 8b8d54b046373ad4596067f01a88d63d, type: 3}
   cardLayout: {fileID: 3815686237261933841}
   coastText: {fileID: 5905588060612727750}
-  useLocalList: 0
   deckNameList:
   - PK_001
   - PK_002
   - PK_007
   - PK_009
+  loadOnStart: 0
+  useLocalList: 0
   startPos: {x: -11.5, y: -7.5}
   tileSize: {x: 9, y: 5}
   stepSize: {x: 3, y: 3}
+  PlayerCoast: 0
+  onEdited: 0
 --- !u!1 &3887917923625877619
 GameObject:
   m_ObjectHideFlags: 0
@@ -169,7 +173,6 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1579290957907087388}
   - {fileID: 8261264160250762198}
   m_Father: {fileID: 1470583369414532747}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -281,7 +284,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uC784\uC2DC \uBCF4\uCDA9\n[ 3 ] \uB20C\uB7EC"
+  m_text: "\uC5D0\uB108\uC9C0 \uBCF4\uCDA9\n[ 3 ]"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 42673bcb4332f384aad40e56e4545421, type: 2}
   m_sharedMaterial: {fileID: -867878037596295584, guid: 42673bcb4332f384aad40e56e4545421, type: 2}
