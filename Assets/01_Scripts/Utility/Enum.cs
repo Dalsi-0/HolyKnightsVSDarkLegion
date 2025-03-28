@@ -9,3 +9,9 @@ public enum ATK_TYPE
     RANGED,
     SPECIAL
 }
+public enum ATTACK_RANGE_TYPE
+{
+    SINGLE,
+    VERTICAL,
+    HORIZONTAL
+}
