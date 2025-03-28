@@ -44,14 +44,15 @@ public class DataManager : Singleton<DataManager>
     }
     //
 
-    private void SetUnitDatas()
-    {
 
+    public void SetUnitDatas(List<UnitSO> listUnitSODatas)
+    {
+        this.listUnitSODatas = listUnitSODatas;
     }
 
-    private void SetMonsterDatas()
+    public void SetMonsterDatas(List<MonsterSO> listMonsterSODatas)
     {
-
+        this.listMonsterSODatas = listMonsterSODatas;
     }
 
 
@@ -65,6 +66,7 @@ public class DataManager : Singleton<DataManager>
     {
 
     }
+
 
 
     public UnitSO GetUnitData(string Id)
