@@ -57,6 +57,7 @@ public class UnitCreator : MonoBehaviour
 
     public void SpawnUnitCard(string unitName)
     {
+
         // 초기화 검사
         if (!isInited)
         {
@@ -64,9 +65,6 @@ public class UnitCreator : MonoBehaviour
         }
         // 중복 검사
         if (handList.ContainsKey(unitName)) return;
-        
-        // 길이 검사
-        if(handList.Count >= handSize) return;
 
         // 이름으로 데이터 불러오기
         UnitSO unit = DataManager.Instance.GetUnitData(unitName);
@@ -106,7 +104,7 @@ public class UnitCreator : MonoBehaviour
                         res += "O";
                     }
                 }
-                Debug.Log(i + ": " +res);
+                Debug.Log(res);
             }
 
         }
@@ -135,22 +133,26 @@ public class UnitCreator : MonoBehaviour
         // 덱 편집 중이라면 해당 카드를 덱에서 빼기
         if (onEdited)
         {
-            // 목록에서 삭제
+            Debug.Log("수정중");
             handList.Remove(unitID);
             // UI 삭제
             for (int i = 0; i < cardList.Count; i++)
             {
                 if (cardList[i].unitID == unitID)
                 {
+                    //Debug.Log(cardList[i].name);
                     Destroy(cardList[i].gameObject);
-                    cardList.RemoveAt(i);
                 }
             }
             return;
         }
-        
+        Debug.Log("DragEndCard");
+
         // 2d여서 z값 보정
         pos.z = 0;
+
+
+
         // 좌표 검사
         if (!UnitManager.Instance.IsOnGrid(pos)) return;
 
