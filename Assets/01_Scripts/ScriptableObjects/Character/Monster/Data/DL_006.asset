@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5b9559b901bd5d45992a1795343df5e, type: 3}
+  m_Name: DL_006
+  m_EditorClassIdentifier: 
+  monsterID: DL_006
+  monsterName: "\uC624\uD06C \uC911\uAC11\uAE30\uC0AC"
+  monsterHP: 150
+  monsterAtk: 100
+  monsterAtkRange: 1
+  monsterAtkDelay: 3
+  monsterMoveSpeed: 0.9
+  monsterAtkType: 0

@@ -1,9 +1,13 @@
+using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
 public class DataDownloaderWindow : EditorWindow
 {
 #if UNITY_EDITOR
+
+    private List<GameObject> myObj = new List<GameObject>();
+
     [MenuItem("Tools/Data Downloader Tool")]
     public static void ShowWindow()
     {
@@ -12,19 +16,42 @@ public class DataDownloaderWindow : EditorWindow
 
     private void OnGUI()
     {
-        GUILayout.Label("Download Character/Stage Data", EditorStyles.boldLabel);
+        GUILayout.Label("Clear TmpObjects", EditorStyles.boldLabel);
 
-        if (GUILayout.Button("Download Character Data"))
+        if (GUILayout.Button("Clear TmpObjects Button"))
         {
-            GameObject obj = new GameObject("tmpCharacterDataDownloader");
+            DestroyTmpObj();
+        }
+
+        GUILayout.Space(20);
+
+        GUILayout.Label("Download Unit/Monster Data", EditorStyles.boldLabel);
+
+        if (GUILayout.Button("Download Unit Data"))
+        {
+            GameObject obj = new GameObject("tmpUnitDataDownloader");
             CharacterDataDownloader downloader = obj.AddComponent<CharacterDataDownloader>();
             if (downloader != null)
             {
-                downloader.StartDownload();
+                downloader.StartDownload(true);
             }
-
-            DestroyImmediate(obj);
+            myObj.Add(obj);
         }
+
+        if (GUILayout.Button("Download Monster Data"))
+        {
+            GameObject obj = new GameObject("tmpMonsterDataDownloader");
+            CharacterDataDownloader downloader = obj.AddComponent<CharacterDataDownloader>();
+            if (downloader != null)
+            {
+                downloader.StartDownload(false);
+            }
+            myObj.Add(obj);
+        }
+
+        GUILayout.Space(10);
+
+        GUILayout.Label("Download Stage Data", EditorStyles.boldLabel);
 
         if (GUILayout.Button("Download Stage Data"))
         {
@@ -34,10 +61,21 @@ public class DataDownloaderWindow : EditorWindow
             {
                 downloader.StartDownload();
             }
-
-            DestroyImmediate(obj);
+            myObj.Add(obj);
         }
     }
-#endif
 
+    private void DestroyTmpObj()
+    {
+        for (int i = 0; i < myObj.Count; i++)
+        {
+            if (myObj[i] != null)
+            {
+                DestroyImmediate(myObj[i]);
+            }
+        }
+        myObj.Clear();
+    }
+
+#endif
 }

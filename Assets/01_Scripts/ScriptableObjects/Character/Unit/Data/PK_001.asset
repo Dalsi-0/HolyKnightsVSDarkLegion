@@ -17,7 +17,7 @@ MonoBehaviour:
   unitHP: 100
   unitAtk: 50
   unitAtkRange: 1
-  unitAtkDelay: 1
+  unitAtkDelay: 5
   unitSummonCost: 50
-  unitCoolDown: 3
-  unitAtkType: 0
+  unitCoolDown: 5
+  unitAtkType: 2

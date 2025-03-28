@@ -15,9 +15,9 @@ MonoBehaviour:
   unitID: PK_002
   unitName: "\uC6A9\uBCD1"
   unitHP: 100
-  unitAtk: 50
+  unitAtk: 8
   unitAtkRange: 50
   unitAtkDelay: 1
-  unitSummonCost: 50
+  unitSummonCost: 100
   unitCoolDown: 3
-  unitAtkType: 0
+  unitAtkType: 1

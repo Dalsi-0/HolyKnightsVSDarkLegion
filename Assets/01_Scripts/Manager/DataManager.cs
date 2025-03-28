@@ -8,6 +8,7 @@ public class DataManager : Singleton<DataManager>
     // Temporary use
     [SerializeField] List<UnitSO> listUnitSODatas;
     [SerializeField] List<MonsterSO> listMonsterSODatas;
+    [SerializeField] StageSO stageSOData;
     //
 
     private Dictionary<string, UnitSO> UnitSODatas;
@@ -44,14 +45,21 @@ public class DataManager : Singleton<DataManager>
     }
     //
 
-    private void SetUnitDatas()
+    public void SetDatas<T>(List<T> dataList) where T : ScriptableObject
     {
-
+        if (typeof(T) == typeof(UnitSO))
+        {
+            listUnitSODatas = dataList as List<UnitSO>;
+        }
+        else if (typeof(T) == typeof(MonsterSO))
+        {
+            listMonsterSODatas = dataList as List<MonsterSO>;
+        }
     }
 
-    private void SetMonsterDatas()
+    public void SetStageDatas(StageSO data)
     {
-
+        stageSOData = data;
     }
 
 
@@ -65,6 +73,7 @@ public class DataManager : Singleton<DataManager>
     {
 
     }
+
 
 
     public UnitSO GetUnitData(string Id)
