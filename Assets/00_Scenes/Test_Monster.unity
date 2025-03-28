@@ -2520,6 +2520,7 @@ MonoBehaviour:
   gridOrigin: {x: -13, y: -9, z: 0}
   column: 9
   row: 5
+  unit: {fileID: 1254317799}
 --- !u!4 &165788710
 Transform:
   m_ObjectHideFlags: 0
@@ -13673,6 +13674,7 @@ GameObject:
   - component: {fileID: 1614634309}
   - component: {fileID: 1614634311}
   - component: {fileID: 1614634312}
+  - component: {fileID: 1614634313}
   m_Layer: 0
   m_Name: Skeleton
   m_TagString: Untagged
@@ -13780,9 +13782,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09337b3dae3b15b4fbeebd2ad6a99f7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Anim>k__BackingField: {fileID: 1614634311}
   <Tr>k__BackingField: {fileID: 1614634310}
+  <Anim>k__BackingField: {fileID: 1614634311}
+  <GridSensor>k__BackingField: {fileID: 1614634313}
   gridTest: {fileID: 165788709}
+--- !u!114 &1614634313
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1614634308}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f720326a8e6522e44bc78bbc0137bee8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gridTest: {fileID: 165788709}
+  StateMachine: {fileID: 1614634312}
 --- !u!1 &1895561478
 GameObject:
   m_ObjectHideFlags: 0

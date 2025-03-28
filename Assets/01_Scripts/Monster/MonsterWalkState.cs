@@ -22,14 +22,10 @@ namespace Monster
         {
             base.Update();
             
-            // 유닛을 체크 -> 존재하면 Attack
-            currentCell = stateMachine.gridTest.WorldToGridCell(stateMachine.Tr.position);
-            frontCell = currentCell + Vector2Int.left;
-            
-            if (stateMachine.gridTest.IsUnitAt(frontCell))
+            if (!stateMachine.GridSensor.Target) return; // 타겟이 없으면 리턴
+            if (stateMachine.GridSensor.IsArrived)
             {
-                if (stateMachine.Tr.position.x - stateMachine.gridTest.GetCellCenter(currentCell).x < 0.01f)
-                    stateMachine.ChangeState(stateMachine.idleState);
+                stateMachine.ChangeState(stateMachine.idleState);
             }
         }
         

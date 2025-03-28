@@ -11,6 +11,9 @@ public class Test : MonoBehaviour
     private float tileSize = 1.0f;
     private int tilesPerCell = 3;
 
+    [SerializeField] private Transform unit;
+    public Transform Unit => unit;
+
     private Dictionary<(int,int), bool> grid = new();
 
     private void Awake()

@@ -18,7 +18,13 @@ namespace Monster
         public override void Update()
         {
             base.Update();
+            
             // 어택 딜레이를 체크 -> 쿨타임이 찼으면 공격
+            if (stateMachine.GridSensor.Target && stateMachine.CanAttack())
+            {
+                stateMachine.ChangeState(stateMachine.attackState);
+            }
+            
             // 앞을 막고 있는 유닛을 죽였는지 체크 -> 죽였으면 이동
         }
         
