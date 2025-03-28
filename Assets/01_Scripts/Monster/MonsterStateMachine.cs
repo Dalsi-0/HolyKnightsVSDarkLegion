@@ -1,43 +1,45 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Monster
 {
-    public class MonsterStateMachine : StateMachine, IEnemyUnit
+    public class MonsterStateMachine : StateMachine
     {
+        [Header("Monster Data")]
+        [SerializeField] private string monsterId; 
+        
+        [field: Header("Components")]
         [field: SerializeField] public Transform Tr { get; private set; }
         [field: SerializeField] public Animator Anim { get; private set; }
         [field: SerializeField] public SpriteRenderer Renderer { get; private set; }
         [field: SerializeField] public MonsterGridSensor GridSensor { get; private set; }
 
-        // 임시
-        public string Id { get; }
-        public string Name { get; }
-        public int Hp { get; set; } = 100;
-        public int Atk { get; set; } = 10;
-        public float AtkRange { get; set; } = 1f;
-        public float AtkDelay { get; set; } = 2f;
-        public float MoveSpeed { get; set; } = 1.5f;
-        public float MoveSpeedModifier { get; set; } = 1f;
-        //
-
+        private readonly Color origin = Color.white;
+        private readonly Color hit = new(1f, 0.4f, 0.4f);
+        private Coroutine hitCoroutine;
+        
+        private const float hitTime = 0.2f;
+        private float lastAttackTime = 0f;
+        private float currentHp;
+        
+        #region State Properties
+        public MonsterSO MonsterData { get; private set; }
         public MonsterIdleState IdleState { get; private set; }
         public MonsterWalkState WalkState { get; private set; }
         public MonsterAttackState AttackState { get; private set; }
         public MonsterDeadState DeadState { get; private set; }
-        private float lastAttackTime;
+        #endregion
         
-        private readonly Color origin = Color.white;
-        private readonly Color hit = new(1f, 0.4f, 0.4f);
-        private Coroutine hitCoroutine;
-        private const float hitTime = 0.2f;
-
         public void Start()
         {
-            // 초기화
+            // Data
+            MonsterData = DataManager.Instance.GetMonsterData(monsterId);
+            currentHp = MonsterData.MonsterHP;
+            
+            // Components
             GridSensor.Init(this);
+            
+            // State
             IdleState = new MonsterIdleState(this);
             WalkState = new MonsterWalkState(this);
             AttackState = new MonsterAttackState(this);
@@ -51,7 +53,7 @@ namespace Monster
         {
             while (true)
             {
-                if (lastAttackTime < AtkDelay)
+                if (lastAttackTime < MonsterData.MonsterAtkDelay)
                     lastAttackTime += Time.deltaTime;
                 
                 yield return null;
@@ -60,7 +62,7 @@ namespace Monster
 
         public bool CanAttack()
         {
-            return lastAttackTime >= AtkDelay;
+            return lastAttackTime >= MonsterData.MonsterAtkDelay;
         }
 
         public void OnAttack()
@@ -71,8 +73,8 @@ namespace Monster
 
         public void OnHit(int damage)
         {
-            Hp = Mathf.Max(0, Hp - damage);
-            if (Hp <= 0)
+            currentHp = Mathf.Max(0, currentHp - damage);
+            if (currentHp <= 0)
             {
                 ChangeState(DeadState);
                 return;

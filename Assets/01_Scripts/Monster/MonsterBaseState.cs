@@ -5,28 +5,25 @@ namespace Monster
     public class MonsterBaseState : IState
     {
         protected MonsterStateMachine stateMachine;
-        
-        public MonsterBaseState(MonsterStateMachine stateMachine)
+        protected float speedModifier = 1f;
+
+        protected MonsterBaseState(MonsterStateMachine stateMachine)
         {
             this.stateMachine = stateMachine;
         }
-        
-        public virtual void Enter()
-        {
-        }
-        
+
+        public virtual void Enter() { }
+
         public virtual void Update()
         {
             Move();
         }
-        
-        public virtual void Exit()
-        {
-        }
+
+        public virtual void Exit() { }
 
         private void Move()
         {
-            var moveSpeed = stateMachine.MoveSpeed * stateMachine.MoveSpeedModifier;
+            var moveSpeed = stateMachine.MonsterData.MonsterMoveSpeed * speedModifier;
             stateMachine.Tr.Translate(Vector3.left * (moveSpeed * Time.deltaTime));
         }
 
@@ -34,12 +31,12 @@ namespace Monster
         {
             stateMachine.Anim.SetBool(animHash, true);
         }
-        
+
         protected void StopAnimation(int animHash)
         {
             stateMachine.Anim.SetBool(animHash, false);
         }
-        
+
         protected float GetNormalizedTime(string animationName)
         {
             var currentAnimState = stateMachine.Anim.GetCurrentAnimatorStateInfo(0);

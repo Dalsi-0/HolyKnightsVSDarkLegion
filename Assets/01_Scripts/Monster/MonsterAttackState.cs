@@ -1,4 +1,3 @@
-using Monster;
 using UnityEngine;
 
 namespace Monster
@@ -11,7 +10,7 @@ namespace Monster
 
         public override void Enter()
         {
-            stateMachine.MoveSpeedModifier = 0f;
+            speedModifier = 0f;
             stateMachine.OnAttack();
             StartAnimation(hashAttack);
         }

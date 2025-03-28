@@ -9,7 +9,7 @@ public class MonsterDeadState : MonsterBaseState
     
     public override void Enter()
     {
-        stateMachine.MoveSpeedModifier = 0f;
+        speedModifier = 0f;
         StartAnimation(hashDead);
     }
     

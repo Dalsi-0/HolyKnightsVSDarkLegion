@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Monster
@@ -11,7 +9,7 @@ namespace Monster
         
         public override void Enter()
         {
-            stateMachine.MoveSpeedModifier = 0f;
+            speedModifier = 0f;
             StartAnimation(hashIdle);
         }
         

@@ -9,7 +9,7 @@ namespace Monster
 
         public override void Enter()
         {
-            stateMachine.MoveSpeedModifier = 1f;
+            speedModifier = 1f;
             StartAnimation(hashWalk);
         }
 
