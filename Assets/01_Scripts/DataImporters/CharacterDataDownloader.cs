@@ -19,23 +19,26 @@ public class CharacterDataDownloader : MonoBehaviour
     private const string monsterSODataFolderPath = "Assets/01_Scripts/ScriptableObjects/Character/Monster/Data";
 
     private DataManager dataManager;
+    private bool isUnit;
+    private string useURL;
+    private string useFolderPath;
 
 #if UNITY_EDITOR
+
     public void StartDownload(bool forUnit)
     {
         dataManager = FindObjectOfType<DataManager>();
+        isUnit = forUnit;
+        useURL = isUnit ? URL_UnitDataSheet : URL_MonsterDataSheet;
+        useFolderPath = isUnit ? unitSODataFolderPath : monsterSODataFolderPath;
+
         if (dataManager == null)
         {
             Debug.LogError("there is no DataManager in the scene.");
             return;
         }
 
-        if (forUnit)
-        {
-            StartCoroutine(DownloadUnitData());
-            return;
-        }
-        StartCoroutine(DownloadMonsterData());
+        StartCoroutine(DownloadData(useURL));
     }
     private string ConvertTSVToJson(string tsv)
     {
@@ -62,29 +65,67 @@ public class CharacterDataDownloader : MonoBehaviour
         return jsonArray.ToString();
     }
 
-
-    #region Unit
-
-    IEnumerator DownloadUnitData()
+    IEnumerator DownloadData(string url)
     {
-        UnityWebRequest www = UnityWebRequest.Get(URL_UnitDataSheet);
+        UnityWebRequest www = UnityWebRequest.Get(url);
         yield return www.SendWebRequest();
 
         if (www.result == UnityWebRequest.Result.Success)
         {
             string tsvText = www.downloadHandler.text;
             string json = ConvertTSVToJson(tsvText);
-
             JArray jsonData = JArray.Parse(json);
-            ApplyUnitDataToSO(jsonData);
+
+            ClearSOData();
+
+            if (isUnit)
+                ApplyUnitDataToSO(jsonData);
+            else
+                ApplyMonsterDataToSO(jsonData);
         }
 
-        ApplyUnitSOData();
+        if (isUnit)
+            dataManager.SetDatas(unitSOData);
+        else
+            dataManager.SetDatas(monsterSOData);
+    }
+
+    private void ClearSOData()
+    {
+        if (!Directory.Exists(useFolderPath))
+        {
+            Debug.LogWarning("SO not found");
+            return;
+        }
+
+        string[] files = Directory.GetFiles(useFolderPath, "*.asset");
+
+        foreach (string file in files)
+        {
+            AssetDatabase.DeleteAsset(file);
+        }
+
+        AssetDatabase.SaveAssets();
+        AssetDatabase.Refresh();
+    }
+
+    private T CreateNewSOData<T>(string fileName) where T : ScriptableObject
+    {
+        T newSO = ScriptableObject.CreateInstance<T>();
+
+        if (!Directory.Exists(useFolderPath))
+        {
+            Directory.CreateDirectory(useFolderPath);
+        }
+
+        string assetPath = $"{useFolderPath}/{fileName}.asset";
+        AssetDatabase.CreateAsset(newSO, assetPath);
+
+        return newSO;
     }
 
     private void ApplyUnitDataToSO(JArray jsonData)
     {
-        ClearAllUnitSOData();
         unitSOData.Clear();
 
         for (int i = 0; i < jsonData.Count; i++)
@@ -109,7 +150,7 @@ public class CharacterDataDownloader : MonoBehaviour
             }
             else
             {
-                unitData = CreateNewUnitDataSO(unitID);
+                unitData = CreateNewSOData<UnitSO>(unitID);
                 unitSOData.Add(unitData);
             }
 
@@ -121,77 +162,8 @@ public class CharacterDataDownloader : MonoBehaviour
         AssetDatabase.Refresh();
     }
 
-    private void ClearAllUnitSOData()
-    {
-        if (!Directory.Exists(unitSODataFolderPath))
-        {
-            Debug.LogWarning("SO not found");
-            return;
-        }
-
-        string[] files = Directory.GetFiles(unitSODataFolderPath, "*.asset");
-
-        foreach (string file in files)
-        {
-            AssetDatabase.DeleteAsset(file);
-        }
-
-        AssetDatabase.SaveAssets();
-        AssetDatabase.Refresh();
-    }
-
-    private UnitSO CreateNewUnitDataSO(string fileName)
-    {
-        UnitSO newSO = ScriptableObject.CreateInstance<UnitSO>();
-
-        if (!Directory.Exists(unitSODataFolderPath))
-        {
-            Directory.CreateDirectory(unitSODataFolderPath);
-        }
-
-        string assetPath = $"{unitSODataFolderPath}/{fileName}.asset";
-        AssetDatabase.CreateAsset(newSO, assetPath);
-        AssetDatabase.SaveAssets();
-        AssetDatabase.Refresh();
-
-        return newSO;
-    }
-
-    private void ApplyUnitSOData()
-    {
-        dataManager.SetUnitDatas(unitSOData);
-    }
-
-    #endregion
-
-
-    /////////////////////////////////////////
-    /////////////////////////////////////////
-    /////////////////////////////////////////
-
-
-    #region Monster
-
-    IEnumerator DownloadMonsterData()
-    {
-        UnityWebRequest www = UnityWebRequest.Get(URL_MonsterDataSheet);
-        yield return www.SendWebRequest();
-
-        if (www.result == UnityWebRequest.Result.Success)
-        {
-            string tsvText = www.downloadHandler.text;
-            string json = ConvertTSVToJson(tsvText);
-
-            JArray jsonData = JArray.Parse(json);
-            ApplyMonsterDataToSO(jsonData);
-        }
-
-        ApplyMonsterSOData();
-    }
-
     private void ApplyMonsterDataToSO(JArray jsonData)
     {
-        ClearAllMonsterSOData();
         unitSOData.Clear();
 
         for (int i = 0; i < jsonData.Count; i++)
@@ -215,7 +187,7 @@ public class CharacterDataDownloader : MonoBehaviour
             }
             else
             {
-                monsterData = CreateNewMonsterDataSO(monsterID);
+                monsterData = CreateNewSOData<MonsterSO>(monsterID);
                 monsterSOData.Add(monsterData);
             }
 
@@ -226,49 +198,6 @@ public class CharacterDataDownloader : MonoBehaviour
         AssetDatabase.SaveAssets();
         AssetDatabase.Refresh();
     }
-
-    private void ClearAllMonsterSOData()
-    {
-        if (!Directory.Exists(monsterSODataFolderPath))
-        {
-            Debug.LogWarning("SO not found");
-            return;
-        }
-
-        string[] files = Directory.GetFiles(monsterSODataFolderPath, "*.asset");
-
-        foreach (string file in files)
-        {
-            AssetDatabase.DeleteAsset(file);
-        }
-
-        AssetDatabase.SaveAssets();
-        AssetDatabase.Refresh();
-    }
-
-    private MonsterSO CreateNewMonsterDataSO(string fileName)
-    {
-        MonsterSO newSO = ScriptableObject.CreateInstance<MonsterSO>();
-
-        if (!Directory.Exists(monsterSODataFolderPath))
-        {
-            Directory.CreateDirectory(monsterSODataFolderPath);
-        }
-
-        string assetPath = $"{monsterSODataFolderPath}/{fileName}.asset";
-        AssetDatabase.CreateAsset(newSO, assetPath);
-        AssetDatabase.SaveAssets();
-        AssetDatabase.Refresh();
-
-        return newSO;
-    }
-
-    private void ApplyMonsterSOData()
-    {
-        dataManager.SetMonsterDatas(monsterSOData);
-    }
-
-    #endregion
 
 #endif
 }

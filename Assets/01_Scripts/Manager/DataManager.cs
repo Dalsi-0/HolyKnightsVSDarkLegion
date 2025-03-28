@@ -44,15 +44,16 @@ public class DataManager : Singleton<DataManager>
     }
     //
 
-
-    public void SetUnitDatas(List<UnitSO> listUnitSODatas)
+    public void SetDatas<T>(List<T> dataList) where T : ScriptableObject
     {
-        this.listUnitSODatas = listUnitSODatas;
-    }
-
-    public void SetMonsterDatas(List<MonsterSO> listMonsterSODatas)
-    {
-        this.listMonsterSODatas = listMonsterSODatas;
+        if (typeof(T) == typeof(UnitSO))
+        {
+            listUnitSODatas = dataList as List<UnitSO>;
+        }
+        else if (typeof(T) == typeof(MonsterSO))
+        {
+            listMonsterSODatas = dataList as List<MonsterSO>;
+        }
     }
 
 
