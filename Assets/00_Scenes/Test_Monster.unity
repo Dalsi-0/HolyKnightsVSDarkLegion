@@ -2520,7 +2520,13 @@ MonoBehaviour:
   gridOrigin: {x: -13, y: -9, z: 0}
   column: 9
   row: 5
-  unit: {fileID: 1254317799}
+  units:
+  - {fileID: 1254317799}
+  - {fileID: 972373573}
+  - {fileID: 1418615213}
+  - {fileID: 370968029}
+  - {fileID: 1423237676}
+  skeleton: {fileID: 1614634312}
 --- !u!4 &165788710
 Transform:
   m_ObjectHideFlags: 0
@@ -13784,8 +13790,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Tr>k__BackingField: {fileID: 1614634310}
   <Anim>k__BackingField: {fileID: 1614634311}
+  <Renderer>k__BackingField: {fileID: 1614634309}
   <GridSensor>k__BackingField: {fileID: 1614634313}
-  gridTest: {fileID: 165788709}
 --- !u!114 &1614634313
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13798,8 +13804,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f720326a8e6522e44bc78bbc0137bee8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gridTest: {fileID: 165788709}
   StateMachine: {fileID: 1614634312}
+  <Target>k__BackingField: {fileID: 0}
 --- !u!1 &1895561478
 GameObject:
   m_ObjectHideFlags: 0

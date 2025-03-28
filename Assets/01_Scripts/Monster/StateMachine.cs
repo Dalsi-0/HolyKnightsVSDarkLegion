@@ -13,7 +13,7 @@ namespace Monster
     
     public class StateMachine : MonoBehaviour
     {
-        private IState currentState;
+        protected IState currentState;
 
         public void ChangeState(IState state)
         {

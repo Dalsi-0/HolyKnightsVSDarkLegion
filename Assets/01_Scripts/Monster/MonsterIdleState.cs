@@ -19,13 +19,13 @@ namespace Monster
         {
             base.Update();
             
-            // 어택 딜레이를 체크 -> 쿨타임이 찼으면 공격
+            // 타겟이 존재하고 공격 가능하다면 공격 상태로 전환
             if (stateMachine.GridSensor.Target && stateMachine.CanAttack())
-            {
-                stateMachine.ChangeState(stateMachine.attackState);
-            }
+                stateMachine.ChangeState(stateMachine.AttackState);
             
             // 앞을 막고 있는 유닛을 죽였는지 체크 -> 죽였으면 이동
+            if (!stateMachine.GridSensor.Target)
+                stateMachine.ChangeState(stateMachine.WalkState);
         }
         
         public override void Exit()

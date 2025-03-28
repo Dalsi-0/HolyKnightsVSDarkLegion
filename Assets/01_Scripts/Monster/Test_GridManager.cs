@@ -1,9 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Monster;
 using UnityEngine;
 
-public class Test : MonoBehaviour
+public class Test_GridManager : Singleton<Test_GridManager>
 {
     [SerializeField] private Vector3 gridOrigin;
     [SerializeField] private int column = 9;
@@ -11,24 +12,33 @@ public class Test : MonoBehaviour
     private float tileSize = 1.0f;
     private int tilesPerCell = 3;
 
-    [SerializeField] private Transform unit;
-    public Transform Unit => unit;
+    [SerializeField] private List<Transform> units;
+    [SerializeField] private MonsterStateMachine skeleton;
+    private Dictionary<(int,int), Transform> grid = new();
+    
+    private bool enableOnGUI = false;
 
-    private Dictionary<(int,int), bool> grid = new();
-
-    private void Awake()
+    protected override void Awake()
     {
         for (int x = 0; x < column; x++)
         {
             for (int y = 0; y < row; y++)
             {
-                grid.Add((x, y), false);
+                grid.Add((x, y), null);
             }
         }
 
         for (int i = 0; i < 5; i++)
         {
-            grid[(7, i)] = true;
+            grid[(7, i)] = units[i];
+        }
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Mouse2))
+        {
+            enableOnGUI = !enableOnGUI;
         }
     }
 
@@ -40,9 +50,9 @@ public class Test : MonoBehaviour
         return new Vector2Int(x, y);
     }
     
-    public bool IsUnitAt(Vector2Int cell)
+    public Transform IsUnitAt(Vector2Int cell)
     {
-        if (cell.x < 0 || cell.x >= column || cell.y < 0 || cell.y >= row) return false;
+        if (cell.x < 0 || cell.x >= column || cell.y < 0 || cell.y >= row) return null;
         return grid[(cell.x, cell.y)];
     }
     
@@ -58,7 +68,6 @@ public class Test : MonoBehaviour
         Gizmos.color = Color.white;
 
         var gridSize = tileSize * tilesPerCell;
-
         for (int x = 0; x < column; x++)
         {
             for (int y = 0; y < row; y++)
@@ -75,6 +84,27 @@ public class Test : MonoBehaviour
                 // 중심 기준으로 그리기
                 Gizmos.DrawWireCube(cellCenter, new Vector3(gridSize, gridSize, 0));
             }
+        }
+    }
+
+    private void OnGUI()
+    {
+        if (!enableOnGUI) return;
+
+        GUIStyle buttonStyle = new GUIStyle(GUI.skin.button);
+        buttonStyle.fontSize = 45;
+        buttonStyle.fixedHeight = 80;
+        buttonStyle.fixedWidth = 150;
+        
+        if (GUILayout.Button("Hit", buttonStyle))
+        {
+            if (!skeleton)
+            {
+                Debug.Log("스켈레톤 캐싱 안함");
+                return;
+            }
+            
+            skeleton.OnHit(20);
         }
     }
 }

@@ -9,9 +9,6 @@ namespace Monster
         public MonsterWalkState(MonsterStateMachine stateMachine) : base(stateMachine) { }
         private readonly int hashWalk = Animator.StringToHash("Walk");
 
-        private Vector2Int currentCell;
-        private Vector2Int frontCell;
-        
         public override void Enter()
         {
             stateMachine.MoveSpeedModifier = 1f;
@@ -25,7 +22,7 @@ namespace Monster
             if (!stateMachine.GridSensor.Target) return; // 타겟이 없으면 리턴
             if (stateMachine.GridSensor.IsArrived)
             {
-                stateMachine.ChangeState(stateMachine.idleState);
+                stateMachine.ChangeState(stateMachine.IdleState);
             }
         }
         

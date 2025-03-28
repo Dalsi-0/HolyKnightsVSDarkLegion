@@ -29,8 +29,6 @@ namespace Monster
             var moveSpeed = stateMachine.MoveSpeed * stateMachine.MoveSpeedModifier;
             stateMachine.Tr.Translate(Vector3.left * (moveSpeed * Time.deltaTime));
         }
-        
-        
 
         protected void StartAnimation(int animHash)
         {
