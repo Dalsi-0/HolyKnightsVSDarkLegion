@@ -1127,8 +1127,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxCost: 100
   currentCost: 0
-  naturalRegenRate: 1
-  costSlider: {fileID: 0}
+  naturalRegenRate: 0
+  costSlider: {fileID: 1279783515}
   costText: {fileID: 749242497}
 --- !u!1 &1279783513
 GameObject:
