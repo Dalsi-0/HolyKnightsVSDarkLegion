@@ -15,6 +15,7 @@ public class SoundManager : Singleton<SoundManager>
     [SerializeField] AudioMixer audioMixer;
     [SerializeField] Slider[] audioSlider;
     [SerializeField] Image[] MuteChks;
+
     private float[] volume = new float[3];
     private bool[] isMute = new bool[3];
 
