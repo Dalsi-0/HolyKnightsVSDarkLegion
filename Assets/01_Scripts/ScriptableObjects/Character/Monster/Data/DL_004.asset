@@ -18,5 +18,6 @@ MonoBehaviour:
   monsterAtk: 80
   monsterAtkRange: 3
   monsterAtkDelay: 4
+  monsterAttackRangeType: 1
   monsterMoveSpeed: 1.3
   monsterAtkType: 2

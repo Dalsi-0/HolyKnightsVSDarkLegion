@@ -1,0 +1,193 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using TMPro;
+using UnityEngine;
+using UnityEngine.Events;
+
+
+/// <summary>
+/// 카드 소환을 관리하는 UI 오브젝트, 맵 정보와 UI 연결이 필수
+/// </summary>
+public class UnitCreator : MonoBehaviour
+{
+    [SerializeField] private GameObject cardPrefab; // 카드 프리팹
+    [SerializeField] private RectTransform cardLayout; // 카드 부모 레이아웃
+    [SerializeField] private TextMeshProUGUI coastText;
+    public static int handSize = 4;
+    [Header("Deck Info")]
+    [SerializeField] private List<string> deckNameList; // 유닛 이름 목록
+    public bool loadOnStart; // 시작시 불러올지 여부
+    public bool useLocalList; // 인스펙터 창에서 설정한 이름 사용할지 여부
+    private Dictionary<string, UnitSO> handList; // 유닛 데이터 목록
+    private List<UnitCard> cardList; // 유닛 데이터 목록
+    public UnityAction<int> CoastAction; // 코스트 변동시 호출 함수
+    private bool isInited;
+    public int PlayerCoast;
+    public bool onEdited = false; // 수정중인지 여부, 놓을 수 있을지를 판단,
+    void Start()
+    {
+        if (!isInited)
+        {
+            Init();
+        }
+
+        if (loadOnStart)
+        {
+            // 저장 된 사용가능 카드 불러오기
+            if (!useLocalList)
+                DeckManager.Instance.LoadInfo(this);
+
+            // 이름으로 카드 생성
+            for (int i = 0; i < deckNameList.Count; i++)
+            {
+                // 이름으로 데이터 불러오기
+                SpawnUnitCard(deckNameList[i]);
+            }
+            ChangeMoney(0);
+        }
+    }
+    private void Init()
+    {
+        coastText.text = PlayerCoast.ToString();
+        handList = new(handSize);
+        cardList = new(handSize);
+        isInited = true;
+    }
+
+    public void SpawnUnitCard(string unitName)
+    {
+
+        // 초기화 검사
+        if (!isInited)
+        {
+            Init();
+        }
+        // 중복 검사
+        if (handList.ContainsKey(unitName)) return;
+
+        // 이름으로 데이터 불러오기
+        UnitSO unit = DataManager.Instance.GetUnitData(unitName);
+        if (unit.UnitID == null)
+            Debug.LogError($"Datamanager에 {unitName} 데이터가 존재하지 않습니다.");
+        handList[unit.UnitID] = unit;
+
+        // 카드 생성 및 세팅
+        UnitCard card = Instantiate(cardPrefab, cardLayout).GetComponent<UnitCard>();
+        card.SetData(unit);
+        // 함수 등록
+        CoastAction += card.UpdateCoast;
+        card.OnEndDragActin += DragEndCard;
+        cardList.Add(card);
+    }
+
+    void Update()
+    {
+        // 테스트 자원 획득 - 외부에서는 ChangeMoney 호출할것
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            ChangeMoney(30);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha4))
+        {
+            for(int i = 0; i< 5; i++)
+            {
+                string res = "";
+                for(int j = 0; j < 9; j++)
+                {
+                    if(UnitManager.Instance.IsOnUnit(j, i) == null)
+                    {
+                        res += "X";
+                    }
+                    else
+                    {
+                        res += "O";
+                    }
+                }
+                Debug.Log(res);
+            }
+
+        }
+    }
+
+
+    // 자원을 추기/소비하는 함수, 소비에 실패하면 falsee 반환
+    public bool ChangeMoney(int amount)
+    {
+        if (amount < 0 && PlayerCoast + amount < 0) return false;
+        PlayerCoast += amount;
+        coastText.text = PlayerCoast.ToString();
+        // 등록 된 이벤트 호출
+        CoastAction?.Invoke(PlayerCoast);
+        return true;
+    }
+
+    public void SetEdit(bool active)
+    {
+        onEdited = active;
+    }
+
+    public void DragEndCard(string unitID, Vector3 pos)
+    {
+
+        // 덱 편집 중이라면 해당 카드를 덱에서 빼기
+        if (onEdited)
+        {
+            Debug.Log("수정중");
+            handList.Remove(unitID);
+            // UI 삭제
+            for (int i = 0; i < cardList.Count; i++)
+            {
+                if (cardList[i].unitID == unitID)
+                {
+                    //Debug.Log(cardList[i].name);
+                    Destroy(cardList[i].gameObject);
+                }
+            }
+            return;
+        }
+        Debug.Log("DragEndCard");
+
+        // 2d여서 z값 보정
+        pos.z = 0;
+
+
+
+        // 좌표 검사
+        if (!UnitManager.Instance.IsOnGrid(pos)) return;
+
+        // 모든 조건을 만족하면 자원 체크
+        if (ChangeMoney(-(int)handList[unitID].UnitSummonCost))
+        {
+            // 소환 성공한 카드의 쿨타임 진행
+            for (int i = 0; i < cardList.Count; i++)
+            {
+                if (cardList[i].unitID == unitID)
+                {
+                    cardList[i].ActiveTimer();
+                }
+            }
+            // 소환
+            Vector2Int grid = UnitManager.Instance.GetGridIndex(pos);
+            UnitManager.Instance.Spawn(unitID, grid.x, grid.y);
+
+        }
+        else
+        {
+            Debug.Log("자원 부족");
+        }
+    }
+
+    // 목록 초기화
+    public void ClearDeck()
+    {
+        deckNameList.Clear();
+    }
+
+    // 이름 목록에 추가
+    public void Add(string cardName)
+    {
+        deckNameList ??= new List<string>();
+        deckNameList.Add(cardName);
+    }
+}
