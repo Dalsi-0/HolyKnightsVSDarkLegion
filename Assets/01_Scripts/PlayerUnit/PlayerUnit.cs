@@ -111,9 +111,9 @@ public class PlayerUnit : MonoBehaviour, IDamageable
         _attackController.FireProjectile();
     }
 
-    public void OnSkillAnimationEvent()
+    public void OnSoldierEvent()
     {
-        _skillController.OnSkillEffectEvent();
+        _skillController.OnSoldierSkill();
     }
 
     public void ExecuteSpecificSkill()
@@ -131,11 +131,11 @@ public class PlayerUnit : MonoBehaviour, IDamageable
         }
     }
 
-    public void OnSkillEffectEvent()
+    public void OnPriestEvent()
     {
         if (_skillController != null)
         {
-            _skillController.OnSkillEffectEvent();
+            _skillController.OnPriestSkill();
         }
     }
 

@@ -8,6 +8,11 @@ public class UnitSkillController : MonoBehaviour
     private float _manaRecoveryAmount;
     private float _skillCooldown;
     private float _currentSkillCooldown = 5f;
+    private DivinePowerRecoverySkill _divinePowerRecoverySkill;
+    private KnockbackSkill _knockbackSkill;
+    private float _knockbackForce = 3f;
+    private float _damageAmount = 20f;
+    private float _checkRadius = 5f;
 
     // 초기화 메서드
     public void Initialize(PlayerUnit playerUnit, UnitSO unitData, GameObject skillEffectPrefab, float manaRecoveryAmount, float skillCooldown)
@@ -17,6 +22,12 @@ public class UnitSkillController : MonoBehaviour
         _skillEffectPrefab = skillEffectPrefab;
         _manaRecoveryAmount = manaRecoveryAmount;
         _skillCooldown = skillCooldown;
+
+        // ManaRecoverySkill 인스턴스 생성
+        _divinePowerRecoverySkill = new DivinePowerRecoverySkill(_playerUnit, _skillCooldown, _skillEffectPrefab, _manaRecoveryAmount);
+        // KnockbackSkill 인스턴스 생성
+        _knockbackSkill = new KnockbackSkill(_playerUnit, _skillCooldown, _skillEffectPrefab,
+                                            _knockbackForce, _damageAmount, _checkRadius);
     }
 
     // UnitStateController에서 Update 메서드에서 호출됨
@@ -35,7 +46,6 @@ public class UnitSkillController : MonoBehaviour
     // 스킬 사용을 시도하는 주요 메서드
     public void TryUseSkill()
     {
-        // 쿨다운 확인
         if (!CanUseSkill())
             return;
 
@@ -43,9 +53,13 @@ public class UnitSkillController : MonoBehaviour
         _playerUnit.CurrentState = UnitState.UsingSkill;
         _playerUnit.GetAnimationController().SetSkillAnimation(true);
 
+        // 스킬 활성화
+        _knockbackSkill.Activate();
+
         // 쿨다운 초기화
         _currentSkillCooldown = _skillCooldown;
     }
+
 
     // 애니메이션 이벤트 핸들러 (PlayerUnit 메서드와 연결됨)
     public void OnSkillStartEvent()
@@ -53,9 +67,13 @@ public class UnitSkillController : MonoBehaviour
         // 스킬 초기화 로직 (필요시)
     }
 
-    public void OnSkillEffectEvent()
+    public void OnPriestSkill()
     {
-        ExecuteSkillEffect();
+        DivinePowerRecovery();
+    }
+    public void OnSoldierSkill()
+    {
+        KnockBackSwing();
     }
 
     public void OnSkillEndEvent()
@@ -66,11 +84,26 @@ public class UnitSkillController : MonoBehaviour
     }
 
     // 실제 스킬 효과를 실행하는 메서드
-    private void ExecuteSkillEffect()
+    private void DivinePowerRecovery()
     {
         if (_playerUnit.CurrentState == UnitState.UsingSkill)
         {
-            // 필요한 경우 스킬 효과 로직 추가
+            // ManaRecoverySkill 효과 실행
+            if (_divinePowerRecoverySkill != null)
+            {
+                _divinePowerRecoverySkill.ExecuteEffect();
+            }
+        }
+    }
+    private void KnockBackSwing()
+    {
+        if (_playerUnit.CurrentState == UnitState.UsingSkill)
+        {
+            // ManaRecoverySkill 효과 실행
+            if (_knockbackSkill != null)
+            {
+                _knockbackSkill.ExecuteEffect();
+            }
         }
     }
 }

@@ -1,13 +1,13 @@
 using UnityEngine;
 
-public class ManaRecoverySkill : SkillBase
+public class DivinePowerRecoverySkill : SkillBase
 {
-    private float manaRecoveryAmount;
+    private float divinePowerRecoveryAmount;
 
-    public ManaRecoverySkill(PlayerUnit owner, float cooldown, GameObject effectPrefab, float manaRecoveryAmount)
+    public DivinePowerRecoverySkill(PlayerUnit owner, float cooldown, GameObject effectPrefab, float manaRecoveryAmount)
         : base(owner, cooldown, effectPrefab)
     {
-        this.manaRecoveryAmount = manaRecoveryAmount;
+        this.divinePowerRecoveryAmount = manaRecoveryAmount;
     }
 
     public override void ExecuteEffect()
@@ -15,7 +15,7 @@ public class ManaRecoverySkill : SkillBase
         CostManager costManager = CostManager.Instance; // 다른요소로 수정 필요
         if (costManager != null)
         {
-            costManager.AddCost(manaRecoveryAmount);
+            costManager.AddCost(divinePowerRecoveryAmount);
             SpawnEffect();
         }
     }
