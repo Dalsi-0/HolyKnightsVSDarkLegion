@@ -10,9 +10,9 @@ public class UnitSkillController : MonoBehaviour
     private float _currentSkillCooldown = 5f;
     private DivinePowerRecoverySkill _divinePowerRecoverySkill;
     private KnockbackSkill _knockbackSkill;
-    private float _knockbackForce = 3f;
-    private float _damageAmount = 20f;
-    private float _checkRadius = 5f;
+    private float _knockbackForce = 1f;
+    private float _damageAmount = 14f;
+    private float _checkRadius = 1f;
 
     // 초기화 메서드
     public void Initialize(PlayerUnit playerUnit, UnitSO unitData, GameObject skillEffectPrefab, float manaRecoveryAmount, float skillCooldown)
