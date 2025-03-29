@@ -90,12 +90,12 @@ public class UnitCreator : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Alpha4))
         {
-            for(int i = 0; i< 5; i++)
+            for (int i = 0; i < 5; i++)
             {
                 string res = "";
-                for(int j = 0; j < 9; j++)
+                for (int j = 0; j < 9; j++)
                 {
-                    if(UnitManager.Instance.IsOnUnit(j, i) == null)
+                    if (UnitManager.Instance.IsOnUnit(j, i) == null)
                     {
                         res += "X";
                     }
@@ -126,6 +126,14 @@ public class UnitCreator : MonoBehaviour
     {
         onEdited = active;
     }
+    public void CraetePool()
+    {
+        // 카드 설정 완료시 풀 생성
+        foreach (var card in handList)
+        {
+            //UnitManager.Instance.CreatePool(card.Key);
+        }
+    }
 
     public void DragEndCard(string unitID, Vector3 pos)
     {
@@ -133,32 +141,34 @@ public class UnitCreator : MonoBehaviour
         // 덱 편집 중이라면 해당 카드를 덱에서 빼기
         if (onEdited)
         {
-            Debug.Log("수정중");
-            handList.Remove(unitID);
-            // UI 삭제
-            for (int i = 0; i < cardList.Count; i++)
+            // UI 삭제, 최소 1개는 보존
+            if (cardList.Count > 1)
             {
-                if (cardList[i].unitID == unitID)
+                handList.Remove(unitID);
+                for (int i = 0; i < cardList.Count; i++)
                 {
-                    //Debug.Log(cardList[i].name);
-                    Destroy(cardList[i].gameObject);
+                    if (cardList[i].unitID == unitID)
+                    {
+                        Destroy(cardList[i].gameObject);
+                        cardList.RemoveAt(i);
+                    }
                 }
             }
             return;
         }
-        Debug.Log("DragEndCard");
-
+        
         // 2d여서 z값 보정
         pos.z = 0;
-
-
-
         // 좌표 검사
         if (!UnitManager.Instance.IsOnGrid(pos)) return;
 
         // 모든 조건을 만족하면 자원 체크
         if (ChangeMoney(-(int)handList[unitID].UnitSummonCost))
         {
+            // 소환
+            Vector2Int grid = UnitManager.Instance.GetGridIndex(pos);
+            UnitManager.Instance.Spawn(unitID, grid.x, grid.y);
+
             // 소환 성공한 카드의 쿨타임 진행
             for (int i = 0; i < cardList.Count; i++)
             {
@@ -167,10 +177,6 @@ public class UnitCreator : MonoBehaviour
                     cardList[i].ActiveTimer();
                 }
             }
-            // 소환
-            Vector2Int grid = UnitManager.Instance.GetGridIndex(pos);
-            UnitManager.Instance.Spawn(unitID, grid.x, grid.y);
-
         }
         else
         {

@@ -52,6 +52,7 @@ public class DeckEditor : MonoBehaviour
     {
         // 편집 모드 해제
         unitCreator.SetEdit(false);
+        unitCreator.CraetePool();
         gameObject.SetActive(false);
     }
 }

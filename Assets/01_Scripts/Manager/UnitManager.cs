@@ -1,20 +1,26 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
 public class UnitManager : Singleton<UnitManager>
 {
-    [SerializeField] private GameObject unitPrefab; // 유닛 프리팹
+    [Header("UnitPrefabs")]
+    public GameObject[] unitPrefabs; // 유닛 프리팹 목록
+    private Dictionary<string, GameObject> unitDitionary; // 유닛 이름별로 저장
+
     [Header("Map Info")]
     public Vector2 startPos = new Vector2(-11.5f, -7.5f); // 좌하단 기준 좌표
     public Vector2Int tileSize = new Vector2Int(9, 5); // 타일 총 칸
     public Vector2 stepSize = new Vector2(3, 3); // 중심점 간 간격
     private PlayerUnit[,] tileInfo; // 타일위에 소환 가능 여부, false는 이미 유닛 있음, TODO : 유닛 객체 정보 저장 필요
-
     protected override void Awake()
     {
         base.Awake();
         tileInfo = new PlayerUnit[tileSize.x, tileSize.y];
+        unitDitionary = new Dictionary<string, GameObject>();
+        foreach (GameObject prefab in unitPrefabs)
+        {
+            unitDitionary[prefab.name] = prefab;
+        }
     }
 
 
@@ -51,7 +57,7 @@ public class UnitManager : Singleton<UnitManager>
     public void Spawn(string unitID, Vector3 pos)
     {
         // 좌표 범위 확인
-        if(IsOnGrid(pos))
+        if (IsOnGrid(pos))
         {
             // 그리드 인덱스 알고 생성
             Vector2Int grid = GetGridIndex(pos);
@@ -66,19 +72,27 @@ public class UnitManager : Singleton<UnitManager>
     // ID와 그리드 x,y로 생성
     public void Spawn(string unitID, int indexX, int indexY)
     {
-        Debug.Log("Spawn");
-        Vector3 pos = new Vector3();
-        pos.x = startPos.x + stepSize.x * indexX;
-        pos.y = startPos.y + stepSize.y * indexY;
-        // 근처의 중심에 엔티티 소환 - TODO : unitID별 프리팹 분리하기
-        //Debug.Log(handList[unitID].UnitName + ": " + pos);
-        var unit = Instantiate(unitPrefab, pos, Quaternion.identity).GetComponent<PlayerUnit>();
-        // 배열에 저장
-        if (unit != null)
+        if (unitDitionary.ContainsKey(unitID))
         {
-            Debug.Log("가져오기 성공");
-            tileInfo[indexX, indexY] = unit;
-        }   
+            Vector3 pos = new Vector3();
+            pos.x = startPos.x + stepSize.x * indexX;
+            pos.y = startPos.y + stepSize.y * indexY;
+            // 근처의 중심에 엔티티 소환 
+            //PlayerUnit unit = Instantiate(unitPrefab, pos, Quaternion.identity).GetComponent<PlayerUnit>();
+            GameObject prefab = unitDitionary[unitID];
+            PlayerUnit unit = Instantiate(prefab, pos, Quaternion.identity).GetComponent<PlayerUnit>();
+            // 배열에 저장
+            if (unit != null)
+            {
+                tileInfo[indexX, indexY] = unit;
+            }
+
+        }
+        else
+        {
+            Debug.LogError($"프리팹 목록에 {unitID} 없음");
+        }
+
     }
 
     public bool IsOnGrid(Vector3 pos)
@@ -110,5 +124,4 @@ public class UnitManager : Singleton<UnitManager>
         }
         return true;
     }
-
 }
