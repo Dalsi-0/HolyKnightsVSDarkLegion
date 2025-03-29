@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using UnityEditor;
+using UnityEditor.U2D.Aseprite;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -11,7 +12,7 @@ public class StageDataDownloader : MonoBehaviour
 {
     private StageSO stageSOData;
 
-    private const string URL_StageDataSheet = "https://docs.google.com/spreadsheets/d/1tgEgtsQp0vTR3rbdCwYv_y4s_4LdsDHd-6RXWyvgk0Y/export?format=tsv&gid=566182702&range=A1:E41";
+    private const string URL_StageDataSheet = "https://docs.google.com/spreadsheets/d/1tgEgtsQp0vTR3rbdCwYv_y4s_4LdsDHd-6RXWyvgk0Y/export?format=tsv&gid=566182702&range=A1:E61";
 
     private const string stageSODataFolderPath = "Assets/01_Scripts/ScriptableObjects/Stage/Data";
     
@@ -105,6 +106,9 @@ public class StageDataDownloader : MonoBehaviour
 
         string assetPath = $"{stageSODataFolderPath}/{fileName}.asset";
         AssetDatabase.CreateAsset(newSO, assetPath);
+        EditorUtility.SetDirty(newSO);
+        AssetDatabase.SaveAssets();
+        AssetDatabase.Refresh();
 
         return newSO;
     }
