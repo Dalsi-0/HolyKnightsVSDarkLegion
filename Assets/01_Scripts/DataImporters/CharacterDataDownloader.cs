@@ -120,6 +120,9 @@ public class CharacterDataDownloader : MonoBehaviour
 
         string assetPath = $"{useFolderPath}/{fileName}.asset";
         AssetDatabase.CreateAsset(newSO, assetPath);
+        EditorUtility.SetDirty(newSO);
+        AssetDatabase.SaveAssets();
+        AssetDatabase.Refresh();
 
         return newSO;
     }
