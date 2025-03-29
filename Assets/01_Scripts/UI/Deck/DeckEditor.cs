@@ -55,4 +55,8 @@ public class DeckEditor : MonoBehaviour
         unitCreator.CraetePool();
         gameObject.SetActive(false);
     }
+    public void SetActive(bool active)
+    {
+        gameObject.SetActive(active);
+    }
 }

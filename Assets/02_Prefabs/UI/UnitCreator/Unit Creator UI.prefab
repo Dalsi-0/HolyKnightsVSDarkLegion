@@ -127,20 +127,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b893c2a5b8573df41b593946f9db4a4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unitPrefab: {fileID: 6202499625561800962, guid: d5851ee44aa8ab04cbd7247d3aed454c, type: 3}
   cardPrefab: {fileID: 3735397260655540834, guid: 8b8d54b046373ad4596067f01a88d63d, type: 3}
   cardLayout: {fileID: 3815686237261933841}
   coastText: {fileID: 5905588060612727750}
   deckNameList:
   - PK_001
-  - PK_002
-  - PK_007
-  - PK_009
   loadOnStart: 0
   useLocalList: 0
-  startPos: {x: -11.5, y: -7.5}
-  tileSize: {x: 9, y: 5}
-  stepSize: {x: 3, y: 3}
   PlayerCoast: 0
   onEdited: 0
 --- !u!1 &3887917923625877619
