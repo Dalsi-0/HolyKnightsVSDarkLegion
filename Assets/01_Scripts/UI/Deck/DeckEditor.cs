@@ -36,11 +36,10 @@ public class DeckEditor : MonoBehaviour
         // 소지 카드 생성
         if (unitCreator != null)
         {
-            Dictionary<string, bool> ownedCards = DeckManager.Instance.GetOwne();
-            foreach (var card in ownedCards)
+            List<string> ownedCards = DeckManager.Instance.GetInHand();
+            for (int i = 0; i < ownedCards.Count; i++)
             {
-                if (card.Value)
-                    unitCreator.SpawnUnitCard(card.Key);
+                unitCreator.SpawnUnitCard(ownedCards[i]);
             }
         }
     }
@@ -50,13 +49,12 @@ public class DeckEditor : MonoBehaviour
     }
     public void Submit()
     {
-        // 편집 모드 해제
-        unitCreator.SetEdit(false);
-        unitCreator.CraetePool();
-        gameObject.SetActive(false);
+        SetActive(false);
     }
     public void SetActive(bool active)
     {
+         // 편집 모드 설정/해제
+        unitCreator.SetEdit(active);
         gameObject.SetActive(active);
     }
 }

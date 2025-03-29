@@ -6,12 +6,27 @@ public class UnitManager : Singleton<UnitManager>
     [Header("UnitPrefabs")]
     public GameObject[] unitPrefabs; // 유닛 프리팹 목록
     private Dictionary<string, GameObject> unitDitionary; // 유닛 이름별로 저장
+    public int PlayerMoney; // 소지 자원
 
     [Header("Map Info")]
     public Vector2 startPos = new Vector2(-11.5f, -7.5f); // 좌하단 기준 좌표
     public Vector2Int tileSize = new Vector2Int(9, 5); // 타일 총 칸
     public Vector2 stepSize = new Vector2(3, 3); // 중심점 간 간격
     private PlayerUnit[,] tileInfo; // 타일위에 소환 가능 여부, false는 이미 유닛 있음, TODO : 유닛 객체 정보 저장 필요
+    private UnitCreator unitCreator;
+    private UnitCreator UnitCreator
+    {
+        get
+        {
+            if (unitCreator == null)
+            {
+                unitCreator = FindObjectOfType<UnitCreator>();
+            }
+            return unitCreator;
+        }
+    }
+
+
     protected override void Awake()
     {
         base.Awake();
@@ -23,7 +38,13 @@ public class UnitManager : Singleton<UnitManager>
         }
     }
 
-
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            ChangeMoney(30);
+        }
+    }
     // 좌표로 가장 가까운 인덱스 반환
     public Vector2Int GetGridIndex(Vector3 pos)
     {
@@ -95,6 +116,17 @@ public class UnitManager : Singleton<UnitManager>
 
     }
 
+    // 자원을 추기/소비하는 함수, 소비에 실패하면 falsee 반환
+    public bool ChangeMoney(int amount)
+    {
+        if (amount < 0 && PlayerMoney + amount < 0) return false;
+        PlayerMoney += amount;
+        // 생성자 UI 갱신
+        UnitCreator.ChangeMoney(PlayerMoney);
+        return true;
+    }
+
+
     public bool IsOnGrid(Vector3 pos)
     {
         // 좌표 범위가 유효한지 검사
@@ -123,5 +155,9 @@ public class UnitManager : Singleton<UnitManager>
             return false;
         }
         return true;
+    }
+    public void SetActiveCreator(bool active)
+    {
+        UnitCreator.SetActive(active);
     }
 }

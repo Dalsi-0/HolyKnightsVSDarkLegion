@@ -7,7 +7,7 @@ using UnityEngine.Events;
 
 
 /// <summary>
-/// 카드 소환을 관리하는 UI 오브젝트, 맵 정보와 UI 연결이 필수
+/// 카드 소환을 관리하는 UI 오브젝트
 /// </summary>
 public class UnitCreator : MonoBehaviour
 {
@@ -23,7 +23,6 @@ public class UnitCreator : MonoBehaviour
     private List<UnitCard> cardList; // 유닛 데이터 목록
     public UnityAction<int> CoastAction; // 코스트 변동시 호출 함수
     private bool isInited;
-    public int PlayerCoast;
     public bool onEdited = false; // 수정중인지 여부, 놓을 수 있을지를 판단,
     void Start()
     {
@@ -43,13 +42,13 @@ public class UnitCreator : MonoBehaviour
             {
                 // 이름으로 데이터 불러오기
                 SpawnUnitCard(deckNameList[i]);
+
             }
-            ChangeMoney(0);
         }
     }
     private void Init()
     {
-        coastText.text = PlayerCoast.ToString();
+        coastText.text = UnitManager.Instance.PlayerMoney.ToString();
         handList = new(handSize);
         cardList = new(handSize);
         isInited = true;
@@ -80,59 +79,15 @@ public class UnitCreator : MonoBehaviour
         card.OnEndDragActin += DragEndCard;
         cardList.Add(card);
     }
-
-    void Update()
+    public void ChangeMoney(int newValue)
     {
-        // 테스트 자원 획득 - 외부에서는 ChangeMoney 호출할것
-        if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            ChangeMoney(30);
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha4))
-        {
-            for (int i = 0; i < 5; i++)
-            {
-                string res = "";
-                for (int j = 0; j < 9; j++)
-                {
-                    if (UnitManager.Instance.IsOnUnit(j, i) == null)
-                    {
-                        res += "X";
-                    }
-                    else
-                    {
-                        res += "O";
-                    }
-                }
-                Debug.Log(res);
-            }
-
-        }
-    }
-
-
-    // 자원을 추기/소비하는 함수, 소비에 실패하면 falsee 반환
-    public bool ChangeMoney(int amount)
-    {
-        if (amount < 0 && PlayerCoast + amount < 0) return false;
-        PlayerCoast += amount;
-        coastText.text = PlayerCoast.ToString();
+        coastText.text = newValue.ToString();
         // 등록 된 이벤트 호출
-        CoastAction?.Invoke(PlayerCoast);
-        return true;
+        CoastAction?.Invoke(newValue);
     }
-
     public void SetEdit(bool active)
     {
         onEdited = active;
-    }
-    public void CraetePool()
-    {
-        // 카드 설정 완료시 풀 생성
-        foreach (var card in handList)
-        {
-            //UnitManager.Instance.CreatePool(card.Key);
-        }
     }
 
     public void DragEndCard(string unitID, Vector3 pos)
@@ -156,14 +111,14 @@ public class UnitCreator : MonoBehaviour
             }
             return;
         }
-        
+
         // 2d여서 z값 보정
         pos.z = 0;
         // 좌표 검사
         if (!UnitManager.Instance.IsOnGrid(pos)) return;
 
         // 모든 조건을 만족하면 자원 체크
-        if (ChangeMoney(-(int)handList[unitID].UnitSummonCost))
+        if (UnitManager.Instance.ChangeMoney(-(int)handList[unitID].UnitSummonCost))
         {
             // 소환
             Vector2Int grid = UnitManager.Instance.GetGridIndex(pos);
@@ -195,5 +150,9 @@ public class UnitCreator : MonoBehaviour
     {
         deckNameList ??= new List<string>();
         deckNameList.Add(cardName);
+    }
+    public void SetActive(bool active)
+    {
+        gameObject.SetActive(active);
     }
 }
