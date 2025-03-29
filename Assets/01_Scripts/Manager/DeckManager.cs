@@ -13,7 +13,7 @@ public class DeckManager : Singleton<DeckManager>
     private List<string> inHandCard; // 손에 들고 있는 카드, 최근에 사용한 카드
     private Dictionary<string, bool> deck; // 전체카드, true면 소지
     private DeckEditor deckEditor;
-    private DeckEditor DeckEditor
+    public DeckEditor DeckEditor
     {
         get
         {

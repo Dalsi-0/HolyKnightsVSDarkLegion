@@ -14,7 +14,7 @@ public class UnitManager : Singleton<UnitManager>
     public Vector2 stepSize = new Vector2(3, 3); // 중심점 간 간격
     private PlayerUnit[,] tileInfo; // 타일위에 소환 가능 여부, false는 이미 유닛 있음, TODO : 유닛 객체 정보 저장 필요
     private UnitCreator unitCreator;
-    private UnitCreator UnitCreator
+    public UnitCreator UnitCreator
     {
         get
         {
