@@ -38,13 +38,6 @@ public class UnitManager : Singleton<UnitManager>
         }
     }
 
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            ChangeMoney(30);
-        }
-    }
     // 좌표로 가장 가까운 인덱스 반환
     public Vector2Int GetGridIndex(Vector3 pos)
     {
