@@ -56,6 +56,14 @@ public class AnimationEventReceiver : MonoBehaviour
             _currentSkill.ExecuteEffect();
     }
 
+    public void OnWizardSkill()
+    {
+        if (_playerUnit != null)
+            _playerUnit.OnWizardEvent();
+        // SkillBase를 통한 이벤트 처리 추가
+        if (_currentSkill != null)
+            _currentSkill.ExecuteEffect();
+    }
 
 
     public void OnSkillEnd()

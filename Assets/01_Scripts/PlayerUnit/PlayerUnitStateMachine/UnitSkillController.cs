@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class UnitSkillController : MonoBehaviour
@@ -10,6 +11,7 @@ public class UnitSkillController : MonoBehaviour
     private float _currentSkillCooldown = 5f;
     private DivinePowerRecoverySkill _divinePowerRecoverySkill;
     private KnockbackSkill _knockbackSkill;
+    private IceBrakeSkill _icebrakeSkill;
     private float _knockbackForce = 1f;
     private float _damageAmount = 14f;
     private float _checkRadius = 1f;
@@ -28,6 +30,7 @@ public class UnitSkillController : MonoBehaviour
         // KnockbackSkill 인스턴스 생성
         _knockbackSkill = new KnockbackSkill(_playerUnit, _skillCooldown, _skillEffectPrefab,
                                             _knockbackForce, _damageAmount, _checkRadius);
+        _icebrakeSkill = new IceBrakeSkill(_playerUnit, _skillCooldown, _skillEffectPrefab);
     }
 
     // UnitStateController에서 Update 메서드에서 호출됨
@@ -75,6 +78,10 @@ public class UnitSkillController : MonoBehaviour
     {
         KnockBackSwing();
     }
+    public void OnWizardSkill()
+    {
+        IceBrake();
+    }
 
     public void OnSkillEndEvent()
     {
@@ -103,6 +110,17 @@ public class UnitSkillController : MonoBehaviour
             if (_knockbackSkill != null)
             {
                 _knockbackSkill.ExecuteEffect();
+            }
+        }
+    }
+    private void IceBrake()
+    {
+        if (_playerUnit.CurrentState == UnitState.UsingSkill)
+        {
+            // ManaRecoverySkill 효과 실행
+            if (_icebrakeSkill != null)
+            {
+                _icebrakeSkill.ExecuteEffect();
             }
         }
     }

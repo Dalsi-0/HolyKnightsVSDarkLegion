@@ -28,6 +28,7 @@ public class PlayerUnit : MonoBehaviour, IDamageable
     [SerializeField] private bool canUseBasicAttack = true;
     [SerializeField] private bool canUseSkill = true;
     [SerializeField] private float skillCooldown = 5f;
+    [Header("사제")]
     [SerializeField] private float manaRecoveryAmount = 10f;
 
     private UnitState _currentState = UnitState.Idle;
@@ -114,6 +115,10 @@ public class PlayerUnit : MonoBehaviour, IDamageable
     public void OnSoldierEvent()
     {
         _skillController.OnSoldierSkill();
+    }
+    public void OnWizardEvent()
+    {
+        _skillController.OnWizardSkill();
     }
 
     public void ExecuteSpecificSkill()
