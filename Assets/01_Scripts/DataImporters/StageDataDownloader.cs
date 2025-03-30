@@ -10,7 +10,7 @@ using UnityEngine.Networking;
 
 public class StageDataDownloader : MonoBehaviour
 {
-    private StageSO stageSOData;
+    [SerializeField] private List<StageSO> stageSOData = new List<StageSO>();
 
     private const string URL_StageDataSheet = "https://docs.google.com/spreadsheets/d/1tgEgtsQp0vTR3rbdCwYv_y4s_4LdsDHd-6RXWyvgk0Y/export?format=tsv&gid=566182702&range=A1:E61";
 
@@ -73,7 +73,7 @@ public class StageDataDownloader : MonoBehaviour
             ApplyStageDataToSO(jsonData);
         }
 
-        dataManager.SetStageDatas(stageSOData);
+        dataManager.SetDatas(stageSOData);
     }
 
     private void ClearSOData()
@@ -115,6 +115,8 @@ public class StageDataDownloader : MonoBehaviour
 
     private void ApplyStageDataToSO(JArray jsonData)
     {
+        stageSOData.Clear();
+
         Dictionary<int, StageSO> stageDictionary = new Dictionary<int, StageSO>();
 
         foreach (JObject row in jsonData)
@@ -146,6 +148,11 @@ public class StageDataDownloader : MonoBehaviour
                 monsterCounts = monsterCounts,
                 spawnInterval = spawnInterval
             });
+
+            if (!stageSOData.Contains(stageData))
+            {
+                stageSOData.Add(stageData);
+            }
 
             EditorUtility.SetDirty(stageData);
         }
