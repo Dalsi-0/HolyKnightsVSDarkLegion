@@ -13,7 +13,7 @@ public class CharacterDataDownloader : MonoBehaviour
     [SerializeField] private List<MonsterSO> monsterSOData = new List<MonsterSO>();
 
     private const string URL_UnitDataSheet = "https://docs.google.com/spreadsheets/d/1tgEgtsQp0vTR3rbdCwYv_y4s_4LdsDHd-6RXWyvgk0Y/export?format=tsv&range=A1:I10";
-    private const string URL_MonsterDataSheet = "https://docs.google.com/spreadsheets/d/1tgEgtsQp0vTR3rbdCwYv_y4s_4LdsDHd-6RXWyvgk0Y/export?format=tsv&gid=960013426&range=A1:H11";
+    private const string URL_MonsterDataSheet = "https://docs.google.com/spreadsheets/d/1tgEgtsQp0vTR3rbdCwYv_y4s_4LdsDHd-6RXWyvgk0Y/export?format=tsv&gid=960013426&range=A1:I11";
 
     private const string unitSODataFolderPath = "Assets/01_Scripts/ScriptableObjects/Character/Unit/Data";
     private const string monsterSODataFolderPath = "Assets/01_Scripts/ScriptableObjects/Character/Monster/Data";
@@ -120,6 +120,9 @@ public class CharacterDataDownloader : MonoBehaviour
 
         string assetPath = $"{useFolderPath}/{fileName}.asset";
         AssetDatabase.CreateAsset(newSO, assetPath);
+        EditorUtility.SetDirty(newSO);
+        AssetDatabase.SaveAssets();
+        AssetDatabase.Refresh();
 
         return newSO;
     }
@@ -174,10 +177,11 @@ public class CharacterDataDownloader : MonoBehaviour
             string monsterName = row["Name"]?.ToString() ?? "";
             float monsterHP = float.TryParse(row["HP"]?.ToString(), out float hp) ? hp : 0;
             float monsterAtk = float.TryParse(row["Atk"]?.ToString(), out float atk) ? atk : 0;
-            float monsterAtkRange = float.TryParse(row["AtkRange"]?.ToString(), out float atkRange) ? atkRange : 0;
+            int monsterAtkRange = int.TryParse(row["AtkRange"]?.ToString(), out int atkRange) ? atkRange : 0;
             float monsterAtkDelay = float.TryParse(row["AtkDelay"]?.ToString(), out float atkDelay) ? atkDelay : 0;
+            ATTACK_RANGE_TYPE monsterAttackRangeType = Enum.TryParse<ATTACK_RANGE_TYPE>(row["AttackRangeType"]?.ToString(), out ATTACK_RANGE_TYPE resultRange) ? resultRange : ATTACK_RANGE_TYPE.SINGLE;
             float monsterMoveSpeed = float.TryParse(row["MoveSpeed"]?.ToString(), out float moveSpeed) ? moveSpeed : 0;
-            ATK_TYPE monsterAtkType = Enum.TryParse<ATK_TYPE>(row["AtkType"]?.ToString(), out ATK_TYPE result) ? result : ATK_TYPE.MELEE;
+            ATK_TYPE monsterAtkType = Enum.TryParse<ATK_TYPE>(row["AtkType"]?.ToString(), out ATK_TYPE resultAtk) ? resultAtk : ATK_TYPE.MELEE;
 
             MonsterSO monsterData = new MonsterSO();
 
@@ -191,7 +195,7 @@ public class CharacterDataDownloader : MonoBehaviour
                 monsterSOData.Add(monsterData);
             }
 
-            monsterData.SetData(monsterID, monsterName, monsterHP, monsterAtk, monsterAtkRange, monsterAtkDelay, monsterMoveSpeed, monsterAtkType);     
+            monsterData.SetData(monsterID, monsterName, monsterHP, monsterAtk, monsterAtkRange, monsterAtkDelay, monsterAttackRangeType, monsterMoveSpeed, monsterAtkType);     
             EditorUtility.SetDirty(monsterData);
         }
 

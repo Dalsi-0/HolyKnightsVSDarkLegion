@@ -1,0 +1,73 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a65795f012cdf384a8dda043502a6f1f, type: 3}
+  m_Name: Stage_1
+  m_EditorClassIdentifier: 
+  stageNumber: 1
+  waves:
+  - waveNumber: 1
+    monsterIDs:
+    - DL_001
+    monsterCounts: 05000000
+    spawnInterval: 3
+  - waveNumber: 2
+    monsterIDs:
+    - DL_001
+    - DL_002
+    monsterCounts: 0400000003000000
+    spawnInterval: 2.8
+  - waveNumber: 3
+    monsterIDs:
+    - DL_002
+    monsterCounts: 06000000
+    spawnInterval: 2.5
+  - waveNumber: 4
+    monsterIDs:
+    - DL_001
+    - DL_002
+    monsterCounts: 0500000004000000
+    spawnInterval: 2.3
+  - waveNumber: 5
+    monsterIDs:
+    - DL_002
+    - DL_003
+    monsterCounts: 0400000003000000
+    spawnInterval: 2
+  - waveNumber: 6
+    monsterIDs:
+    - DL_001
+    - DL_003
+    monsterCounts: 0500000003000000
+    spawnInterval: 2.2
+  - waveNumber: 7
+    monsterIDs:
+    - DL_002
+    - DL_003
+    monsterCounts: 0500000004000000
+    spawnInterval: 2
+  - waveNumber: 8
+    monsterIDs:
+    - DL_003
+    monsterCounts: 06000000
+    spawnInterval: 2
+  - waveNumber: 9
+    monsterIDs:
+    - DL_002
+    - DL_003
+    monsterCounts: 0600000004000000
+    spawnInterval: 1.8
+  - waveNumber: 10
+    monsterIDs:
+    - DL_003
+    - DL_004
+    monsterCounts: 0500000003000000
+    spawnInterval: 1.5
