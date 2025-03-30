@@ -118,12 +118,10 @@ public class UnitCreator : MonoBehaviour
         if (!UnitManager.Instance.IsOnGrid(pos)) return;
 
         // 모든 조건을 만족하면 자원 체크
-        if (UnitManager.Instance.ChangeMoney(-(int)handList[unitID].UnitSummonCost))
-        {
-            // 소환
-            Vector2Int grid = UnitManager.Instance.GetGridIndex(pos);
-            UnitManager.Instance.Spawn(unitID, grid.x, grid.y);
 
+        // 소환 시도
+        if (UnitManager.Instance.Spawn(unitID, pos))
+        {
             // 소환 성공한 카드의 쿨타임 진행
             for (int i = 0; i < cardList.Count; i++)
             {
@@ -132,10 +130,6 @@ public class UnitCreator : MonoBehaviour
                     cardList[i].ActiveTimer();
                 }
             }
-        }
-        else
-        {
-            Debug.Log("자원 부족");
         }
     }
 

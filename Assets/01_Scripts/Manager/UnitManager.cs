@@ -75,45 +75,61 @@ public class UnitManager : Singleton<UnitManager>
 
 
     // 월드 좌표로 생성
-    public void Spawn(string unitID, Vector3 pos)
+    public bool Spawn(string unitID, Vector3 pos)
     {
         // 좌표 범위 확인
         if (IsOnGrid(pos))
         {
             // 그리드 인덱스 알고 생성
             Vector2Int grid = GetGridIndex(pos);
-            Spawn(unitID, grid.x, grid.y);
+            return Spawn(unitID, grid.x, grid.y);
         }
         else
         {
             Debug.Log("좌표가 그리드 밖에 있습니다.");
         }
+        return false;
     }
 
     // ID와 그리드 x,y로 생성
-    public void Spawn(string unitID, int indexX, int indexY)
+    public bool Spawn(string unitID, int indexX, int indexY)
     {
+        // 그리드 확인
+        if (indexX < 0 || indexX >= tileSize.x) return false;
+        if (indexY < 0 || indexY >= tileSize.y) return false;
+        if(IsOnUnit(indexX, indexY)) return false;
+        // id 확인
         if (unitDitionary.ContainsKey(unitID))
         {
-            Vector3 pos = new Vector3();
-            pos.x = startPos.x + stepSize.x * indexX;
-            pos.y = startPos.y + stepSize.y * indexY;
-            // 근처의 중심에 엔티티 소환 
-            //PlayerUnit unit = Instantiate(unitPrefab, pos, Quaternion.identity).GetComponent<PlayerUnit>();
-            GameObject prefab = unitDitionary[unitID];
-            PlayerUnit unit = Instantiate(prefab, pos, Quaternion.identity).GetComponent<PlayerUnit>();
-            // 배열에 저장
-            if (unit != null)
+            // 비용 자동 소모
+            if (ChangeMoney(-unitDitionary[unitID].GetComponent<PlayerUnit>().GetUnitData().UnitSummonCost))
             {
-                tileInfo[indexX, indexY] = unit;
-            }
+                Vector3 pos = new Vector3();
+                pos.x = startPos.x + stepSize.x * indexX;
+                pos.y = startPos.y + stepSize.y * indexY;
 
+                // 근처의 중심에 엔티티 소환 
+                //PlayerUnit unit = Instantiate(unitPrefab, pos, Quaternion.identity).GetComponent<PlayerUnit>();
+                GameObject prefab = unitDitionary[unitID];
+                PlayerUnit unit = Instantiate(prefab, pos, Quaternion.identity).GetComponent<PlayerUnit>();
+                // 배열에 저장
+                if (unit != null)
+                {
+                    tileInfo[indexX, indexY] = unit;
+                }
+                Debug.Log("소환 성공");
+                return true;
+            }
+            else
+            {
+                Debug.LogWarning("비용 부족");
+            }
         }
         else
         {
             Debug.LogError($"프리팹 목록에 {unitID} 없음");
         }
-
+        return false;
     }
 
     // 자원을 추기/소비하는 함수, 소비에 실패하면 falsee 반환
@@ -124,6 +140,11 @@ public class UnitManager : Singleton<UnitManager>
         // 생성자 UI 갱신
         UnitCreator.ChangeMoney(PlayerMoney);
         return true;
+    }
+    public bool ChangeMoney(float amount)
+    {
+        // 반올림 적용
+        return ChangeMoney((int)Mathf.Round(amount));
     }
 
 
