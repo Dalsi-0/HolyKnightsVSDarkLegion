@@ -114,10 +114,6 @@ public class UnitCreator : MonoBehaviour
 
         // 2d여서 z값 보정
         pos.z = 0;
-        // 좌표 검사
-        if (!UnitManager.Instance.IsOnGrid(pos)) return;
-
-        // 모든 조건을 만족하면 자원 체크
 
         // 소환 시도
         if (UnitManager.Instance.Spawn(unitID, pos))
