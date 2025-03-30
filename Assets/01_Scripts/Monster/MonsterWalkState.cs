@@ -17,7 +17,7 @@ namespace Monster
         {
             base.Update();
             
-            if (!stateMachine.GridSensor.Target) return; // 타겟이 없으면 리턴
+            if (!stateMachine.GridSensor.IsAttackable) return; // 타겟이 없으면 리턴
             if (stateMachine.GridSensor.IsArrived)
             {
                 stateMachine.ChangeState(stateMachine.IdleState);

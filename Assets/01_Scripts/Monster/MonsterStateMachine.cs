@@ -68,7 +68,7 @@ namespace Monster
         public void OnAttack()
         {
             lastAttackTime = 0;
-            // TODO: Target.OnHit(Atk);
+            // TODO: for문으로 Targets[i].OnHit(Atk);
         }
 
         public void OnHit(int damage)
