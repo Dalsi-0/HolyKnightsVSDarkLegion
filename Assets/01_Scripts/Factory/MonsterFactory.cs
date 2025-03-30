@@ -15,7 +15,7 @@ public class MonsterFactory
             MonsterStateMachine monster = prefab.GetComponent<MonsterStateMachine>();
             if (monster != null && monster.MonsterData != null)
             {
-                monsterPrefabs[monster.MonsterData.name] = prefab;
+                monsterPrefabs[monster.MonsterData.MonsterID] = prefab;
             }
         }
     }
