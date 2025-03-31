@@ -78,6 +78,8 @@ public class UnitManager : Singleton<UnitManager>
 
     public PlayerUnit IsOnUnit(int indexX, int indexY)
     {
+        if (indexX < 0 || indexX >= tileSize.x) return null;
+        if (indexY < 0 || indexY >= tileSize.y) return null;
         // 소환 가능한 칸인지 판별
         if (tileInfo[indexX, indexY] != null)
         {
