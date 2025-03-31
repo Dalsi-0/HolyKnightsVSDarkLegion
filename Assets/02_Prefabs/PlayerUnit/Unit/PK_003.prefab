@@ -77,12 +77,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -179253613, guid: 9d00b764825d71c47bd55d999b7fe07c, type: 3}
+  m_Sprite: {fileID: -1879894202, guid: 5086ad767cd3ebe4b96ea74ef352a065, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 9, y: 7}
+  m_Size: {x: 12.5, y: 12.5}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -98,7 +98,7 @@ Animator:
   m_GameObject: {fileID: 1330669260379873261}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 22100000, guid: 6bccc6098fd61dc4784ca32e87f2de09, type: 2}
+  m_Controller: {fileID: 22100000, guid: f503a8b20f9966142acad954360c5cec, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -170,8 +170,8 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 5, y: 5}
-    newSize: {x: 9, y: 7}
+    oldSize: {x: 12.5, y: 12.5}
+    newSize: {x: 12.5, y: 12.5}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
@@ -191,7 +191,7 @@ GameObject:
   - component: {fileID: 1582508736563317122}
   - component: {fileID: 8393769014539338458}
   m_Layer: 7
-  m_Name: Priest
+  m_Name: PK_003
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -226,10 +226,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4297627705b42494baf7d74292f384f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unitData: {fileID: 11400000, guid: 9a0dc2d0a653dc64b834602097ff9d58, type: 2}
+  unitData: {fileID: 0}
   projectilePrefab: {fileID: 0}
   firePoint: {fileID: 9001062046756068614}
-  skillEffectPrefab: {fileID: 7202539752609158937, guid: de722880ad8562d4ba59338fd5fb8f23, type: 3}
+  skillEffectPrefab: {fileID: 2972524419763916846, guid: ea775c195ec423c46b86f5ef02a83943, type: 3}
   enemyLayer:
     serializedVersion: 2
     m_Bits: 64
@@ -310,7 +310,7 @@ Transform:
   m_GameObject: {fileID: 6872081973523943767}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0.22, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
