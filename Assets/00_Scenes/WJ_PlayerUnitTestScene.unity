@@ -539,6 +539,9 @@ MonoBehaviour:
   canUseSkill: 1
   skillCooldown: 5
   manaRecoveryAmount: 10
+  knockbackForce: 3
+  damageAmount: 12
+  checkRadius: 1
 --- !u!50 &217033976
 Rigidbody2D:
   serializedVersion: 4
@@ -1552,6 +1555,9 @@ MonoBehaviour:
   canUseSkill: 1
   skillCooldown: 5
   manaRecoveryAmount: 10
+  knockbackForce: 3
+  damageAmount: 12
+  checkRadius: 1
 --- !u!4 &4325824034458834502
 Transform:
   m_ObjectHideFlags: 0
