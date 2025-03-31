@@ -89,7 +89,9 @@ namespace Monsters
 
         public void OnDead()
         {
-            Destroy(gameObject);
+            MonsterFactory monsterFactory = StageManager.Instance.GetMonsterFactory();
+            monsterFactory.ReturnMonsterToPool(gameObject);
+            // Destroy(gameObject);
         }
 
         private void OnDestroy()
