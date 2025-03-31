@@ -30,6 +30,10 @@ public class PlayerUnit : MonoBehaviour, IDamageable
     [SerializeField] private float skillCooldown = 5f;
     [Header("사제")]
     [SerializeField] private float manaRecoveryAmount = 10f;
+    [Header("넉백 수치")]
+    [SerializeField] private float knockbackForce = 3f;
+    [SerializeField] private float damageAmount = 12f;
+    [SerializeField] private float checkRadius = 1f;
 
     private UnitState _currentState = UnitState.Idle;
     private float _currentHP;
@@ -68,7 +72,7 @@ public class PlayerUnit : MonoBehaviour, IDamageable
         // 컴포넌트 설정
         _animationController.Initialize(this);
         _attackController.Initialize(this, unitData, projectilePrefab, firePoint, enemyLayer);
-        _skillController.Initialize(this, unitData, skillEffectPrefab, manaRecoveryAmount, skillCooldown);
+        _skillController.Initialize(this, unitData, skillEffectPrefab, manaRecoveryAmount, skillCooldown,knockbackForce,damageAmount,checkRadius);
         _stateController.Initialize(this, _attackController, _skillController, canUseBasicAttack, canUseSkill);
     }
 
