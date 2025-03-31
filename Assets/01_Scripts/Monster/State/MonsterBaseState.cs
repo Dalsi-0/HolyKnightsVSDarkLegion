@@ -1,14 +1,16 @@
 using UnityEngine;
 
-namespace Monster
+namespace Monsters
 {
     public class MonsterBaseState : IState
     {
-        protected MonsterStateMachine stateMachine;
+        protected readonly Monster monster;
+        protected readonly MonsterStateMachine stateMachine;
         protected float speedModifier = 1f;
 
         protected MonsterBaseState(MonsterStateMachine stateMachine)
         {
+            monster = stateMachine.Monster;
             this.stateMachine = stateMachine;
         }
 
@@ -23,23 +25,23 @@ namespace Monster
 
         private void Move()
         {
-            var moveSpeed = stateMachine.MonsterData.MonsterMoveSpeed * speedModifier;
-            stateMachine.Tr.Translate(Vector3.left * (moveSpeed * Time.deltaTime));
+            var moveSpeed = monster.MonsterData.MonsterMoveSpeed * speedModifier;
+            monster.transform.Translate(Vector3.left * (moveSpeed * Time.deltaTime));
         }
 
         protected void StartAnimation(int animHash)
         {
-            stateMachine.Anim.SetBool(animHash, true);
+            monster.Animator.SetBool(animHash, true);
         }
 
         protected void StopAnimation(int animHash)
         {
-            stateMachine.Anim.SetBool(animHash, false);
+            monster.Animator.SetBool(animHash, false);
         }
 
         protected float GetNormalizedTime(string animationName)
         {
-            var currentAnimState = stateMachine.Anim.GetCurrentAnimatorStateInfo(0);
+            var currentAnimState = monster.Animator.GetCurrentAnimatorStateInfo(0);
             if (currentAnimState.IsName(animationName))
                 return currentAnimState.normalizedTime % 1;
             else

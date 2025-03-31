@@ -85,7 +85,7 @@ SpriteRenderer:
   m_Size: {x: 9, y: 7}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!95 &498808915675523193
@@ -191,7 +191,7 @@ GameObject:
   - component: {fileID: 1582508736563317122}
   - component: {fileID: 8393769014539338458}
   m_Layer: 7
-  m_Name: Soldier
+  m_Name: PK_002
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

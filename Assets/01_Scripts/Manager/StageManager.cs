@@ -1,18 +1,16 @@
-using Monster;
+using Monsters;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StageManager : MonoBehaviour
+public class StageManager : Singleton<StageManager>
 {
-    public GameObject[] monsterPrefabs; // 몬스터 프리팹들
-    public Transform[] spawnPoints; // 스폰 위치 배열
+    [SerializeField] private GameObject[] monsterPrefabs; // 몬스터 프리팹들
+    [SerializeField] private Transform[] spawnPoints; // 스폰 위치 배열
     private MonsterFactory monsterFactory;
-
     private IWaveState currentState;  // 현재 웨이브 상태
-    public StageSO stageData;  
+    private StageSO stageData;  
     private int currentWaveIndex = 0;  // 현재 웨이브 인덱스
-    private float waveTimer = 0f;  // 대기 시간 관리
     private bool isWaveCleared = false;  // 몬스터가 전부 처치되었는지 체크
 
     void Start()
@@ -20,29 +18,24 @@ public class StageManager : MonoBehaviour
         // 팩토리 초기화
         monsterFactory = new MonsterFactory(monsterPrefabs);
 
+        SetStageData(1);
+
         // 처음엔 대기 상태로 시작
-        ChangeState(new WaveWaitingState(this));
+        // ChangeState(new WaveWaitingState(this));
     }
 
     void Update()
     {
-        currentState?.UpdateState();
+        if(currentState != null)
+        {
+            currentState?.UpdateState();
+        }
     }
 
     public void ChangeState(IWaveState newState)
     {
         currentState = newState;
         currentState.EnterState();
-    }
-    public void SpawnWave(string[] monsterIDs)
-    {
-        foreach (string monsterID in monsterIDs)
-        {
-            int randomIndex = Random.Range(0, spawnPoints.Length);
-            Transform spawnPoint = spawnPoints[randomIndex];
-
-            MonsterStateMachine spawnedMonster = monsterFactory.SpawnMonster(monsterID, spawnPoint.position);
-        }
     }
 
     public void StartNextWave()
@@ -70,5 +63,15 @@ public class StageManager : MonoBehaviour
     public void SetStageData(int stageNumber)
     {
         stageData = DataManager.Instance.GetStageData(stageNumber);
+    }
+
+    public MonsterFactory GetMonsterFactory()
+    {
+        return monsterFactory;
+    }
+
+    public Transform[] GetSpawnPoints()
+    {
+        return spawnPoints;
     }
 }

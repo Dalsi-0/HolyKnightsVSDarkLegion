@@ -11,8 +11,9 @@ GameObject:
   - component: {fileID: 2781973116852192781}
   - component: {fileID: 2533883576698459309}
   - component: {fileID: 7008119984442211573}
-  - component: {fileID: 3849357306591312815}
+  - component: {fileID: 7550442193786969651}
   - component: {fileID: 4034144907966935733}
+  - component: {fileID: 8460682639763829156}
   m_Layer: 0
   m_Name: WereWolf
   m_TagString: Untagged
@@ -108,7 +109,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &3849357306591312815
+--- !u!114 &7550442193786969651
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -117,14 +118,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 3439657226694188365}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 09337b3dae3b15b4fbeebd2ad6a99f7b, type: 3}
+  m_Script: {fileID: 11500000, guid: 6e13cc30f5a0d7d4b91543f300b8ad55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   monsterId: DL_005
-  <Tr>k__BackingField: {fileID: 2781973116852192781}
-  <Anim>k__BackingField: {fileID: 7008119984442211573}
-  <Renderer>k__BackingField: {fileID: 2533883576698459309}
-  <GridSensor>k__BackingField: {fileID: 4034144907966935733}
+  stateMachine: {fileID: 8460682639763829156}
+  gridSensor: {fileID: 4034144907966935733}
+  spriteRenderer: {fileID: 2533883576698459309}
+  animator: {fileID: 7008119984442211573}
 --- !u!114 &4034144907966935733
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -135,5 +136,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f720326a8e6522e44bc78bbc0137bee8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &8460682639763829156
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3439657226694188365}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0764263ca8d9af744a09632f229a3f88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

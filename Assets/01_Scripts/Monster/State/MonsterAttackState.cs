@@ -1,12 +1,12 @@
 using UnityEngine;
 
-namespace Monster
+namespace Monsters
 {
     public class MonsterAttackState : MonsterBaseState
     {
         public MonsterAttackState(MonsterStateMachine stateMachine) : base(stateMachine) { }
         private readonly int hashAttack = Animator.StringToHash("Attack");
-        private const string attackAnimName = "Attack";
+        protected const string attackAnimName = "Attack";
 
         public override void Enter()
         {

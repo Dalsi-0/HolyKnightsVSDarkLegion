@@ -78,6 +78,8 @@ public class UnitManager : Singleton<UnitManager>
 
     public PlayerUnit IsOnUnit(int indexX, int indexY)
     {
+        if (indexX < 0 || indexX >= tileSize.x) return null;
+        if (indexY < 0 || indexY >= tileSize.y) return null;
         // 소환 가능한 칸인지 판별
         if (tileInfo[indexX, indexY] != null)
         {
@@ -128,6 +130,7 @@ public class UnitManager : Singleton<UnitManager>
                 // 배열에 저장
                 if (unit != null)
                 {
+                    unit.OnPlayerDeadAction += Remove;
                     tileInfo[indexX, indexY] = unit;
                 }
                 Debug.Log("소환 성공");
@@ -160,7 +163,14 @@ public class UnitManager : Singleton<UnitManager>
         return ChangeMoney((int)Mathf.Round(amount));
     }
 
-
+    // 목록에서 유닛 정보 삭제
+    public void Remove(PlayerUnit unit)
+    {
+        // 유닛 정보 삭제
+        Vector3 pos = unit.transform.position;
+        Vector2Int grid = GetGridIndex(pos);
+        tileInfo[grid.x, grid.y] = null;
+    }
     public bool IsOnGrid(Vector3 pos)
     {
         // 좌표 범위가 유효한지 검사

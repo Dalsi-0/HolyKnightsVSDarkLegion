@@ -11,8 +11,9 @@ GameObject:
   - component: {fileID: 7838420221388371635}
   - component: {fileID: 4377979501849243165}
   - component: {fileID: 31823581068297203}
-  - component: {fileID: 7806723352249191575}
+  - component: {fileID: 1525989583847253214}
   - component: {fileID: 7353626305121047040}
+  - component: {fileID: 7784030325887474899}
   m_Layer: 0
   m_Name: OrcRider
   m_TagString: Untagged
@@ -108,7 +109,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &7806723352249191575
+--- !u!114 &1525989583847253214
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -117,14 +118,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 5756283248381880950}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 09337b3dae3b15b4fbeebd2ad6a99f7b, type: 3}
+  m_Script: {fileID: 11500000, guid: 6e13cc30f5a0d7d4b91543f300b8ad55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   monsterId: DL_004
-  <Tr>k__BackingField: {fileID: 7838420221388371635}
-  <Anim>k__BackingField: {fileID: 31823581068297203}
-  <Renderer>k__BackingField: {fileID: 4377979501849243165}
-  <GridSensor>k__BackingField: {fileID: 7353626305121047040}
+  stateMachine: {fileID: 7784030325887474899}
+  gridSensor: {fileID: 7353626305121047040}
+  spriteRenderer: {fileID: 4377979501849243165}
+  animator: {fileID: 31823581068297203}
 --- !u!114 &7353626305121047040
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -135,5 +136,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f720326a8e6522e44bc78bbc0137bee8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &7784030325887474899
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5756283248381880950}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03ab6773c22ddeb4793b8e1af394cf46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

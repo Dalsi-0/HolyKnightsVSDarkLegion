@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Monster
+namespace Monsters
 {
     public interface IState
     {
@@ -11,7 +11,7 @@ namespace Monster
     
     public class StateMachine : MonoBehaviour
     {
-        protected IState currentState;
+        private IState currentState;
 
         public void ChangeState(IState state)
         {

@@ -1,4 +1,4 @@
-using Monster;
+using Monsters;
 using UnityEngine;
 
 public class MonsterDeadState : MonsterBaseState
@@ -19,8 +19,7 @@ public class MonsterDeadState : MonsterBaseState
         
         if (GetNormalizedTime(deadAnimName) > 0.95f)
         {
-            // TODO: 몬스터 제거
-            Object.Destroy(stateMachine.gameObject);
+            stateMachine.OnDead();
         }
     }
     

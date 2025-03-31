@@ -1,0 +1,36 @@
+namespace Monsters
+{
+    public class WereWolfStateMachine : MonsterStateMachine
+    {
+        public bool IsFirstAttack { get; private set; } = true;
+        
+        public override void Init(Monster monster)
+        {
+            base.Init(monster);
+            AttackState = new WereWolfAttackState(this);
+        }
+        
+        public override void OnAttack()
+        {
+            if (IsFirstAttack)
+            {
+                // Front Cell Center에 위치하도록 이동
+                var destination = Monster.GridSensor.GetFrontCellCenter();
+                Monster.transform.position = destination;
+                
+                // Current Cell 기준으로 타겟을 설정
+                Monster.GridSensor.SetTarget();
+                IsFirstAttack = false;
+            }
+            
+            // 공격
+            var targets = Monster.GridSensor.Targets;
+            lastAttackTime = 0;
+            for (int i = 0; i < targets.Length; i++)
+            {
+                if (!targets[i]) continue;
+                targets[i].TakeDamage(Monster.MonsterData.MonsterAtk);
+            }
+        }
+    }
+}

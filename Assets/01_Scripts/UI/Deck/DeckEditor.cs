@@ -52,6 +52,7 @@ public class DeckEditor : MonoBehaviour
     public void Submit()
     {
         SetActive(false);
+        StageManager.Instance.StartNextWave();
     }
     public void SetActive(bool active)
     {
