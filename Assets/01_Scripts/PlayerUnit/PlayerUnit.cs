@@ -42,7 +42,7 @@ public class PlayerUnit : MonoBehaviour, IDamageable
     [Header("유닛 설정")]
     [SerializeField] private bool canUseBasicAttack = true;
     [SerializeField] private bool canUseSkill = true;
-    [SerializeField] private float skillCooldown = 5f;
+    
     [Header("사제")]
     [SerializeField] private float manaRecoveryAmount = 10f;
     [Header("넉백 수치")]
@@ -51,6 +51,7 @@ public class PlayerUnit : MonoBehaviour, IDamageable
     [SerializeField] private float checkRadius = 1f;
 
     private UnitState _currentState = UnitState.Idle;
+    private float skillCooldown;
     private float _currentHP;
     private Transform _currentTarget;
 
@@ -64,6 +65,7 @@ public class PlayerUnit : MonoBehaviour, IDamageable
 
     private void Awake()
     {
+        skillCooldown = unitData.UnitCoolDown;
         InitializeComponents();
     }
 
@@ -71,6 +73,7 @@ public class PlayerUnit : MonoBehaviour, IDamageable
     {
         ValidateReferences();
         _currentHP = unitData.UnitHP;
+        
     }
 
     private void Update()
