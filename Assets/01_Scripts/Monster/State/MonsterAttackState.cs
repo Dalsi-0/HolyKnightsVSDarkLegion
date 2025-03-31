@@ -6,7 +6,7 @@ namespace Monsters
     {
         public MonsterAttackState(MonsterStateMachine stateMachine) : base(stateMachine) { }
         private readonly int hashAttack = Animator.StringToHash("Attack");
-        protected const string attackAnimName = "Attack";
+        protected string attackAnimName = "Attack";
 
         public override void Enter()
         {

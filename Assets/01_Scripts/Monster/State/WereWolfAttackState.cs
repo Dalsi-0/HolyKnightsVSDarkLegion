@@ -10,8 +10,8 @@ namespace Monsters
         private readonly int hashSpecialAttack = Animator.StringToHash("SpecialAttack");
         private readonly int hashAttack = Animator.StringToHash("Attack");
 
+        private const string normalAttackName = "Attack";
         private const string specialAttackName = "SpecialAttack";
-        private string currentAnimName;
 
         public override void Enter()
         {
@@ -19,11 +19,11 @@ namespace Monsters
             speedModifier = 0f;
 
             var hashAnim = hashAttack;
-            currentAnimName = attackAnimName;
+            attackAnimName = normalAttackName;
             if (wolfFSM.IsFirstAttack)
             {
                 hashAnim = hashSpecialAttack;
-                currentAnimName = specialAttackName;
+                attackAnimName = specialAttackName;
             }
 
             StartAnimation(hashAnim);
