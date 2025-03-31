@@ -70,7 +70,7 @@ public class UnitCard : MonoBehaviour, IDragHandler, IPointerEnterHandler, IPoin
             }
         }
     }
-    public void SetData(UnitSO unitSO)
+    public void SetData(UnitSO unitSO, Sprite image)
     {
         // 데이터 설정
         coast = (int)unitSO.UnitSummonCost;
@@ -79,8 +79,11 @@ public class UnitCard : MonoBehaviour, IDragHandler, IPointerEnterHandler, IPoin
             coastText.text = coast.ToString();
         if (unitImage != null)
         {
-            // TODO : 이미지 변경
-            //unitImage.sprite = 
+            if (unitSO.UnitSprite != null)
+                unitImage.sprite = unitSO.UnitSprite;
+
+            else if (image != null)
+                unitImage.sprite = image;
         }
     }
 

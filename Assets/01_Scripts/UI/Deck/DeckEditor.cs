@@ -13,10 +13,11 @@ public class DeckEditor : MonoBehaviour
     [SerializeField] private RectTransform deckLayout; // 레이아웃 위치 content
     [SerializeField] private Button startButton; // 완료버튼
     [SerializeField] private UnitCreator unitCreator; // 유닛 생성자
-
+    private List<DeckCard> cards;
     void Awake()
     {
         startButton.onClick.AddListener(Submit);
+        cards = new();
     }
 
     // Start is called before the first frame update
@@ -29,8 +30,10 @@ public class DeckEditor : MonoBehaviour
         {
             var unit = DataManager.Instance.GetUnitData(card.Key);
             var deckcard = Instantiate(deckCardPrefab, deckLayout).GetComponent<DeckCard>();
-            deckcard.Setup(unit, card.Value);
+            Sprite sprite = DeckManager.Instance.GetSprite(unit.UnitID);
+            deckcard.Setup(unit, card.Value, sprite);
             deckcard.ClickAction += AddCard;
+            cards.Add(deckcard);
         }
 
         // 소지 카드 생성
@@ -40,8 +43,6 @@ public class DeckEditor : MonoBehaviour
             for (int i = 0; i < ownedCards.Count; i++)
             {
                 unitCreator.SpawnUnitCard(ownedCards[i]);
-                // 비활성화 상태로 시작
-                unitCreator.ChangeMoney(0);
             }
         }
     }
@@ -53,11 +54,43 @@ public class DeckEditor : MonoBehaviour
     {
         SetActive(false);
         StageManager.Instance.StartNextWave();
+        DeckManager.Instance.SaveInfo();
+        // 사용 가능 갱신
+        unitCreator.ChangeMoney(0);
     }
     public void SetActive(bool active)
     {
-         // 편집 모드 설정/해제
+        // 편집 모드 설정/해제
         unitCreator.SetEdit(active);
         gameObject.SetActive(active);
+    }
+    public void Reflash(string unitID)
+    {
+        foreach(var card in cards)
+        {
+            if(card.unitID == unitID)
+            {
+                card.SetUsable();
+            }
+        }
+    }
+    public void ReflashAll()
+    {
+        // 기존 카드 삭제
+        foreach (Transform child in deckLayout.transform)
+        {
+            Destroy(child.gameObject);
+        }
+        // 전체 카드 정보 불러오기
+        Dictionary<string, bool> allCard = DeckManager.Instance.GetAllCard();
+        // 덱 카드 생성
+        foreach (var card in allCard)
+        {
+            var unit = DataManager.Instance.GetUnitData(card.Key);
+            var deckcard = Instantiate(deckCardPrefab, deckLayout).GetComponent<DeckCard>();
+            Sprite sprite = DeckManager.Instance.GetSprite(unit.UnitID);
+            deckcard.Setup(unit, card.Value, sprite);
+            deckcard.ClickAction += AddCard;
+        }
     }
 }

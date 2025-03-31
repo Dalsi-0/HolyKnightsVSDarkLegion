@@ -1,0 +1,65 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3701583288522048188
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5069057108020480383}
+  - component: {fileID: 7742095787669551145}
+  m_Layer: 0
+  m_Name: DeckManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5069057108020480383
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3701583288522048188}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -1.73, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7742095787669551145
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3701583288522048188}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d2f39811acd8d324981ce3a7b5d68a7c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  images:
+  - unitID: PK_001
+    thumbnail: {fileID: -67669710610019127, guid: b3e3d6ee6821f5f49aec154a1e827727, type: 3}
+  - unitID: PK_002
+    thumbnail: {fileID: -2700384011633777007, guid: 47bb161a600944c41b53d23b7327f721, type: 3}
+  - unitID: PK_003
+    thumbnail: {fileID: 5024298934491920599, guid: ad81330780e576343a66fc0f87871371, type: 3}
+  - unitID: PK_004
+    thumbnail: {fileID: -3929850266068196405, guid: 6a633d0442b51a04ca548407e00a1d04, type: 3}
+  - unitID: PK_005
+    thumbnail: {fileID: -5925610384695444893, guid: 13a7e20e1b959b049840a9e33a9587d1, type: 3}
+  - unitID: PK_006
+    thumbnail: {fileID: 1036445751409431405, guid: 598017dba1045ae469e85588fd999c41, type: 3}
+  - unitID: PK_007
+    thumbnail: {fileID: -298736934203332731, guid: fdb9c46378071a84c8bb916176ecc2b5, type: 3}
+  - unitID: PK_008
+    thumbnail: {fileID: 1266806997481423862, guid: 629a05e18aa1a324cac29d7cb5c3167d, type: 3}
+  - unitID: PK_009
+    thumbnail: {fileID: -7312577040199753461, guid: df17c276454310f4a9d863688d386861, type: 3}
