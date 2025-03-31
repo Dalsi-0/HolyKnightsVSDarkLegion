@@ -48,9 +48,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   unitData: {fileID: 11400000, guid: 4e127f864198f0b4fb08ed5281bd4e0b, type: 2}
-  projectilePrefab: {fileID: 8905324314553288908, guid: 098f2ad469e79814887ec73c3f1e41ec, type: 3}
+  projectilePrefab: {fileID: 0}
   firePoint: {fileID: 1562965711855876140}
-  skillEffectPrefab: {fileID: 7371550591858681241, guid: 293f57c13f9ae054ebb86a95817bbb36, type: 3}
+  skillEffectPrefab: {fileID: 0}
   enemyLayer:
     serializedVersion: 2
     m_Bits: 64
