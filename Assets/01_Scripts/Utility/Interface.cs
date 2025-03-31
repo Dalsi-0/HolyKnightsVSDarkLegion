@@ -27,3 +27,9 @@ public interface IEnemyUnit : IGameEntity, IAttacker, IMovable
 {
     // 적 고유 속성을 여기에 추가할 수 있습니다
 }
+
+public interface IWaveState
+{
+    void EnterState();
+    void UpdateState();
+}
