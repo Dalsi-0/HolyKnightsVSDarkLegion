@@ -4,8 +4,8 @@ namespace Monsters
     {
         public override void Init(Monster monster)
         {
-            AttackState = new MonsterAttackState(this);
             base.Init(monster);
+            AttackState = new MonsterAttackState(this);
         }
 
         public override void OnAttack()

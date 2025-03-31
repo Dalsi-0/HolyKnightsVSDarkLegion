@@ -89,7 +89,7 @@ namespace Monsters
 
         public void OnDead()
         {
-            
+            Destroy(gameObject);
         }
 
         private void OnDestroy()
