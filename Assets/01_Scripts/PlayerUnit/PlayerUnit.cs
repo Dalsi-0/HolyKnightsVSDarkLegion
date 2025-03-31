@@ -103,8 +103,6 @@ public class PlayerUnit : MonoBehaviour, IDamageable
     {
         if (unitData == null)
             Debug.LogError("UnitData가 할당되지 않았습니다!");
-        if (projectilePrefab == null)
-            Debug.LogError("ProjectilePrefab이 할당되지 않았습니다!");
     }
 
     // 상태 관리
