@@ -12,7 +12,8 @@ public class UnitSO : ScriptableObject
     [SerializeField] private float unitSummonCost;
     [SerializeField] private float unitCoolDown;
     [SerializeField] private ATK_TYPE unitAtkType;
-    
+    [SerializeField] private Sprite unitSprite;
+
     // Getter
     public string UnitID => unitID;
     public string UnitName => unitName;
@@ -23,6 +24,7 @@ public class UnitSO : ScriptableObject
     public float UnitSummonCost => unitSummonCost;
     public float UnitCoolDown => unitCoolDown;
     public ATK_TYPE UnitAttackType => unitAtkType;
+    public Sprite UnitSprite => unitSprite;
 
     public void SetData(string id, string name, float hp, float atk, float atkRange, float atkDelay, float summonCost, float coolDown, ATK_TYPE atkType)
     {
