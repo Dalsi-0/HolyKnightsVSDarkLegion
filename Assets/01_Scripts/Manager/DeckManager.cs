@@ -2,6 +2,7 @@ using System.IO;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using Newtonsoft.Json;
 
 /// <summary>
 /// 플레이어의 덱 데이터를 불러오고 저장하는 매니저, unitCreator와 연결하여 설정 가능
@@ -69,6 +70,7 @@ public class DeckManager : Singleton<DeckManager>
                         if (!deck.ContainsKey(defaultCard.unitID))
                         {
                             deck[defaultCard.unitID] = defaultCard.canUse;
+                            cardList.Add(defaultCard);
                         }
                     }
                 }
@@ -102,6 +104,13 @@ public class DeckManager : Singleton<DeckManager>
                     {
                         Debug.Log("유효하지 않은 요소 : " + errList[i]);
                         deck.Remove(errList[i]);
+                        for (int k = 0; k < cardList.Count; k++)
+                        {
+                            if (cardList[k].unitID == errList[i])
+                            {
+                                cardList.RemoveAt(k);
+                            }
+                        }
                     }
                 }
 
@@ -109,11 +118,19 @@ public class DeckManager : Singleton<DeckManager>
                 List<string> hands = playerInfo?.InHandCard;
                 for (int i = 0; i < hands.Count; i++)
                 {
-                    //Debug.Log("기본 추가 2 :" + hands[i]);
                     // 가지고 있는 카드면 추가
-                    if(deck[hands[i]])
+                    if (deck[hands[i]])
                         inHandCard.Add(hands[i]);
+                    else
+                        hands.Remove(hands[i]);
                 }
+
+                // 수정 완료된 정보를 파일로 저장
+                PlayerInfo newInfo = new PlayerInfo();
+                newInfo.AllCard = cardList;
+                newInfo.InHandCard = hands;
+                string newJson = JsonConvert.SerializeObject(newInfo, Formatting.Indented);
+                File.WriteAllText(filePath, newJson);
             }
         }
         else
