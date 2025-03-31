@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5449117594517917581}
   - component: {fileID: 55591312129993588}
   - component: {fileID: 5623325657180590223}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: FuryAttack
   m_TagString: Untagged
   m_Icon: {fileID: 0}

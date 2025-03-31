@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7770489853304114993}
   - component: {fileID: 5166261679757375307}
   - component: {fileID: 8625375454099830022}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: FireBall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -118,7 +118,7 @@ GameObject:
   - component: {fileID: 3907625678534024634}
   - component: {fileID: 1462245792399387311}
   - component: {fileID: 3854887279584001850}
-  m_Layer: 4
+  m_Layer: 8
   m_Name: Fireball
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -135,7 +135,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.566, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.8, y: 0.8, z: 0.8}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7770489853304114993}
@@ -227,3 +227,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 10
   lifetime: 3
+  monster: {fileID: 0}

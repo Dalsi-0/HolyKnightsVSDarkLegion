@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6960014335773151968}
   - component: {fileID: 6430014087307348558}
-  m_Layer: 4
+  m_Layer: 8
   m_Name: Arrow01(32x32)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: 3907625678534024634}
   - component: {fileID: 1462245792399387311}
   - component: {fileID: 3854887279584001850}
-  m_Layer: 4
+  m_Layer: 8
   m_Name: Arrow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -113,7 +113,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.566, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.6, y: 0.6, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6960014335773151968}
@@ -151,7 +151,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.019916415, y: -0.021137152}
+  m_Offset: {x: 0.052661896, y: -0.058560558}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -162,7 +162,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.6073637, y: 0.23989034}
+  m_Size: {x: 2.1136565, y: 0.3147372}
   m_EdgeRadius: 0
 --- !u!50 &1462245792399387311
 Rigidbody2D:
@@ -179,7 +179,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 0.1
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -205,3 +205,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 10
   lifetime: 3
+  monster: {fileID: 0}

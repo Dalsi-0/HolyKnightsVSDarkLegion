@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7674946671882527417}
   - component: {fileID: 3660203087463293831}
   - component: {fileID: 4606171799557169078}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: KnockBack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
