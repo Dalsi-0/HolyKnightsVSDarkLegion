@@ -43,6 +43,12 @@ public class AnimationEventReceiver : MonoBehaviour
             _playerUnit.OnPriestEvent();
     }
 
+    public void OnAttack()
+    {
+        if (_playerUnit != null)
+            _playerUnit.OnAttackBaseEvent();
+    }
+
 
     public void OnSoldierSkill()
     {

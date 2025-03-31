@@ -1,3 +1,4 @@
+using Monsters;
 using UnityEngine;
 public class UnitAttackController : MonoBehaviour
 {
@@ -34,6 +35,7 @@ public class UnitAttackController : MonoBehaviour
 
     public void DetectAndAttackEnemy()
     {
+
         // 현재 유닛의 그리드 위치 가져오기
         Vector2Int currentGrid = UnitManager.Instance.GetGridIndex(transform.position);
 
@@ -101,6 +103,27 @@ public class UnitAttackController : MonoBehaviour
             _playerUnit.GetAnimationController().SetAttackAnimation(false);
         }
     }
+    public void Attack()
+    {
+        Transform currentTarget = _playerUnit.GetCurrentTarget();
+        if (currentTarget != null)
+        {
+            // 현재 타겟에서 Monster 컴포넌트 찾기
+            Monster monster = currentTarget.GetComponent<Monster>();
+            if (monster != null)
+            {
+                // 유닛의 공격력 데이터 사용
+                int damage = (int)_unitData.UnitAtk;
+
+                // 몬스터에게 데미지 전달
+                monster.StateMachine.OnHit(damage);
+
+                // 공격 성공 후 쿨다운 갱신
+                _attackCooldown = _unitData.UnitAtkDelay;
+            }
+        }
+    }
+
 
     public void FireProjectile()
     {

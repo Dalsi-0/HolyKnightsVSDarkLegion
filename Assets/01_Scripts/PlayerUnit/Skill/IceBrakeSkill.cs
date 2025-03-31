@@ -1,4 +1,3 @@
-
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
@@ -9,6 +8,7 @@ public class IceBrakeSkill : SkillBase
     private float slowDuration = 1.5f; // 감속 지속 시간 (초)
     private float iceDropHeight = 5f; // 얼음이 떨어지는 높이
     private float iceDropSpeed = 10f; // 얼음이 떨어지는 속도
+    private Color iceDebuffColor = new Color(0.35f, 0.82f, 1f); // 얼음 디버프 색상
 
     public IceBrakeSkill(PlayerUnit owner, float cooldown, GameObject effectPrefab)
         : base(owner, cooldown, effectPrefab)
@@ -117,13 +117,6 @@ public class IceBrakeSkill : SkillBase
             GameObject splashEffect = Object.Instantiate(effectPrefab, targetEnemy.position, Quaternion.identity);
             Object.Destroy(splashEffect, 2f);
 
-            // 충격파 사운드 효과 재생 (필요한 경우)
-            AudioSource audioSource = owner.GetComponent<AudioSource>();
-            if (audioSource != null && audioSource.clip != null)
-            {
-                audioSource.Play();
-            }
-
             // 적에게 감속 효과 적용
             ApplySlowEffect(targetEnemy);
 
@@ -143,52 +136,17 @@ public class IceBrakeSkill : SkillBase
     {
         if (enemyTransform == null) return;
 
-        // 색상 효과 적용 (스프라이트 렌더러가 있는 경우)
-        SpriteRenderer renderer = enemyTransform.GetComponent<SpriteRenderer>();
-        if (renderer != null)
-        {
-            Color originalColor = renderer.color;
-            renderer.color = new Color(0.7f, 0.9f, 1f); // 옅은 푸른색 (얼음 효과)
-
-            // 색상 원상복구를 위한 코루틴
-            owner.StartCoroutine(RestoreColor(enemyTransform.gameObject, renderer, originalColor));
-        }
-
         // 적 컴포넌트 가져오기
-        MonoBehaviour enemyComponent = enemyTransform.GetComponent<MonoBehaviour>();
-        if (enemyComponent != null)
+        Monsters.Monster monster = enemyTransform.GetComponent<Monsters.Monster>();
+        if (monster != null)
         {
-            // 적 이동 속도 감소 메서드 호출 시도
-            System.Reflection.MethodInfo slowMethod = enemyComponent.GetType().GetMethod("ApplySlow");
-            if (slowMethod != null)
-            {
-                // ApplySlow 메서드가 있으면 호출
-                slowMethod.Invoke(enemyComponent, new object[] { slowAmount, slowDuration });
-            }
-        }
-    }
+            // 데미지 적용
+            int damage = (int)(owner.GetUnitData().UnitAtk * 1.5f);
+            monster.StateMachine.OnHit(damage);
 
-    private IEnumerator RestoreColor(GameObject enemyObject, SpriteRenderer renderer, Color originalColor)
-    {
-        if (enemyObject == null || renderer == null) yield break;
-
-        float elapsedTime = 0f;
-        Color iceColor = renderer.color;
-
-        while (elapsedTime < slowDuration)
-        {
-            if (enemyObject == null || renderer == null) yield break;
-
-            float t = elapsedTime / slowDuration;
-            renderer.color = Color.Lerp(iceColor, originalColor, t);
-
-            elapsedTime += Time.deltaTime;
-            yield return null;
-        }
-
-        if (renderer != null)
-        {
-            renderer.color = originalColor;
+            // SlowDebuff 생성 및 적용
+            SlowDebuff slow = new SlowDebuff(slowDuration, iceDebuffColor);
+            monster.DebuffHandler.ExecuteBuff(slow);
         }
     }
 }

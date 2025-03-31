@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8835945365835850617}
   - component: {fileID: 1596895042852474007}
   - component: {fileID: 3062315898748508744}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Heal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -73,7 +73,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 100
   m_Sprite: {fileID: -1694105515, guid: 9d00b764825d71c47bd55d999b7fe07c, type: 3}
   m_Color: {r: 1, g: 0.84485185, b: 0, a: 1}
   m_FlipX: 0

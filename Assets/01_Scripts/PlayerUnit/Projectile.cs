@@ -8,6 +8,7 @@ public class Projectile : MonoBehaviour
     public float lifetime = 3f;  // 투사체 수명
     private float damage;   // 투사체 데미지
     private float timer;
+    [SerializeField] private Monsters.Monster monster;
 
     public void Initialize(Vector2 direction, float damage)
     {
@@ -33,16 +34,16 @@ public class Projectile : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        // 적 태그를 가진 오브젝트와 충돌했을 때
-        if (other.CompareTag("Player"))
+        // 에너미 레이어를 가진 오브젝트와 충돌했을 때
+        if (other.gameObject.layer == LayerMask.NameToLayer("Enemy"))
         {
-            // 데미지 처리
-            IDamageable damageable = other.GetComponent<IDamageable>();
-            if (damageable != null)
+            // 몬스터 컴포넌트 찾기
+            Monsters.Monster monster = other.GetComponent<Monsters.Monster>();
+            if (monster != null)
             {
-                damageable.TakeDamage(damage);
+                monster.StateMachine.OnHit((int)damage);
             }
-            
+
             // 충돌 후 투사체 파괴
             Destroy(gameObject);
         }

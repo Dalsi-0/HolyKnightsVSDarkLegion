@@ -99,6 +99,20 @@ public class PlayerUnit : MonoBehaviour, IDamageable
             Debug.LogError("UnitData가 할당되지 않았습니다!");
     }
 
+    // PlayerUnit.cs에 추가
+    public void SetUnitData(UnitSO data)
+    {
+        this.unitData = data;
+        _currentHP = data.UnitHP;
+
+        // 컴포넌트 재초기화 필요시
+        if (_attackController != null)
+        {
+            _attackController.Initialize(this, unitData, projectilePrefab, firePoint, enemyLayer);
+        }
+        // 다른 컴포넌트들도 필요에 따라 재초기화
+    }
+
     // 상태 관리
     public UnitState CurrentState
     {
@@ -141,6 +155,10 @@ public class PlayerUnit : MonoBehaviour, IDamageable
     public void OnWizardEvent()
     {
         _skillController.OnWizardSkill();
+    }
+    public void OnAttackBaseEvent()
+    {
+        _attackController.Attack();
     }
 
     public void ExecuteSpecificSkill()
