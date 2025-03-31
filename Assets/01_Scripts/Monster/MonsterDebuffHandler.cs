@@ -19,7 +19,7 @@ namespace Monsters
         }
 
         // 디버프 실행
-        public void ExecuteBuff(DebuffData data)
+        public void ExecuteDebuff(DebuffData data)
         {
             var type = data.DebuffType;
             
@@ -59,6 +59,11 @@ namespace Monsters
         private void EndDebuff(DebuffData data)
         {
             data.RemoveDebuff(monster);
+        }
+
+        private void OnDisable()
+        {
+            StopAllCoroutines();
         }
     }
 }
