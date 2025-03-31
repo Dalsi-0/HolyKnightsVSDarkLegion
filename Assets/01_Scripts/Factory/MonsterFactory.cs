@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
-using Monster;
+using Monsters;
 
 public class MonsterFactory
 {
@@ -13,13 +13,12 @@ public class MonsterFactory
         // 각 몬스터 프리팹에 대해 풀을 생성
         foreach (var prefab in prefabs)
         {
-            MonsterStateMachine monster = prefab.GetComponent<MonsterStateMachine>();
-            // monster.init();
-
-            if (monster != null && monster.MonsterData != null)
+            Monster monster = prefab.GetComponent<Monster>();
+            if (monster != null)
             {
-                string monsterID = monster.MonsterData.MonsterID;
+                string monsterID = monster.MonsterId;
                 monsterPools[monsterID] = new MonsterPool(prefab, 5);  // 풀의 초기 크기는 5로 설정
+
             }
         }
     }
@@ -37,14 +36,18 @@ public class MonsterFactory
 
             return monster;
         }
-        return null;
+        else
+        {
+            Debug.Log("풀에서 찾을수가 없다.");
+        }
+            return null;
     }
 
     // 풀에 몬스터를 반환하는 함수
     public void ReturnMonsterToPool(GameObject monster)
     {
         monster.SetActive(false);  // 비활성화
-        string monsterID = monster.GetComponent<MonsterStateMachine>().MonsterData.MonsterID;
+        string monsterID = monster.GetComponent<Monster>().MonsterId;
 
         if (monsterPools.TryGetValue(monsterID, out MonsterPool pool))
         {
