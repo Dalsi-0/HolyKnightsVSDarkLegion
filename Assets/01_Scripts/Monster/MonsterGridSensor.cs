@@ -105,7 +105,7 @@ namespace Monsters
             return UnitManager.Instance.GetPosByGrid(frontCell.x, frontCell.y);
         }
         
-        private void StopCoroutine()
+        public void StopCoroutine()
         {
             StopAllCoroutines();
         }

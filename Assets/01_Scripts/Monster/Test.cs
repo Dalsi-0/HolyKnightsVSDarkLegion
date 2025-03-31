@@ -23,7 +23,8 @@ public class Test : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            monster.StateMachine.OnHit(500);
+            var slow = new SlowDebuff(2f, new Color(0.35f, 0.82f, 1f));
+            monster.DebuffHandler.ExecuteBuff(slow);
         }
     }
 }

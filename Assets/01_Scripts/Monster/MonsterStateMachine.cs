@@ -7,10 +7,14 @@ namespace Monsters
     {
         public Monster Monster { get; private set; }
         
-        protected readonly Color origin = Color.white;
-        protected readonly Color hit = new(1f, 0.4f, 0.4f);
+        protected Color baseColor = Color.white;
+        protected readonly Color hitColor = new(1f, 0.4f, 0.4f);
         protected Coroutine hitCoroutine;
-        
+
+        public float SpeedModifier { get; private set; } = 1f;
+        public float DebuffSpeedModifier { get; private set; } = 1f;
+        public float AttackSpeedModifier { get; private set; } = 1f;
+
         protected const float hitDuration = 0.2f;
         protected float lastAttackTime = 0f;
         protected float currentHp;
@@ -41,7 +45,7 @@ namespace Monsters
         {
             while (true)
             {
-                if (lastAttackTime < Monster.MonsterData.MonsterAtkDelay)
+                if (lastAttackTime < Monster.MonsterData.MonsterAtkDelay * AttackSpeedModifier)
                     lastAttackTime += Time.deltaTime;
                 
                 yield return null;
@@ -69,10 +73,10 @@ namespace Monsters
         
         private IEnumerator HitRoutine()
         {
-            yield return LerpColor(origin, hit, hitDuration);
-            yield return LerpColor(hit, origin, hitDuration);
+            yield return LerpColor(baseColor, hitColor, hitDuration);
+            yield return LerpColor(hitColor, baseColor, hitDuration);
 
-            Monster.SpriteRenderer.color = origin;
+            Monster.SpriteRenderer.color = baseColor;
             hitCoroutine = null;
         }
 
@@ -86,16 +90,33 @@ namespace Monsters
                 yield return null;
             }
         }
+        
+        public void SetSpeedModifier(float modifier)
+        {
+            SpeedModifier = modifier;
+        }
+        
+        public void SetDebuffSpeedModifier(float modifier)
+        {
+            DebuffSpeedModifier = modifier;
+        }
+        
+        public void SetAttackSpeedModifier(float modifier)
+        {
+            AttackSpeedModifier = modifier;
+        }
+
+        public void SetBaseColor(Color setColor)
+        {
+            baseColor = setColor;
+            Monster.SpriteRenderer.color = baseColor;
+        }
 
         public void OnDead()
         {
+            Monster.GridSensor.StopCoroutine();
             MonsterFactory monsterFactory = StageManager.Instance.GetMonsterFactory();
             monsterFactory.ReturnMonsterToPool(gameObject);
-        }
-
-        private void OnDestroy()
-        {
-            StopAllCoroutines();
         }
     }
 }

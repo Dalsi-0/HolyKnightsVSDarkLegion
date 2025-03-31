@@ -1,4 +1,3 @@
-using Monsters;
 using UnityEngine;
 
 namespace Monsters
@@ -19,7 +18,7 @@ namespace Monsters
         public override void Enter()
         {
             var wolfFSM = (WereWolfStateMachine)stateMachine;
-            speedModifier = 0f;
+            stateMachine.SetSpeedModifier(0f);
 
             hashAnim = hashAttack;
             currentAttackName = normalAttackName;

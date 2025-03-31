@@ -10,7 +10,7 @@ namespace Monsters
 
         public override void Enter()
         {
-            speedModifier = 0f;
+            stateMachine.SetSpeedModifier(0f);
             stateMachine.OnAttack();
             StartAnimation(hashAttack);
         }

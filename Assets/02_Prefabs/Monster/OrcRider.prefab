@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 7353626305121047040}
   - component: {fileID: 7784030325887474899}
   - component: {fileID: 2641298183720511064}
+  - component: {fileID: 2181330968296152541}
   m_Layer: 6
   m_Name: OrcRider
   m_TagString: Untagged
@@ -125,6 +126,7 @@ MonoBehaviour:
   monsterId: DL_004
   stateMachine: {fileID: 7784030325887474899}
   gridSensor: {fileID: 7353626305121047040}
+  debuffHandler: {fileID: 2181330968296152541}
   spriteRenderer: {fileID: 4377979501849243165}
   animator: {fileID: 31823581068297203}
 --- !u!114 &7353626305121047040
@@ -196,3 +198,15 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 3, y: 3}
   m_EdgeRadius: 0
+--- !u!114 &2181330968296152541
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5756283248381880950}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b97468d6e20d2e47844f65b7b0aacf7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

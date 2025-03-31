@@ -2595,6 +2595,7 @@ MonoBehaviour:
   - {x: 7, y: 2}
   - {x: 7, y: 3}
   - {x: 7, y: 4}
+  monster: {fileID: 1268218557}
 --- !u!1001 &216014280
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6661,11 +6662,34 @@ PrefabInstance:
       propertyPath: m_Name
       value: Skeleton
       objectReference: {fileID: 0}
+    - target: {fileID: 7920551095061519502, guid: a18508e6eadd6bd44a7ab4993ef7d031, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7920551095061519502, guid: a18508e6eadd6bd44a7ab4993ef7d031, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7920551095061519502, guid: a18508e6eadd6bd44a7ab4993ef7d031, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a18508e6eadd6bd44a7ab4993ef7d031, type: 3}
+--- !u!114 &1268218557 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8787741657793057834, guid: a18508e6eadd6bd44a7ab4993ef7d031, type: 3}
+  m_PrefabInstance: {fileID: 1268218556}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e13cc30f5a0d7d4b91543f300b8ad55, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1282016126
 GameObject:
   m_ObjectHideFlags: 0

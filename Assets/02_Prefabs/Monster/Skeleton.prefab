@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 1977887629088136092}
   - component: {fileID: 1842271646380393746}
   - component: {fileID: 7637882802451002963}
+  - component: {fileID: -960085946246555828}
   m_Layer: 6
   m_Name: Skeleton
   m_TagString: Untagged
@@ -125,6 +126,7 @@ MonoBehaviour:
   monsterId: DL_002
   stateMachine: {fileID: 1842271646380393746}
   gridSensor: {fileID: 1977887629088136092}
+  debuffHandler: {fileID: -960085946246555828}
   spriteRenderer: {fileID: 7920551095061519502}
   animator: {fileID: 457960692095252157}
 --- !u!114 &1977887629088136092
@@ -196,3 +198,15 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2, y: 2}
   m_EdgeRadius: 0
+--- !u!114 &-960085946246555828
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4844858453227604977}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b97468d6e20d2e47844f65b7b0aacf7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

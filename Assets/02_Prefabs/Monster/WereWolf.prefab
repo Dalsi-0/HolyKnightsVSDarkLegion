@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 4034144907966935733}
   - component: {fileID: 8460682639763829156}
   - component: {fileID: -3333425475344196640}
+  - component: {fileID: -2050187401594865534}
   m_Layer: 6
   m_Name: WereWolf
   m_TagString: Untagged
@@ -125,6 +126,7 @@ MonoBehaviour:
   monsterId: DL_005
   stateMachine: {fileID: 8460682639763829156}
   gridSensor: {fileID: 4034144907966935733}
+  debuffHandler: {fileID: -2050187401594865534}
   spriteRenderer: {fileID: 2533883576698459309}
   animator: {fileID: 7008119984442211573}
 --- !u!114 &4034144907966935733
@@ -196,3 +198,15 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2, y: 2}
   m_EdgeRadius: 0
+--- !u!114 &-2050187401594865534
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3439657226694188365}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b97468d6e20d2e47844f65b7b0aacf7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

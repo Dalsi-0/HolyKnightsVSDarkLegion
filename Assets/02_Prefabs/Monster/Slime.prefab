@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 5074255316852694032}
   - component: {fileID: 3501197325503082165}
   - component: {fileID: 3085472947339009573}
+  - component: {fileID: 466843444794027646}
   m_Layer: 6
   m_Name: Slime
   m_TagString: Untagged
@@ -125,6 +126,7 @@ MonoBehaviour:
   monsterId: DL_001
   stateMachine: {fileID: 3501197325503082165}
   gridSensor: {fileID: 5074255316852694032}
+  debuffHandler: {fileID: 466843444794027646}
   spriteRenderer: {fileID: 8884529047015296618}
   animator: {fileID: 5059042582596663631}
 --- !u!114 &5074255316852694032
@@ -196,3 +198,15 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2, y: 2}
   m_EdgeRadius: 0
+--- !u!114 &466843444794027646
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8934879896733710834}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b97468d6e20d2e47844f65b7b0aacf7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

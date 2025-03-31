@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 2881419968948012961}
   - component: {fileID: -9131811652180890473}
   - component: {fileID: -5055798345515363599}
+  - component: {fileID: 7820683220604388001}
   m_Layer: 6
   m_Name: Orc
   m_TagString: Untagged
@@ -125,6 +126,7 @@ MonoBehaviour:
   monsterId: DL_003
   stateMachine: {fileID: -9131811652180890473}
   gridSensor: {fileID: 2881419968948012961}
+  debuffHandler: {fileID: 7820683220604388001}
   spriteRenderer: {fileID: 684484529897900603}
   animator: {fileID: 997765391033989300}
 --- !u!114 &2881419968948012961
@@ -196,3 +198,15 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2, y: 2}
   m_EdgeRadius: 0
+--- !u!114 &7820683220604388001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5895395422612916313}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b97468d6e20d2e47844f65b7b0aacf7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
