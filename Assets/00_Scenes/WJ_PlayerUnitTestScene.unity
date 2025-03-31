@@ -1485,7 +1485,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -1879894202, guid: 5086ad767cd3ebe4b96ea74ef352a065, type: 3}
+  m_Sprite: {fileID: -4086315115110813228, guid: 6a633d0442b51a04ca548407e00a1d04, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -1544,7 +1544,7 @@ MonoBehaviour:
   unitData: {fileID: 11400000, guid: 0eee2974f03448740b83217718b3274e, type: 2}
   projectilePrefab: {fileID: 8905324314553288908, guid: b6399f9b1c9ed1246a6602be69b0d159, type: 3}
   firePoint: {fileID: 5935192694887894410}
-  skillEffectPrefab: {fileID: 0}
+  skillEffectPrefab: {fileID: 7371550591858681241, guid: 293f57c13f9ae054ebb86a95817bbb36, type: 3}
   enemyLayer:
     serializedVersion: 2
     m_Bits: 1
