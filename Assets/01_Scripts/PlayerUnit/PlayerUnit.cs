@@ -156,6 +156,10 @@ public class PlayerUnit : MonoBehaviour, IDamageable
     {
         _skillController.OnWizardSkill();
     }
+    public void OnAttackBaseEvent()
+    {
+        _attackController.Attack();
+    }
 
     public void ExecuteSpecificSkill()
     {

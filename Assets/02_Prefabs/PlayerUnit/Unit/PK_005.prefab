@@ -50,7 +50,7 @@ MonoBehaviour:
   unitData: {fileID: 11400000, guid: 4e127f864198f0b4fb08ed5281bd4e0b, type: 2}
   projectilePrefab: {fileID: 0}
   firePoint: {fileID: 1562965711855876140}
-  skillEffectPrefab: {fileID: 0}
+  skillEffectPrefab: {fileID: 7300542784626074085, guid: c3630570e572cf74ca598ede6546967b, type: 3}
   enemyLayer:
     serializedVersion: 2
     m_Bits: 64
@@ -60,7 +60,7 @@ MonoBehaviour:
   manaRecoveryAmount: 10
   knockbackForce: 3
   damageAmount: 12
-  checkRadius: 1
+  checkRadius: 2
 --- !u!61 &1895707621055578576
 BoxCollider2D:
   m_ObjectHideFlags: 0

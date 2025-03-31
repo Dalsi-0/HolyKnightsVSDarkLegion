@@ -155,18 +155,37 @@ public class IceBrakeSkill : SkillBase
         }
 
         // 적 컴포넌트 가져오기
-        MonoBehaviour enemyComponent = enemyTransform.GetComponent<MonoBehaviour>();
-        if (enemyComponent != null)
+        Monsters.Monster monster = enemyTransform.GetComponent<Monsters.Monster>();
+        if (monster != null)
         {
-            // 적 이동 속도 감소 메서드 호출 시도
-            System.Reflection.MethodInfo slowMethod = enemyComponent.GetType().GetMethod("ApplySlow");
-            if (slowMethod != null)
-            {
-                // ApplySlow 메서드가 있으면 호출
-                slowMethod.Invoke(enemyComponent, new object[] { slowAmount, slowDuration });
-            }
+            // 데미지 적용
+            int damage = (int)(owner.GetUnitData().UnitAtk * 1.5f);
+            monster.StateMachine.OnHit(damage);
+
+            // 속도 감소 적용
+            //owner.StartCoroutine(SlowMonsterSpeed(monster));
         }
     }
+
+    /*private IEnumerator SlowMonsterSpeed(Monsters.Monster monster)
+    {
+        if (monster == null) yield break;
+
+        // 몬스터의 원래 이동 속도를 저장
+        float originalSpeed = monster.GetMonsterData().MonsterMoveSpeed;
+
+        // 몬스터에게 감속 적용 (몬스터 클래스에 속도 조절 메서드가 있다고 가정)
+        monster.SetCurrentMoveSpeed(originalSpeed * (1 - slowAmount));
+
+        // 감속 효과 지속
+        yield return new WaitForSeconds(slowDuration);
+
+        // 몬스터가 아직 존재하는지 확인 후 원래 속도로 복원
+        if (monster != null)
+        {
+            monster.SetCurrentMoveSpeed(originalSpeed);
+        }
+    }*/
 
     private IEnumerator RestoreColor(GameObject enemyObject, SpriteRenderer renderer, Color originalColor)
     {
