@@ -10,7 +10,7 @@ public class WaveSpawningState : IWaveState
     public WaveSpawningState(StageManager stageManager, WaveData waveData)
     {
         this.stageManager = stageManager;
-        this.waveData = waveData;
+        this.waveData = waveData.Clone(); // 복사본을 생성하여 사용
     }
 
     public void EnterState()
