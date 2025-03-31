@@ -21,3 +21,4 @@ MonoBehaviour:
   unitSummonCost: 100
   unitCoolDown: 3
   unitAtkType: 1
+  unitSprite: {fileID: 0}
