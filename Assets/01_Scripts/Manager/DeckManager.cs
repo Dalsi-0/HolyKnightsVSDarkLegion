@@ -5,10 +5,11 @@ using System;
 using Newtonsoft.Json;
 
 /// <summary>
-/// 플레이어의 덱 데이터를 불러오고 저장하는 매니저, unitCreator와 연결하여 설정 가능
+/// 플레이어의 덱 데이터를 불러오고 저장하는 매니저
 /// </summary>
 public class DeckManager : Singleton<DeckManager>
 {
+    [SerializeField] private List<CardThumbnail> images; // 이미지 목록
     private static string ownedCardName = "PlayerData";
     private static string defaultSettingPath = "DefaultSetting";
     private List<string> inHandCard; // 손에 들고 있는 카드, 최근에 사용한 카드
@@ -139,7 +140,9 @@ public class DeckManager : Singleton<DeckManager>
     {
         // 사용 가능
         deck[unitName] = true;
+        DeckEditor.Reflash(unitName);
     }
+
     public void AddCard(string unitName, bool active = false)
     {
         // 미사용 상태로 추가
@@ -204,6 +207,16 @@ public class DeckManager : Singleton<DeckManager>
         }
     }
 
+    public Sprite GetSprite(string id)
+    {
+        foreach(var thumbnail in images)
+        {
+            if(thumbnail.unitID == id)
+                return thumbnail.thumbnail;
+        }
+        return null;
+    }
+
     public void SetActiveEditor(bool active)
     {
         DeckEditor.SetActive(active);
@@ -228,4 +241,11 @@ public class CardCollection
         this.unitID = id;
         this.canUse = use;
     }
+}
+// 카드 이미지용 클래스
+[Serializable]
+public class CardThumbnail
+{
+    public string unitID;
+    public Sprite thumbnail;
 }

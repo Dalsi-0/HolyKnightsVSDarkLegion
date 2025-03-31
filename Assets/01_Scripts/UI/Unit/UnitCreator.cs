@@ -62,6 +62,8 @@ public class UnitCreator : MonoBehaviour
         {
             Init();
         }
+        // 갯수 검사
+        if (handList.Count >= handSize) return;
         // 중복 검사
         if (handList.ContainsKey(unitName)) return;
 
@@ -73,7 +75,8 @@ public class UnitCreator : MonoBehaviour
 
         // 카드 생성 및 세팅
         UnitCard card = Instantiate(cardPrefab, cardLayout).GetComponent<UnitCard>();
-        card.SetData(unit);
+        Sprite sprite = DeckManager.Instance.GetSprite(unit.UnitID);
+        card.SetData(unit, sprite);
         // 함수 등록
         CoastAction += card.UpdateCoast;
         card.OnEndDragActin += DragEndCard;

@@ -8,13 +8,13 @@ using UnityEngine.UI;
 // 덱 리스트에 들어갈 버튼 UI
 public class DeckCard : MonoBehaviour
 {
-    [SerializeField] Image uniyImage;
+    [SerializeField] Image unitImage;
     [SerializeField] Image shadowImage;
     [SerializeField] TextMeshProUGUI coastText;
     [SerializeField] Button clickButton;
     public UnityAction<string> ClickAction; // 클릭 이벤트, 유닛 unitID 반환
     private UnitSO unitSO;
-    private string unitID;
+    public string unitID;
     private Button button;
     void Awake()
     {
@@ -22,24 +22,35 @@ public class DeckCard : MonoBehaviour
             clickButton.onClick.AddListener(ActCallback);
     }
 
-    public void Setup(UnitSO unit, bool hideShadow)
+    public void Setup(UnitSO unit, bool active, Sprite sprite)
     {
         // 이미지 설정
-        if (uniyImage != null)
+        if (unitImage != null)
         {
-            //uniyImage.sprite = 
+            if (unit.UnitSprite != null)
+                unitImage.sprite = unit.UnitSprite;
+
+            else if (sprite != null)
+                unitImage.sprite = sprite;
         }
         // 데이터 설정
         if (unit != null)
         {
             coastText.text = unit.UnitSummonCost.ToString();
             unitID = unit.UnitID;
-            shadowImage.enabled = !hideShadow;
+            clickButton.interactable = active;
+            shadowImage.enabled = !active;
         }
     }
 
+    public void SetUsable()
+    {
+        clickButton.interactable = true;
+        shadowImage.enabled = false;
+    }
     public void ActCallback()
     {
+        Debug.Log("unitID: " + unitID);
         ClickAction?.Invoke(unitID);
     }
 }
