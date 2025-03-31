@@ -70,7 +70,6 @@ public class DeckManager : Singleton<DeckManager>
                         if (!deck.ContainsKey(defaultCard.unitID))
                         {
                             deck[defaultCard.unitID] = defaultCard.canUse;
-                            cardList.Add(defaultCard);
                         }
                     }
                 }
@@ -104,13 +103,6 @@ public class DeckManager : Singleton<DeckManager>
                     {
                         Debug.Log("유효하지 않은 요소 : " + errList[i]);
                         deck.Remove(errList[i]);
-                        for (int k = 0; k < cardList.Count; k++)
-                        {
-                            if (cardList[k].unitID == errList[i])
-                            {
-                                cardList.RemoveAt(k);
-                            }
-                        }
                     }
                 }
 
@@ -126,11 +118,7 @@ public class DeckManager : Singleton<DeckManager>
                 }
 
                 // 수정 완료된 정보를 파일로 저장
-                PlayerInfo newInfo = new PlayerInfo();
-                newInfo.AllCard = cardList;
-                newInfo.InHandCard = hands;
-                string newJson = JsonConvert.SerializeObject(newInfo, Formatting.Indented);
-                File.WriteAllText(filePath, newJson);
+                SaveInfo();
             }
         }
         else
@@ -172,6 +160,22 @@ public class DeckManager : Singleton<DeckManager>
                 }
             }
         }
+    }
+
+    // 파일로 저장
+    public void SaveInfo()
+    {
+        PlayerInfo newInfo = new PlayerInfo();
+        List<CardCollection> cardList = new();
+        foreach(var card in deck)
+        {
+            cardList.Add(new CardCollection(card.Key, card.Value));
+        }
+        newInfo.AllCard = cardList;
+        newInfo.InHandCard = inHandCard;
+        string newJson = JsonConvert.SerializeObject(newInfo, Formatting.Indented);
+        string filePath = Path.Combine(Application.persistentDataPath, ownedCardName + ".json");
+        File.WriteAllText(filePath, newJson);
     }
 
     public Dictionary<string, bool> GetAllCard()
@@ -219,4 +223,9 @@ public class CardCollection
 {
     public string unitID; // 카드 ID
     public bool canUse; // 카드 사용 여부
+    public CardCollection(string id, bool use)
+    {
+        this.unitID = id;
+        this.canUse = use;
+    }
 }
