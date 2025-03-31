@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using System;
+using UnityEngine.Events;
+
 public enum UnitState
 {
     Idle,
@@ -16,6 +19,18 @@ public interface IDamageable
     void TakeDamage(float damage);
 }
 
+// 사망 데이터를 담을 클래스 정의
+[Serializable]
+public class PlayerDeathData
+{
+    public Vector3 DeathPosition;
+    public Quaternion DeathRotation;
+    public UnitSO UnitData;
+    public float TimeOfDeath;
+    public Transform LastTarget;
+    public float RemainingHP;
+}
+
 public class PlayerUnit : MonoBehaviour, IDamageable
 {
     [SerializeField] private UnitSO unitData;
@@ -28,7 +43,12 @@ public class PlayerUnit : MonoBehaviour, IDamageable
     [SerializeField] private bool canUseBasicAttack = true;
     [SerializeField] private bool canUseSkill = true;
     [SerializeField] private float skillCooldown = 5f;
+    [Header("사제")]
     [SerializeField] private float manaRecoveryAmount = 10f;
+    [Header("넉백 수치")]
+    [SerializeField] private float knockbackForce = 3f;
+    [SerializeField] private float damageAmount = 12f;
+    [SerializeField] private float checkRadius = 1f;
 
     private UnitState _currentState = UnitState.Idle;
     private float _currentHP;
@@ -39,6 +59,9 @@ public class PlayerUnit : MonoBehaviour, IDamageable
     private UnitAttackController _attackController;
     private UnitSkillController _skillController;
     private UnitStateController _stateController;
+
+    public UnityAction <PlayerUnit>
+        OnPlayerDeadAction;
 
     private void Awake()
     {
@@ -67,7 +90,7 @@ public class PlayerUnit : MonoBehaviour, IDamageable
         // 컴포넌트 설정
         _animationController.Initialize(this);
         _attackController.Initialize(this, unitData, projectilePrefab, firePoint, enemyLayer);
-        _skillController.Initialize(this, unitData, skillEffectPrefab, manaRecoveryAmount, skillCooldown);
+        _skillController.Initialize(this, unitData, skillEffectPrefab, manaRecoveryAmount, skillCooldown, knockbackForce, damageAmount, checkRadius, enemyLayer);
         _stateController.Initialize(this, _attackController, _skillController, canUseBasicAttack, canUseSkill);
     }
 
@@ -75,8 +98,6 @@ public class PlayerUnit : MonoBehaviour, IDamageable
     {
         if (unitData == null)
             Debug.LogError("UnitData가 할당되지 않았습니다!");
-        if (projectilePrefab == null)
-            Debug.LogError("ProjectilePrefab이 할당되지 않았습니다!");
     }
 
     // 상태 관리
@@ -101,6 +122,9 @@ public class PlayerUnit : MonoBehaviour, IDamageable
     {
         _currentState = UnitState.Dead;
         _animationController.TriggerDeathAnimation();
+
+        OnPlayerDeadAction?.Invoke(this);
+
         // 추가 죽음 처리 로직
         Destroy(gameObject, 1f); // 애니메이션 재생 시간 고려
     }
@@ -111,9 +135,13 @@ public class PlayerUnit : MonoBehaviour, IDamageable
         _attackController.FireProjectile();
     }
 
-    public void OnSkillAnimationEvent()
+    public void OnSoldierEvent()
     {
-        _skillController.OnSkillEffectEvent();
+        _skillController.OnSoldierSkill();
+    }
+    public void OnWizardEvent()
+    {
+        _skillController.OnWizardSkill();
     }
 
     public void ExecuteSpecificSkill()
@@ -131,11 +159,11 @@ public class PlayerUnit : MonoBehaviour, IDamageable
         }
     }
 
-    public void OnSkillEffectEvent()
+    public void OnPriestEvent()
     {
         if (_skillController != null)
         {
-            _skillController.OnSkillEffectEvent();
+            _skillController.OnPriestSkill();
         }
     }
 
@@ -162,4 +190,5 @@ public class PlayerUnit : MonoBehaviour, IDamageable
     public void SetCurrentTarget(Transform target) => _currentTarget = target;
     public UnitAnimationController GetAnimationController() => _animationController;
     public UnitSO GetUnitData() => unitData;
+    public float GetCurrentHP() => _currentHP;
 }

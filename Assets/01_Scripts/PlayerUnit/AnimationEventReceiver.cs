@@ -26,16 +26,6 @@ public class AnimationEventReceiver : MonoBehaviour
             _playerUnit.OnAttackAnimationEventReceived();
     }
 
-    public void OnSkillAnimationEvent()
-    {
-        if (_playerUnit != null)
-            _playerUnit.OnSkillAnimationEvent();
-
-        // SkillBase를 통한 이벤트 처리 추가
-        if (_currentSkill != null)
-            _currentSkill.ExecuteEffect();
-    }
-
     // 스킬 단계별 실행을 위한 추가 이벤트들
     public void OnSkillStart()
     {
@@ -47,15 +37,25 @@ public class AnimationEventReceiver : MonoBehaviour
             _currentSkill.Activate();
     }
 
-    public void OnSkillEffect()
+    public void OnPriestSkill()
     {
         if (_playerUnit != null)
-            _playerUnit.OnSkillEffectEvent();
-
-        // SkillBase를 통한 스킬 이펙트 실행
-        if (_currentSkill != null)
-            _currentSkill.ExecuteEffect();
+            _playerUnit.OnPriestEvent();
     }
+
+
+    public void OnSoldierSkill()
+    {
+        if (_playerUnit != null)
+            _playerUnit.OnSoldierEvent();
+    }
+
+    public void OnWizardSkill()
+    {
+        if (_playerUnit != null)
+            _playerUnit.OnWizardEvent();
+    }
+
 
     public void OnSkillEnd()
     {
