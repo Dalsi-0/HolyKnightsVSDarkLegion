@@ -35,16 +35,100 @@ public class DeckManager : Singleton<DeckManager>
         {
             Debug.Log("파일 불러오기");
             string jsonData = File.ReadAllText(filePath);
-            ApplyJson(jsonData);
+
+            // 유효성 검사
+            PlayerInfo playerInfo = JsonUtility.FromJson<PlayerInfo>(jsonData);
+            if (playerInfo == null)
+            {
+                //파일만 있고 데이터 없으면 기본값
+                Debug.Log("PlayerInfo 없음");
+                CreateDefalutFile();
+            }
+            else
+            {
+                // 기본 설정 불러오기
+                string json = Resources.Load<TextAsset>(defaultSettingPath).text;
+                PlayerInfo defalutInfo = JsonUtility.FromJson<PlayerInfo>(json);
+
+                // 기본정보 불러오기
+                List<CardCollection> defalutList = defalutInfo?.AllCard;
+
+                // 카드 목록 저장
+                List<CardCollection> cardList = playerInfo?.AllCard;
+                foreach (var card in cardList)
+                {
+                    deck[card.unitID] = card.canUse;
+                }
+
+                // 저장 후 갯수 부족하면 누락 확인
+                if (deck.Count < defalutList.Count)
+                {
+                    // 누락 되면 업데이트
+                    foreach (var defaultCard in defalutList)
+                    {
+                        if (!deck.ContainsKey(defaultCard.unitID))
+                        {
+                            deck[defaultCard.unitID] = defaultCard.canUse;
+                        }
+                    }
+                }
+
+                // 갯수가 많으면 유효한지 확인
+                List<string> errList = new();
+                if (deck.Count > defalutList.Count)
+                {
+                    // 유효값인지 확인
+                    foreach (var card in deck)
+                    {
+                        bool isError = true;
+                        for (int i = 0; i < defalutList.Count; i++)
+                        {
+                            // 기본값에 포함되면 유효한 값
+                            if (card.Key == defalutList[i].unitID)
+                            {
+                                isError = false;
+                                continue;
+                            }
+                        }
+                        if (isError)
+                        {
+                            // 유효한 값이 아니면오류 목룍에 추가
+                            // 딕셔너리는 한번에 처리하도록
+                            errList.Add(card.Key);
+                        }
+                    }
+                    // 유효하지 않은 요소 제거
+                    for (int i = 0; i < errList.Count; i++)
+                    {
+                        Debug.Log("유효하지 않은 요소 : " + errList[i]);
+                        deck.Remove(errList[i]);
+                    }
+                }
+
+                // 사용 목록 불러오기
+                List<string> hands = playerInfo?.InHandCard;
+                for (int i = 0; i < hands.Count; i++)
+                {
+                    //Debug.Log("기본 추가 2 :" + hands[i]);
+                    // 가지고 있는 카드면 추가
+                    if(deck[hands[i]])
+                        inHandCard.Add(hands[i]);
+                }
+            }
         }
         else
         {
             Debug.Log("파일 없음, 기본값 적용");
-            // 기본 파일 불러오기 생성
-            string json = Resources.Load<TextAsset>(defaultSettingPath).text;
-            File.WriteAllText(filePath, json);
-            ApplyJson(json);
+            CreateDefalutFile();
         }
+    }
+    private void CreateDefalutFile()
+    {
+        // 기본 파일 불러오기 생성
+        string filePath = Path.Combine(Application.persistentDataPath, ownedCardName + ".json");
+        string json = Resources.Load<TextAsset>(defaultSettingPath).text;
+        File.WriteAllText(filePath, json);
+        ApplyJson(json);
     }
     public void SetUse(string unitName)
     {
