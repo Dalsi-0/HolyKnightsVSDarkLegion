@@ -14,63 +14,59 @@ public class SoundManager : Singleton<SoundManager>
     [SerializeField] AudioClip[] sfxClip;
     [SerializeField] AudioMixer audioMixer;
     [SerializeField] Slider[] audioSlider;
-    [SerializeField] Image[] MuteChks;
+    [SerializeField] Image[] muteBox;
 
     private float[] volume = new float[3];
-    private bool[] isMute = new bool[3];
+    private bool[] SliderVolume = new bool[3] {false, false, false};
 
     /// <summary>
     /// 사운드 옵션 세팅
     /// </summary>
-    /// <param name="SoundIndex"> 0 = MASTER , 1 = BGM, 2 = SFX </param>
+    /// <param name="SoundIndex"> MASTER = 0 , BGM = 1, SFX = 2 </param>
     protected void AudioControl(int SoundIndex)
     {
         volume[SoundIndex] = audioSlider[SoundIndex].value;
-        SetMute(SoundIndex);
         if (volume[SoundIndex] == -40f)
         {
+            SetMute(SoundIndex);
+            SliderVolume[SoundIndex] = true;
+
             switch (SoundIndex)
             {
                 case 0:
                     audioMixer.SetFloat("MASTER", -80f);
-                    MuteChks[SoundIndex].gameObject.SetActive(false);
-                    audioBgm.mute = true;
-                    audioSfx.mute = true;
                     break;
                 case 1:
                     audioMixer.SetFloat("BGM", -80f);
-                    MuteChks[SoundIndex].gameObject.SetActive(false);
-                    audioBgm.mute = true;
                     break;
                 case 2:
                     audioMixer.SetFloat("SFX", -80f);
-                    MuteChks[SoundIndex].gameObject.SetActive(false);
-                    audioSfx.mute = true;
                     break;
             }
         }
         else
         {
+            if (SliderVolume[SoundIndex])
+            {
+                SetMute(SoundIndex);
+                SliderVolume[SoundIndex] = false;
+            }
+
             switch (SoundIndex)
             {
                 case 0:
                     audioMixer.SetFloat("MASTER", volume[SoundIndex]);
-                    MuteChks[SoundIndex].gameObject.SetActive(true);
-                    audioBgm.mute = false;
-                    audioSfx.mute = false;
                     break;
                 case 1:
                     audioMixer.SetFloat("BGM", volume[SoundIndex]);
-                    MuteChks[SoundIndex].gameObject.SetActive(true);
-                    audioBgm.mute = false;
                     break;
                 case 2:
                     audioMixer.SetFloat("SFX", volume[SoundIndex]);
-                    MuteChks[SoundIndex].gameObject.SetActive(true);
-                    audioSfx.mute = false;
                     break;
             }
+            
         }
+        
     }
 
     /// <summary>
@@ -95,56 +91,53 @@ public class SoundManager : Singleton<SoundManager>
         audioSfx.PlayOneShot(sfxClip[Index]);
     }
 
+    /// <summary>
+    /// 음소거 세팅
+    /// </summary>
+    /// <param name="SoundIndex"> MASTER = 0 , BGM = 1, SFX = 2 </param>
     public void SetMute(int SoundIndex)
     {
-        if (isMute[SoundIndex] == true)
+        if (muteBox[SoundIndex].gameObject.activeSelf) // 뮤트 실행
         {
-            switch (SoundIndex)
-            {
-                case 0:
-                    MuteChks[SoundIndex].gameObject.SetActive(false);
-                    audioBgm.mute = true;
-                    audioSfx.mute = true;
-                    break;
-                case 1:
-                    MuteChks[SoundIndex].gameObject.SetActive(false);
-                    audioBgm.mute = true;
-                    break;
-                case 2:
-                    MuteChks[SoundIndex].gameObject.SetActive(false);
-                    audioSfx.mute = true;
-                    break;
-            }
+            muteBox[SoundIndex].gameObject.SetActive(false);
 
-            isMute[SoundIndex] = false;
-        }
-        else
-        {
             switch (SoundIndex)
             {
                 case 0:
-                    audioBgm.mute = false;
-                    audioSfx.mute = false;
+                    audioBgm.mute = true;
+                    audioSfx.mute = true;
                     break;
                 case 1:
-                    audioBgm.mute = false;
-                    if (MuteChks[0].gameObject.activeSelf)
+                    audioBgm.mute = true;
+                    break;
+                case 2:
+                    audioSfx.mute = true;
+                    break;
+            }
+        }
+        else // 뮤트 해제
+        {
+            muteBox[SoundIndex].gameObject.SetActive(true);
+
+            switch (SoundIndex)
+            {
+                case 0:
+                    if (muteBox[1].gameObject.activeSelf) audioBgm.mute = false;
+                    if (muteBox[2].gameObject.activeSelf) audioSfx.mute = false;
+                    break;
+                case 1:
+                    if (muteBox[0].gameObject.activeSelf)
                     {
-                        MuteChks[0].gameObject.SetActive(true);
-                        isMute[SoundIndex] = false;
+                        audioBgm.mute = false;
                     }
                     break;
                 case 2:
-                    audioSfx.mute = false;
-                    if (MuteChks[0].gameObject.activeSelf)
+                    if (muteBox[0].gameObject.activeSelf)
                     {
-                        MuteChks[0].gameObject.SetActive(true);
-                        isMute[SoundIndex] = false;
+                        audioSfx.mute = false;
                     }
                     break;
             }
-            MuteChks[SoundIndex].gameObject.SetActive(true);
-            isMute[SoundIndex] = true;
         }
     }
 }
