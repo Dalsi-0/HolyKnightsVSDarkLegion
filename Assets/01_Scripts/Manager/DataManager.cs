@@ -8,11 +8,12 @@ public class DataManager : Singleton<DataManager>
     // Temporary use
     [SerializeField] List<UnitSO> listUnitSODatas;
     [SerializeField] List<MonsterSO> listMonsterSODatas;
-    [SerializeField] StageSO stageSOData;
+    [SerializeField] List<StageSO> listStageSODatas;
     //
 
     private Dictionary<string, UnitSO> UnitSODatas;
     private Dictionary<string, MonsterSO> MonsterSODatas;
+    private Dictionary<int, StageSO> StageSODatas;
 
 
     protected override void Awake()
@@ -42,6 +43,14 @@ public class DataManager : Singleton<DataManager>
                 MonsterSODatas.Add(monsterSO.MonsterID, monsterSO);
             }
         }
+
+        foreach (var stageSO in listStageSODatas)
+        {
+            if (stageSO != null && !StageSODatas.ContainsKey(stageSO.StageNumber))
+            {
+                StageSODatas.Add(stageSO.StageNumber, stageSO);
+            }
+        }
     }
     //
 
@@ -55,11 +64,10 @@ public class DataManager : Singleton<DataManager>
         {
             listMonsterSODatas = dataList as List<MonsterSO>;
         }
-    }
-
-    public void SetStageDatas(StageSO data)
-    {
-        stageSOData = data;
+        else if (typeof(T) == typeof(StageSO))
+        {
+            listStageSODatas = dataList as List<StageSO>;
+        }
     }
 
 
@@ -93,4 +101,15 @@ public class DataManager : Singleton<DataManager>
         }
         return null;
     }
+
+    public StageSO GetStageData(int stageNumber)
+    {
+        if (StageSODatas.TryGetValue(stageNumber, out StageSO stageData))
+        {
+            return stageData;
+        }
+        return null;
+    }
+
+
 }

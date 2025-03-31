@@ -1,17 +1,18 @@
 using Newtonsoft.Json.Linq;
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using UnityEditor;
+using UnityEditor.U2D.Aseprite;
 using UnityEngine;
 using UnityEngine.Networking;
 
 public class StageDataDownloader : MonoBehaviour
 {
-    private StageSO stageSOData;
+    [SerializeField] private List<StageSO> stageSOData = new List<StageSO>();
 
-    private const string URL_StageDataSheet = "https://docs.google.com/spreadsheets/d/1tgEgtsQp0vTR3rbdCwYv_y4s_4LdsDHd-6RXWyvgk0Y/export?format=tsv&gid=960013426&range=A1:H11";
+    private const string URL_StageDataSheet = "https://docs.google.com/spreadsheets/d/1tgEgtsQp0vTR3rbdCwYv_y4s_4LdsDHd-6RXWyvgk0Y/export?format=tsv&gid=566182702&range=A1:E61";
 
     private const string stageSODataFolderPath = "Assets/01_Scripts/ScriptableObjects/Stage/Data";
     
@@ -72,7 +73,7 @@ public class StageDataDownloader : MonoBehaviour
             ApplyStageDataToSO(jsonData);
         }
 
-        dataManager.SetStageDatas(stageSOData);
+        dataManager.SetDatas(stageSOData);
     }
 
     private void ClearSOData()
@@ -105,34 +106,54 @@ public class StageDataDownloader : MonoBehaviour
 
         string assetPath = $"{stageSODataFolderPath}/{fileName}.asset";
         AssetDatabase.CreateAsset(newSO, assetPath);
+        EditorUtility.SetDirty(newSO);
+        AssetDatabase.SaveAssets();
+        AssetDatabase.Refresh();
 
         return newSO;
     }
 
     private void ApplyStageDataToSO(JArray jsonData)
     {
-        for (int i = 0; i < jsonData.Count; i++)
+        stageSOData.Clear();
+
+        Dictionary<int, StageSO> stageDictionary = new Dictionary<int, StageSO>();
+
+        foreach (JObject row in jsonData)
         {
-            JObject row = (JObject)jsonData[i];
-
             int stageNumber = int.TryParse(row["Stage"]?.ToString(), out int number) ? number : 0;
-            int stageWave = int.TryParse(row["Wave"]?.ToString(), out int wave) ? wave : 0;
+            int waveNumber = int.TryParse(row["Wave"]?.ToString(), out int wave) ? wave : 0;
 
-            int length = 0;//row["MonsterIDs"]?.ToString() ?? "";??
-            string[] monsterIDs = new string[length];
-            for (int j = 0; j < monsterIDs.Length; j++)
+            string[] monsterIDs = row["MonsterIDs"]?.ToString().Split(',') ?? new string[0];
+            for (int i = 0; i < monsterIDs.Length; i++)
             {
-                monsterIDs[j] = "DL_001";
+                monsterIDs[i] = monsterIDs[i].Trim();
             }
-
-            int monsterCount = int.TryParse(row["MonsterCount"]?.ToString(), out int count) ? count : 0;
+            
+            int[] monsterCounts = row["MonsterCount"]?.ToString().Split(',').Select(int.Parse).ToArray() ?? new int[0];
             float spawnInterval = float.TryParse(row["SpawnInterval"]?.ToString(), out float interval) ? interval : 0;
 
-            StageSO stageData = new StageSO();
+            if (!stageDictionary.TryGetValue(stageNumber, out StageSO stageData))
+            {
+                stageData = CreateNewSOData<StageSO>($"Stage_{stageNumber}");
+                stageDictionary[stageNumber] = stageData;
 
-           // stageData = CreateNewSOData<UnitSO>(unitID);
+                stageData.SetData(stageNumber, new List<WaveData>());
+            }
 
-           // stageData.SetData(unitID, unitName, unitHP, unitAtk, unitAtkRange, unitAtkDelay, unitSummonCost, unitCoolDown, unitAtkType);
+            stageData.Waves.Add(new WaveData
+            {
+                waveNumber = waveNumber,
+                monsterIDs = monsterIDs,
+                monsterCounts = monsterCounts,
+                spawnInterval = spawnInterval
+            });
+
+            if (!stageSOData.Contains(stageData))
+            {
+                stageSOData.Add(stageData);
+            }
+
             EditorUtility.SetDirty(stageData);
         }
 
