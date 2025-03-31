@@ -60,8 +60,7 @@ public class PlayerUnit : MonoBehaviour, IDamageable
     private UnitSkillController _skillController;
     private UnitStateController _stateController;
 
-    public UnityAction <PlayerUnit>
-        OnPlayerDeadAction;
+    public UnityAction <PlayerUnit>OnPlayerDeadAction;
 
     private void Awake()
     {
