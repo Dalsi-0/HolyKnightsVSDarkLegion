@@ -12,18 +12,21 @@ namespace Monsters
         private Coroutine checkRoutine;
 
         private IAttackRangeCalc attackRangeCalc;
+        public PlayerUnit TriggerUnit { get; private set; }
         public PlayerUnit[] Targets { get; private set; }
-        public bool IsAttackable { get; private set; }
         public bool IsArrived { get; private set; }
-        
-        // TODO: 만약 타겟이 죽는다면?
-        // 다시 프론트 셀을 체크하는 루틴을 돌려야 한다.
-        // Target = null;
-        // TODO: currentCell에 유닛이 배치된다면?
         
         public void Init(MonsterSO monsterData)
         {
             InitAttackInfo(monsterData);
+            FindTarget();
+        }
+
+        private void FindTarget(PlayerUnit target = null)
+        {
+            if (TriggerUnit) TriggerUnit.OnPlayerDeadAction -= FindTarget;
+                
+            TriggerUnit = null;
             checkRoutine = StartCoroutine(CheckFrontCell());
         }
         
@@ -51,7 +54,6 @@ namespace Monsters
                 if (target)
                 {
                     GetTargets();
-                    IsAttackable = true;
                     checkRoutine = StartCoroutine(CheckArrived());
                     yield break;
                 }
@@ -62,6 +64,11 @@ namespace Monsters
 
         private void GetTargets()
         {
+            TriggerUnit = UnitManager.Instance.IsOnUnit(frontCell.x, currentCell.y);
+            if (!TriggerUnit) return;
+            
+            TriggerUnit.OnPlayerDeadAction += FindTarget;
+            
             var cells = attackRangeCalc.GetTargetCells(currentCell);
             for (int i = 0; i < cells.Length; i++)
             {
@@ -89,6 +96,7 @@ namespace Monsters
         public void SetTarget()
         {
             currentCell = UnitManager.Instance.GetGridIndex(transform.position);
+            frontCell = currentCell + Vector2Int.left;
             GetTargets();
         }
         
@@ -97,7 +105,7 @@ namespace Monsters
             return UnitManager.Instance.GetPosByGrid(frontCell.x, frontCell.y);
         }
         
-        private void OnDestroy()
+        private void StopCoroutine()
         {
             StopAllCoroutines();
         }
