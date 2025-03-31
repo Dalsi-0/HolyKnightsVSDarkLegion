@@ -19,6 +19,8 @@ public class StageManager : Singleton<StageManager>
 
     void Start()
     {
+        stageUIAnim.Play("FadeIn");
+
         // 팩토리 초기화
         monsterFactory = new MonsterFactory(monsterPrefabs, spawnParticle);
 
