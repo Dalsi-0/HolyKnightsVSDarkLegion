@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Monster;
+using Monsters;
 using UnityEngine;
 
 public class Test_GridManager : Singleton<Test_GridManager>
@@ -10,9 +10,9 @@ public class Test_GridManager : Singleton<Test_GridManager>
     private float tileSize = 1.0f;
     private int tilesPerCell = 3;
 
-    [SerializeField] private List<Transform> units;
+    [SerializeField] private List<PlayerUnit> units;
     [SerializeField] private MonsterStateMachine skeleton;
-    private Dictionary<(int,int), Transform> grid = new();
+    private Dictionary<(int,int), PlayerUnit> grid = new();
     
     private bool enableOnGUI = false;
 
@@ -48,7 +48,7 @@ public class Test_GridManager : Singleton<Test_GridManager>
         return new Vector2Int(x, y);
     }
     
-    public Transform IsUnitAt(Vector2Int cell)
+    public PlayerUnit IsUnitAt(Vector2Int cell)
     {
         if (cell.x < 0 || cell.x >= column || cell.y < 0 || cell.y >= row) return null;
         return grid[(cell.x, cell.y)];

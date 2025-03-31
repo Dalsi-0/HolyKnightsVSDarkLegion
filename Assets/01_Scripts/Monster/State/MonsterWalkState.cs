@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Monster
+namespace Monsters
 {
     public class MonsterWalkState : MonsterBaseState
     {
@@ -17,8 +17,8 @@ namespace Monster
         {
             base.Update();
             
-            if (!stateMachine.GridSensor.Target) return; // 타겟이 없으면 리턴
-            if (stateMachine.GridSensor.IsArrived)
+            if (!monster.GridSensor.IsAttackable) return; // 타겟이 없으면 리턴
+            if (monster.GridSensor.IsArrived)
             {
                 stateMachine.ChangeState(stateMachine.IdleState);
             }
