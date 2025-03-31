@@ -21,12 +21,15 @@ public class StageManager : Singleton<StageManager>
         SetStageData(1);
 
         // 처음엔 대기 상태로 시작
-        ChangeState(new WaveWaitingState(this));
+        // ChangeState(new WaveWaitingState(this));
     }
 
     void Update()
     {
-        currentState?.UpdateState();
+        if(currentState != null)
+        {
+            currentState?.UpdateState();
+        }
     }
 
     public void ChangeState(IWaveState newState)
