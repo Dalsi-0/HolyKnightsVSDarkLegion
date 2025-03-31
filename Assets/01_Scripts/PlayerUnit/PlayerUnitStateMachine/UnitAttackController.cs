@@ -34,6 +34,26 @@ public class UnitAttackController : MonoBehaviour
 
     public void DetectAndAttackEnemy()
     {
+
+        // 필요한 참조들 확인
+        if (UnitManager.Instance == null)
+        {
+            Debug.LogError("UnitManager.Instance is null! Make sure UnitManager exists in scene.");
+            return;
+        }
+
+        if (_unitData == null)
+        {
+            Debug.LogError("_unitData is null! Make sure Initialize is called properly.");
+            return;
+        }
+
+        if (_playerUnit == null)
+        {
+            Debug.LogError("_playerUnit is null! Make sure Initialize is called properly.");
+            return;
+        }
+
         // 현재 유닛의 그리드 위치 가져오기
         Vector2Int currentGrid = UnitManager.Instance.GetGridIndex(transform.position);
 
