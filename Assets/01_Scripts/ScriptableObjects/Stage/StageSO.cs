@@ -8,6 +8,17 @@ public struct WaveData
     public string[] monsterIDs;
     public int[] monsterCounts;
     public float spawnInterval;
+
+    public WaveData Clone()
+    {
+        return new WaveData
+        {
+            waveNumber = this.waveNumber,
+            monsterIDs = (string[])this.monsterIDs.Clone(),
+            monsterCounts = (int[])this.monsterCounts.Clone(),
+            spawnInterval = this.spawnInterval
+        };
+    }
 }
 
 [CreateAssetMenu(fileName = "StageData", menuName = "Scriptable Object/Stage Data", order = int.MaxValue)]
