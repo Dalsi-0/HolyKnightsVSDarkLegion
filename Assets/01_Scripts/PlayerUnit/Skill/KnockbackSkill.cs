@@ -15,7 +15,7 @@ public class KnockbackSkill : SkillBase
         this.knockbackForce = knockbackForce;
         this.damageAmount = damageAmount;
         this.checkRadius = checkRadius;
-        this.enemyLayer = LayerMask.GetMask("Default");
+        this.enemyLayer = LayerMask.GetMask("Enemy");
     }
 
     public override bool CanUse()

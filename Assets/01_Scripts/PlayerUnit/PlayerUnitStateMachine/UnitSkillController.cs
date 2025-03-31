@@ -9,6 +9,7 @@ public class UnitSkillController : MonoBehaviour
     private float _manaRecoveryAmount;
     private float _skillCooldown;
     private float _currentSkillCooldown = 5f;
+    private LayerMask _enemyLayer;
     private DivinePowerRecoverySkill _divinePowerRecoverySkill;
     private KnockbackSkill _knockbackSkill;
     private IceBrakeSkill _icebrakeSkill;
@@ -17,7 +18,7 @@ public class UnitSkillController : MonoBehaviour
     private float _checkRadius;
 
     // 초기화 메서드
-    public void Initialize(PlayerUnit playerUnit, UnitSO unitData, GameObject skillEffectPrefab, float manaRecoveryAmount, float skillCooldown,float knockbackForce, float damageAmount, float checkRadius)
+    public void Initialize(PlayerUnit playerUnit, UnitSO unitData, GameObject skillEffectPrefab, float manaRecoveryAmount, float skillCooldown,float knockbackForce, float damageAmount, float checkRadius, LayerMask enemyLayer)
     {
         _playerUnit = playerUnit;
         _unitData = unitData;
@@ -27,6 +28,7 @@ public class UnitSkillController : MonoBehaviour
         _knockbackForce = knockbackForce;
         _damageAmount = damageAmount;
         _checkRadius = checkRadius;
+        _enemyLayer = enemyLayer;
 
         // ManaRecoverySkill 인스턴스 생성
         _divinePowerRecoverySkill = new DivinePowerRecoverySkill(_playerUnit, _skillCooldown, _skillEffectPrefab, _manaRecoveryAmount);

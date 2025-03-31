@@ -95,7 +95,7 @@ public class PlayerUnit : MonoBehaviour, IDamageable
         // 컴포넌트 설정
         _animationController.Initialize(this);
         _attackController.Initialize(this, unitData, projectilePrefab, firePoint, enemyLayer);
-        _skillController.Initialize(this, unitData, skillEffectPrefab, manaRecoveryAmount, skillCooldown, knockbackForce, damageAmount, checkRadius);
+        _skillController.Initialize(this, unitData, skillEffectPrefab, manaRecoveryAmount, skillCooldown, knockbackForce, damageAmount, checkRadius, enemyLayer);
         _stateController.Initialize(this, _attackController, _skillController, canUseBasicAttack, canUseSkill);
     }
 

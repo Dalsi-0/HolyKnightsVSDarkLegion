@@ -7,7 +7,6 @@ public class UnitAttackController : MonoBehaviour
     private GameObject _projectilePrefab;
     private Transform _firePoint;
     private LayerMask _enemyLayer;
-
     private float _attackCooldown = 0f;
     private Vector3 _targetPosition;
 
