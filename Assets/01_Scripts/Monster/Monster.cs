@@ -1,5 +1,5 @@
-using UnityEngine;
 
+using UnityEngine;
 namespace Monsters
 {
     public class Monster : MonoBehaviour

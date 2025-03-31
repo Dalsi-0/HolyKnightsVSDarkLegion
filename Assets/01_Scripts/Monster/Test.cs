@@ -8,6 +8,8 @@ public class Test : MonoBehaviour
     [SerializeField] private List<Vector2Int> list;
     [SerializeField] private Monster monster;
 
+    private bool onGUI = false;
+    
     private void Start()
     {
         UnitManager.Instance.ChangeMoney(9999);
@@ -21,10 +23,30 @@ public class Test : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Q))
+        if (Input.GetKeyDown(KeyCode.Mouse2))
         {
-            var slow = new SlowDebuff(2f, new Color(0.35f, 0.82f, 1f));
+            onGUI = !onGUI;
+        }
+    }
+
+    private void OnGUI()
+    {
+        if (!onGUI) return;
+        
+        var slow = new SlowDebuff(2f, new Color(0.35f, 0.82f, 1f));
+        
+        GUIStyle bigButtonStyle = new GUIStyle(GUI.skin.button);
+        bigButtonStyle.fontSize = 35;
+        bigButtonStyle.fixedHeight = 80;
+        bigButtonStyle.fixedWidth = 150; 
+        if (GUILayout.Button("Slow", bigButtonStyle))
+        {
             monster.DebuffHandler.ExecuteBuff(slow);
+        }
+        
+        if (GUILayout.Button("Hit", bigButtonStyle))
+        {
+            monster.StateMachine.OnHit(20);
         }
     }
 }

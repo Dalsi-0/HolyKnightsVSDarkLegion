@@ -73,6 +73,7 @@ namespace Monsters
         
         private IEnumerator HitRoutine()
         {
+            Debug.Log("Hit" + baseColor);
             yield return LerpColor(baseColor, hitColor, hitDuration);
             yield return LerpColor(hitColor, baseColor, hitDuration);
 
