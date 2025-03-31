@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3453203993279202383}
   - component: {fileID: 1895707621055578576}
   m_Layer: 7
-  m_Name: SwardMan
+  m_Name: PK_004
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -214,7 +214,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -1124085425, guid: 2f2739b15be73c8498b8b831d1721904, type: 3}
+  m_Sprite: {fileID: 1891347568, guid: e9e4fe27e6ebc86489efcde30c043128, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -235,7 +235,7 @@ Animator:
   m_GameObject: {fileID: 6472539435189870427}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 22100000, guid: bd8f133dc25dfd74daa2edaa07dff1c6, type: 2}
+  m_Controller: {fileID: 22100000, guid: fa2ac72a38f1cb24aa1254edbd35dd7f, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

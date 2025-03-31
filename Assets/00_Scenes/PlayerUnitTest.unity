@@ -14744,11 +14744,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09337b3dae3b15b4fbeebd2ad6a99f7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  monsterId: DL_003
-  <Tr>k__BackingField: {fileID: 8657726477818062505}
-  <Anim>k__BackingField: {fileID: 2136769779079848921}
-  <Renderer>k__BackingField: {fileID: 1801533930592719190}
-  <GridSensor>k__BackingField: {fileID: 4000127408446856396}
 --- !u!1001 &6909363965034899743
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14905,7 +14900,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 5, y: 5}
+    oldSize: {x: 12.5, y: 12.5}
     newSize: {x: 5, y: 5}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
