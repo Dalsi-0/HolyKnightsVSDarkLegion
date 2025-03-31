@@ -33,7 +33,7 @@ public class SceneLoadManager : Singleton<SoundManager>
 
     /// <summary>
     /// 씬 전환시 실행되는 메소드,
-    /// BGM 변경 용도로 사용
+    /// 현재 변경 씬의 BGM으로 변경하는 메소드로 활용
     /// </summary>
     /// <param name="level"> 실행된 씬 인덱스 번호 </param>
     private void OnLevelWasLoaded(int level) //유니티 5.4 이후로는 SceneManager.sceneLoaded 사용 대체
