@@ -49,6 +49,7 @@ public class DeckManager : Singleton<DeckManager>
             else
             {
                 // 기본 설정 불러오기
+                bool hasError = false;
                 string json = Resources.Load<TextAsset>(defaultSettingPath).text;
                 PlayerInfo defalutInfo = JsonUtility.FromJson<PlayerInfo>(json);
 
@@ -71,40 +72,39 @@ public class DeckManager : Singleton<DeckManager>
                         if (!deck.ContainsKey(defaultCard.unitID))
                         {
                             deck[defaultCard.unitID] = defaultCard.canUse;
+                            hasError = true;
                         }
                     }
                 }
 
-                // 갯수가 많으면 유효한지 확인
+                // 유효한지 확인
                 List<string> errList = new();
-                if (deck.Count > defalutList.Count)
+                // 유효값인지 확인
+                foreach (var card in deck)
                 {
-                    // 유효값인지 확인
-                    foreach (var card in deck)
+                    bool isError = true;
+                    for (int i = 0; i < defalutList.Count; i++)
                     {
-                        bool isError = true;
-                        for (int i = 0; i < defalutList.Count; i++)
+                        // 기본값에 포함되면 유효한 값
+                        if (card.Key == defalutList[i].unitID)
                         {
-                            // 기본값에 포함되면 유효한 값
-                            if (card.Key == defalutList[i].unitID)
-                            {
-                                isError = false;
-                                continue;
-                            }
-                        }
-                        if (isError)
-                        {
-                            // 유효한 값이 아니면오류 목룍에 추가
-                            // 딕셔너리는 한번에 처리하도록
-                            errList.Add(card.Key);
+                            isError = false;
+                            continue;
                         }
                     }
-                    // 유효하지 않은 요소 제거
-                    for (int i = 0; i < errList.Count; i++)
+                    if (isError)
                     {
-                        Debug.Log("유효하지 않은 요소 : " + errList[i]);
-                        deck.Remove(errList[i]);
+                        // 유효한 값이 아니면오류 목룍에 추가
+                        // 딕셔너리는 한번에 처리하도록
+                        errList.Add(card.Key);
                     }
+                }
+                // 유효하지 않은 요소 제거
+                for (int i = 0; i < errList.Count; i++)
+                {
+                    Debug.Log("유효하지 않은 요소 : " + errList[i]);
+                    deck.Remove(errList[i]);
+                    hasError = true;
                 }
 
                 // 사용 목록 불러오기
@@ -117,9 +117,10 @@ public class DeckManager : Singleton<DeckManager>
                     else
                         hands.Remove(hands[i]);
                 }
-
+                
                 // 수정 완료된 정보를 파일로 저장
-                SaveInfo();
+                if (hasError)
+                    SaveInfo();
             }
         }
         else
@@ -170,7 +171,7 @@ public class DeckManager : Singleton<DeckManager>
     {
         PlayerInfo newInfo = new PlayerInfo();
         List<CardCollection> cardList = new();
-        foreach(var card in deck)
+        foreach (var card in deck)
         {
             cardList.Add(new CardCollection(card.Key, card.Value));
         }
@@ -209,9 +210,9 @@ public class DeckManager : Singleton<DeckManager>
 
     public Sprite GetSprite(string id)
     {
-        foreach(var thumbnail in images)
+        foreach (var thumbnail in images)
         {
-            if(thumbnail.unitID == id)
+            if (thumbnail.unitID == id)
                 return thumbnail.thumbnail;
         }
         return null;
