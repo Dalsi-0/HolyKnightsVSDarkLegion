@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using System;
+using UnityEngine.Events;
 
 public enum UnitState
 {
@@ -59,14 +60,8 @@ public class PlayerUnit : MonoBehaviour, IDamageable
     private UnitSkillController _skillController;
     private UnitStateController _stateController;
 
-    // 델리게이트 정의
-    public delegate void PlayerDeathHandler(PlayerDeathData deathData);
-
-    // 정적 이벤트 (어디서든 접근 가능)
-    public static event PlayerDeathHandler OnPlayerDeath;
-
-    // 인스턴스 이벤트 (특정 유닛의 죽음만 감지하고 싶을 때 사용)
-    public event PlayerDeathHandler OnThisPlayerDeath;
+    public UnityAction <PlayerUnit>
+        OnPlayerDeadAction;
 
     private void Awake()
     {
@@ -128,20 +123,7 @@ public class PlayerUnit : MonoBehaviour, IDamageable
         _currentState = UnitState.Dead;
         _animationController.TriggerDeathAnimation();
 
-        // 사망 데이터 생성
-        PlayerDeathData deathData = new PlayerDeathData
-        {
-            DeathPosition = transform.position,
-            DeathRotation = transform.rotation,
-            UnitData = unitData,
-            TimeOfDeath = Time.time,
-            LastTarget = _currentTarget,
-            RemainingHP = _currentHP
-        };
-
-        // 이벤트 발생 (null 체크)
-        OnThisPlayerDeath?.Invoke(deathData);
-        OnPlayerDeath?.Invoke(deathData);
+        OnPlayerDeadAction?.Invoke(this);
 
         // 추가 죽음 처리 로직
         Destroy(gameObject, 1f); // 애니메이션 재생 시간 고려
