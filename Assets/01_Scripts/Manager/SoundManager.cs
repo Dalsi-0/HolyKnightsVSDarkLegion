@@ -1,9 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.ShaderGraph.Legacy;
 using UnityEngine;
 using UnityEngine.Audio;
-using UnityEngine.Rendering;
 using UnityEngine.UI;
 
 public class SoundManager : Singleton<SoundManager>
@@ -22,16 +18,16 @@ public class SoundManager : Singleton<SoundManager>
     /// <summary>
     /// 사운드 옵션 세팅
     /// </summary>
-    /// <param name="SoundIndex"> MASTER = 0 , BGM = 1, SFX = 2 </param>
-    protected void AudioControl(int SoundIndex)
+    /// <param name="typeIndex"> MASTER = 0 , BGM = 1, SFX = 2 </param>
+    protected void AudioControl(int typeIndex)
     {
-        volume[SoundIndex] = audioSlider[SoundIndex].value;
-        if (volume[SoundIndex] == -40f)
+        volume[typeIndex] = audioSlider[typeIndex].value;
+        if (volume[typeIndex] == -40f)
         {
-            SetMute(SoundIndex);
-            SliderVolume[SoundIndex] = true;
+            SetMute(typeIndex);
+            SliderVolume[typeIndex] = true;
 
-            switch (SoundIndex)
+            switch (typeIndex)
             {
                 case 0:
                     audioMixer.SetFloat("MASTER", -80f);
@@ -46,22 +42,22 @@ public class SoundManager : Singleton<SoundManager>
         }
         else
         {
-            if (SliderVolume[SoundIndex])
+            if (SliderVolume[typeIndex])
             {
-                SetMute(SoundIndex);
-                SliderVolume[SoundIndex] = false;
+                SetMute(typeIndex);
+                SliderVolume[typeIndex] = false;
             }
 
-            switch (SoundIndex)
+            switch (typeIndex)
             {
                 case 0:
-                    audioMixer.SetFloat("MASTER", volume[SoundIndex]);
+                    audioMixer.SetFloat("MASTER", volume[typeIndex]);
                     break;
                 case 1:
-                    audioMixer.SetFloat("BGM", volume[SoundIndex]);
+                    audioMixer.SetFloat("BGM", volume[typeIndex]);
                     break;
                 case 2:
-                    audioMixer.SetFloat("SFX", volume[SoundIndex]);
+                    audioMixer.SetFloat("SFX", volume[typeIndex]);
                     break;
             }
             
@@ -72,36 +68,36 @@ public class SoundManager : Singleton<SoundManager>
     /// <summary>
     /// BGM Index 번호로 원하는 BGM 세팅
     /// </summary>
-    /// <param name="Index">BGM 클립 번호 입력</param>
-    public void SetBgm(int Index)
+    /// <param name="index">BGM 클립 번호 입력</param>
+    public void SetBgm(int index)
     {
         if (audioBgm.isPlaying)
             audioBgm.Stop();
 
-        audioBgm.clip = bgmClip[Index];
+        audioBgm.clip = bgmClip[index];
         audioBgm.Play();
     }
 
     /// <summary>
     /// SFX Index 번호로 원하는 SFX 세팅
     /// </summary>
-    /// <param name="Index">SFX 클립 번호 입력</param>
-    public void SetSfx(int Index)
+    /// <param name="index">SFX 클립 번호 입력</param>
+    public void SetSfx(int index)
     {
-        audioSfx.PlayOneShot(sfxClip[Index]);
+        audioSfx.PlayOneShot(sfxClip[index]);
     }
 
     /// <summary>
     /// 음소거 세팅
     /// </summary>
-    /// <param name="SoundIndex"> MASTER = 0 , BGM = 1, SFX = 2 </param>
-    public void SetMute(int SoundIndex)
+    /// <param name="typeIndex"> MASTER = 0 , BGM = 1, SFX = 2 </param>
+    public void SetMute(int typeIndex)
     {
-        if (muteBox[SoundIndex].gameObject.activeSelf) // 뮤트 실행
+        if (muteBox[typeIndex].gameObject.activeSelf) // 뮤트 실행
         {
-            muteBox[SoundIndex].gameObject.SetActive(false);
+            muteBox[typeIndex].gameObject.SetActive(false);
 
-            switch (SoundIndex)
+            switch (typeIndex)
             {
                 case 0:
                     audioBgm.mute = true;
@@ -117,9 +113,9 @@ public class SoundManager : Singleton<SoundManager>
         }
         else // 뮤트 해제
         {
-            muteBox[SoundIndex].gameObject.SetActive(true);
+            muteBox[typeIndex].gameObject.SetActive(true);
 
-            switch (SoundIndex)
+            switch (typeIndex)
             {
                 case 0:
                     if (muteBox[1].gameObject.activeSelf) audioBgm.mute = false;
