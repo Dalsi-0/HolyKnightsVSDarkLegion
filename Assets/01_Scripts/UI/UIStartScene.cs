@@ -12,7 +12,7 @@ public class UIStartScene : MonoBehaviour
     }
 
     /// <summary>
-    /// 스테이지 텍스트 메소드
+    /// 시작 씬 스테이지 텍스트 변경 메소드
     /// </summary>
     public void StageUpdate()
     {

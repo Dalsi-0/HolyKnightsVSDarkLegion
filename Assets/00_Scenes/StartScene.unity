@@ -945,12 +945,12 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 1065395761}
         m_TargetAssemblyTypeName: SceneLoadManager, Assembly-CSharp
-        m_MethodName: LoadScene
-        m_Mode: 5
+        m_MethodName: NumLoadScene
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 1
           m_FloatArgument: 0
           m_StringArgument: Map
           m_BoolArgument: 0
@@ -2048,7 +2048,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 1065395761}
         m_TargetAssemblyTypeName: SceneLoadManager, Assembly-CSharp
-        m_MethodName: LoadScene
+        m_MethodName: StringLoadScene
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2659,10 +2659,7 @@ MonoBehaviour:
   - {fileID: 1116308221}
   - {fileID: 1828517912}
   - {fileID: 1262234460}
-  MuteChks:
-  - {fileID: 1023197723}
-  - {fileID: 2040897371}
-  - {fileID: 687877468}
+  muteBox: []
 --- !u!1 &1145405014
 GameObject:
   m_ObjectHideFlags: 0
