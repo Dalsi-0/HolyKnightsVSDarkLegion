@@ -7,7 +7,7 @@ using UnityEngine.Events;
 
 
 /// <summary>
-/// 카드 소환을 관리하는 UI 오브젝트, 맵 정보와 UI 연결이 필수
+/// 카드 소환을 관리하는 UI 오브젝트
 /// </summary>
 public class UnitCreator : MonoBehaviour
 {
@@ -23,7 +23,6 @@ public class UnitCreator : MonoBehaviour
     private List<UnitCard> cardList; // 유닛 데이터 목록
     public UnityAction<int> CoastAction; // 코스트 변동시 호출 함수
     private bool isInited;
-    public int PlayerCoast;
     public bool onEdited = false; // 수정중인지 여부, 놓을 수 있을지를 판단,
     void Start()
     {
@@ -43,13 +42,13 @@ public class UnitCreator : MonoBehaviour
             {
                 // 이름으로 데이터 불러오기
                 SpawnUnitCard(deckNameList[i]);
+
             }
-            ChangeMoney(0);
         }
     }
     private void Init()
     {
-        coastText.text = PlayerCoast.ToString();
+        coastText.text = UnitManager.Instance.PlayerMoney.ToString();
         handList = new(handSize);
         cardList = new(handSize);
         isInited = true;
@@ -80,48 +79,12 @@ public class UnitCreator : MonoBehaviour
         card.OnEndDragActin += DragEndCard;
         cardList.Add(card);
     }
-
-    void Update()
+    public void ChangeMoney(int newValue)
     {
-        // 테스트 자원 획득 - 외부에서는 ChangeMoney 호출할것
-        if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            ChangeMoney(30);
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha4))
-        {
-            for(int i = 0; i< 5; i++)
-            {
-                string res = "";
-                for(int j = 0; j < 9; j++)
-                {
-                    if(UnitManager.Instance.IsOnUnit(j, i) == null)
-                    {
-                        res += "X";
-                    }
-                    else
-                    {
-                        res += "O";
-                    }
-                }
-                Debug.Log(res);
-            }
-
-        }
-    }
-
-
-    // 자원을 추기/소비하는 함수, 소비에 실패하면 falsee 반환
-    public bool ChangeMoney(int amount)
-    {
-        if (amount < 0 && PlayerCoast + amount < 0) return false;
-        PlayerCoast += amount;
-        coastText.text = PlayerCoast.ToString();
+        coastText.text = newValue.ToString();
         // 등록 된 이벤트 호출
-        CoastAction?.Invoke(PlayerCoast);
-        return true;
+        CoastAction?.Invoke(newValue);
     }
-
     public void SetEdit(bool active)
     {
         onEdited = active;
@@ -133,31 +96,27 @@ public class UnitCreator : MonoBehaviour
         // 덱 편집 중이라면 해당 카드를 덱에서 빼기
         if (onEdited)
         {
-            Debug.Log("수정중");
-            handList.Remove(unitID);
-            // UI 삭제
-            for (int i = 0; i < cardList.Count; i++)
+            // UI 삭제, 최소 1개는 보존
+            if (cardList.Count > 1)
             {
-                if (cardList[i].unitID == unitID)
+                handList.Remove(unitID);
+                for (int i = 0; i < cardList.Count; i++)
                 {
-                    //Debug.Log(cardList[i].name);
-                    Destroy(cardList[i].gameObject);
+                    if (cardList[i].unitID == unitID)
+                    {
+                        Destroy(cardList[i].gameObject);
+                        cardList.RemoveAt(i);
+                    }
                 }
             }
             return;
         }
-        Debug.Log("DragEndCard");
 
         // 2d여서 z값 보정
         pos.z = 0;
 
-
-
-        // 좌표 검사
-        if (!UnitManager.Instance.IsOnGrid(pos)) return;
-
-        // 모든 조건을 만족하면 자원 체크
-        if (ChangeMoney(-(int)handList[unitID].UnitSummonCost))
+        // 소환 시도
+        if (UnitManager.Instance.Spawn(unitID, pos))
         {
             // 소환 성공한 카드의 쿨타임 진행
             for (int i = 0; i < cardList.Count; i++)
@@ -167,14 +126,6 @@ public class UnitCreator : MonoBehaviour
                     cardList[i].ActiveTimer();
                 }
             }
-            // 소환
-            Vector2Int grid = UnitManager.Instance.GetGridIndex(pos);
-            UnitManager.Instance.Spawn(unitID, grid.x, grid.y);
-
-        }
-        else
-        {
-            Debug.Log("자원 부족");
         }
     }
 
@@ -189,5 +140,9 @@ public class UnitCreator : MonoBehaviour
     {
         deckNameList ??= new List<string>();
         deckNameList.Add(cardName);
+    }
+    public void SetActive(bool active)
+    {
+        gameObject.SetActive(active);
     }
 }

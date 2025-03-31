@@ -37,7 +37,6 @@ public class DeckCard : MonoBehaviour
 
     public void ActCallback()
     {
-        Debug.Log(unitID);
         ClickAction?.Invoke(unitID);
     }
 }
