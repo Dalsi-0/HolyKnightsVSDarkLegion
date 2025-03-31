@@ -2659,7 +2659,10 @@ MonoBehaviour:
   - {fileID: 1116308221}
   - {fileID: 1828517912}
   - {fileID: 1262234460}
-  muteBox: []
+  muteBox:
+  - {fileID: 1023197723}
+  - {fileID: 2040897371}
+  - {fileID: 687877468}
 --- !u!1 &1145405014
 GameObject:
   m_ObjectHideFlags: 0
