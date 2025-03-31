@@ -9,7 +9,7 @@ namespace Monsters
 
         public override void Enter()
         {
-            speedModifier = 1f;
+            stateMachine.SetSpeedModifier(1f);
             StartAnimation(hashWalk);
         }
 
@@ -17,7 +17,7 @@ namespace Monsters
         {
             base.Update();
             
-            if (!monster.GridSensor.IsAttackable) return; // 타겟이 없으면 리턴
+            if (!monster.GridSensor.TriggerUnit) return; // 타겟이 없으면 리턴
             if (monster.GridSensor.IsArrived)
             {
                 stateMachine.ChangeState(stateMachine.IdleState);

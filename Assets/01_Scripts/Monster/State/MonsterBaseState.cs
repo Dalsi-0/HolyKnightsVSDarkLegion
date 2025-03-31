@@ -6,7 +6,6 @@ namespace Monsters
     {
         protected readonly Monster monster;
         protected readonly MonsterStateMachine stateMachine;
-        protected float speedModifier = 1f;
 
         protected MonsterBaseState(MonsterStateMachine stateMachine)
         {
@@ -25,7 +24,8 @@ namespace Monsters
 
         private void Move()
         {
-            var moveSpeed = monster.MonsterData.MonsterMoveSpeed * speedModifier;
+            var modifiedSpeed = monster.StateMachine.DebuffSpeedModifier * monster.StateMachine.SpeedModifier;
+            var moveSpeed = monster.MonsterData.MonsterMoveSpeed * modifiedSpeed;
             monster.transform.Translate(Vector3.left * (moveSpeed * Time.deltaTime));
         }
 
