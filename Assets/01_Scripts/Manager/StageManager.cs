@@ -11,7 +11,6 @@ public class StageManager : Singleton<StageManager>
     private IWaveState currentState;  // 현재 웨이브 상태
     private StageSO stageData;  
     private int currentWaveIndex = 0;  // 현재 웨이브 인덱스
-    private bool isWaveCleared = false;  // 몬스터가 전부 처치되었는지 체크
 
     void Start()
     {
@@ -51,13 +50,9 @@ public class StageManager : Singleton<StageManager>
         }
     }
 
-    public void SetWaveCleared(bool cleared)
+    public void SetWaveCleared()
     {
-        isWaveCleared = cleared;
-        if (cleared)
-        {
-            ChangeState(new WaveEndState(this));
-        }
+        ChangeState(new WaveEndState(this));
     }
 
     public void SetStageData(int stageNumber)
