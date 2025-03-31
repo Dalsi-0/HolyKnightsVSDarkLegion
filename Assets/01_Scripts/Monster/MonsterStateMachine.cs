@@ -1,48 +1,36 @@
 using System.Collections;
 using UnityEngine;
 
-namespace Monster
+namespace Monsters
 {
     public class MonsterStateMachine : StateMachine
     {
-        [Header("Monster Data")]
-        [SerializeField] private string monsterId; 
+        public Monster Monster { get; private set; }
         
-        [field: Header("Components")]
-        [field: SerializeField] public Transform Tr { get; private set; }
-        [field: SerializeField] public Animator Anim { get; private set; }
-        [field: SerializeField] public SpriteRenderer Renderer { get; private set; }
-        [field: SerializeField] public MonsterGridSensor GridSensor { get; private set; }
-
-        private readonly Color origin = Color.white;
-        private readonly Color hit = new(1f, 0.4f, 0.4f);
-        private Coroutine hitCoroutine;
+        protected readonly Color origin = Color.white;
+        protected readonly Color hit = new(1f, 0.4f, 0.4f);
+        protected Coroutine hitCoroutine;
         
-        private const float hitTime = 0.2f;
-        private float lastAttackTime = 0f;
-        private float currentHp;
+        protected const float hitDuration = 0.2f;
+        protected float lastAttackTime = 0f;
+        protected float currentHp;
         
-        #region State Properties
-        public MonsterSO MonsterData { get; private set; }
+        #region Properties
         public MonsterIdleState IdleState { get; private set; }
         public MonsterWalkState WalkState { get; private set; }
-        public MonsterAttackState AttackState { get; private set; }
+        public MonsterAttackState AttackState { get; protected set; }
         public MonsterDeadState DeadState { get; private set; }
         #endregion
         
-        public void Start()
+        public virtual void Init(Monster monster)
         {
             // Data
-            MonsterData = DataManager.Instance.GetMonsterData(monsterId);
-            currentHp = MonsterData.MonsterHP;
-            
-            // Components
-            GridSensor.Init(this);
+            Monster = monster;
+            currentHp = monster.MonsterData.MonsterHP;
             
             // State
             IdleState = new MonsterIdleState(this);
             WalkState = new MonsterWalkState(this);
-            AttackState = new MonsterAttackState(this);
             DeadState = new MonsterDeadState(this);
             
             ChangeState(WalkState);
@@ -53,7 +41,7 @@ namespace Monster
         {
             while (true)
             {
-                if (lastAttackTime < MonsterData.MonsterAtkDelay)
+                if (lastAttackTime < Monster.MonsterData.MonsterAtkDelay)
                     lastAttackTime += Time.deltaTime;
                 
                 yield return null;
@@ -62,14 +50,10 @@ namespace Monster
 
         public bool CanAttack()
         {
-            return lastAttackTime >= MonsterData.MonsterAtkDelay;
+            return lastAttackTime >= Monster.MonsterData.MonsterAtkDelay;
         }
 
-        public void OnAttack()
-        {
-            lastAttackTime = 0;
-            // TODO: Target.OnHit(Atk);
-        }
+        public virtual void OnAttack() { }
 
         public void OnHit(int damage)
         {
@@ -85,10 +69,10 @@ namespace Monster
         
         private IEnumerator HitRoutine()
         {
-            yield return LerpColor(origin, hit, hitTime);
-            yield return LerpColor(hit, origin, hitTime);
+            yield return LerpColor(origin, hit, hitDuration);
+            yield return LerpColor(hit, origin, hitDuration);
 
-            Renderer.color = origin;
+            Monster.SpriteRenderer.color = origin;
             hitCoroutine = null;
         }
 
@@ -98,9 +82,14 @@ namespace Monster
             while (time < duration)
             {
                 time += Time.deltaTime;
-                Renderer.color = Color.Lerp(from, to, time / duration);
+                Monster.SpriteRenderer.color = Color.Lerp(from, to, time / duration);
                 yield return null;
             }
+        }
+
+        public void OnDead()
+        {
+            
         }
 
         private void OnDestroy()

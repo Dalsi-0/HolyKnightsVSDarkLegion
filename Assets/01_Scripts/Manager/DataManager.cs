@@ -27,6 +27,7 @@ public class DataManager : Singleton<DataManager>
     {
         UnitSODatas = new Dictionary<string, UnitSO>();
         MonsterSODatas = new Dictionary<string, MonsterSO>();
+        StageSODatas = new Dictionary<int, StageSO>();
 
         foreach (var unitSO in listUnitSODatas)
         {

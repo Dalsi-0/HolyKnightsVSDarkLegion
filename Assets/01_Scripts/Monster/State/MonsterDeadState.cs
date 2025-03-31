@@ -1,4 +1,4 @@
-using Monster;
+using Monsters;
 using UnityEngine;
 
 public class MonsterDeadState : MonsterBaseState
