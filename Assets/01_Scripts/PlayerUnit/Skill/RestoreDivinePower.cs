@@ -12,10 +12,10 @@ public class DivinePowerRecoverySkill : SkillBase
 
     public override void ExecuteEffect()
     {
-        CostManager costManager = CostManager.Instance; // 다른요소로 수정 필요
-        if (costManager != null)
+        UnitManager unitManager = UnitManager.Instance; // 다른요소로 수정 필요
+        if (unitManager != null)
         {
-            costManager.AddCost(divinePowerRecoveryAmount);
+            unitManager.ChangeMoney(divinePowerRecoveryAmount);
             SpawnEffect();
         }
     }
