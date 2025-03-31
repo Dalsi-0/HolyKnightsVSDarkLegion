@@ -30,9 +30,12 @@ public class DeckCard : MonoBehaviour
             //uniyImage.sprite = 
         }
         // 데이터 설정
-        coastText.text = unit.UnitSummonCost.ToString();
-        unitID = unit.UnitID;
-        shadowImage.enabled = !hideShadow;
+        if (unit != null)
+        {
+            coastText.text = unit.UnitSummonCost.ToString();
+            unitID = unit.UnitID;
+            shadowImage.enabled = !hideShadow;
+        }
     }
 
     public void ActCallback()
