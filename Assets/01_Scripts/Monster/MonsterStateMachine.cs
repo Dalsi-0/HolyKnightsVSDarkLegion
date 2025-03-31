@@ -91,7 +91,6 @@ namespace Monsters
         {
             MonsterFactory monsterFactory = StageManager.Instance.GetMonsterFactory();
             monsterFactory.ReturnMonsterToPool(gameObject);
-            // Destroy(gameObject);
         }
 
         private void OnDestroy()
