@@ -174,13 +174,49 @@ public class PlayerUnit : MonoBehaviour, IDamageable
         }
     }
 
-    // 기즈모로 감지 범위 시각화
     private void OnDrawGizmosSelected()
     {
-        if (unitData != null)
+        if (unitData != null && UnitManager.Instance != null)
         {
             Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(transform.position, unitData.UnitAtkRange);
+
+            // 현재 유닛의 그리드 위치 가져오기
+            Vector2Int currentGrid = UnitManager.Instance.GetGridIndex(transform.position);
+
+            // UnitAtkRange를 그리드 거리로 재해석 (정수로 반올림)
+            int gridRange = Mathf.RoundToInt(unitData.UnitAtkRange);
+
+            // 공격 범위 그리드 순회하여 시각화
+            for (int x = -gridRange; x <= gridRange; x++)
+            {
+                for (int y = -gridRange; y <= gridRange; y++)
+                {
+                    // 맨해튼 거리(Manhattan distance)로 계산하면 다이아몬드 모양 범위가 됨
+                    // 체비세프 거리(Chebyshev distance)로 계산하면 정사각형 모양 범위가 됨
+                    int distance = Mathf.Max(Mathf.Abs(x), Mathf.Abs(y)); // 체비세프 거리
+
+                    if (distance <= gridRange)
+                    {
+                        // 범위 내 그리드 좌표 계산
+                        int targetX = currentGrid.x + x;
+                        int targetY = currentGrid.y + y;
+
+                        // 유효한 그리드 위치인지 확인
+                        if (targetX >= 0 && targetX < UnitManager.Instance.tileSize.x &&
+                            targetY >= 0 && targetY < UnitManager.Instance.tileSize.y)
+                        {
+                            // 그리드 중심 위치 가져오기
+                            Vector3 targetPos = UnitManager.Instance.GetPosByGrid(targetX, targetY);
+
+                            // 그리드 크기에 맞게 사각형 그리기
+                            Gizmos.DrawWireCube(targetPos, new Vector3(
+                                UnitManager.Instance.stepSize.x * 0.9f,
+                                UnitManager.Instance.stepSize.y * 0.9f,
+                                0.1f));
+                        }
+                    }
+                }
+            }
         }
     }
 
