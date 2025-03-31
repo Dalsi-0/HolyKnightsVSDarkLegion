@@ -8,10 +8,14 @@ public class StageManager : Singleton<StageManager>
     [SerializeField] private GameObject[] monsterPrefabs; // 몬스터 프리팹들
     [SerializeField] private Transform[] spawnPoints; // 스폰 위치 배열
     [SerializeField] private GameObject spawnParticle; // 스폰 파티클
+    [SerializeField] private Animator stageUIAnim;
+
     private MonsterFactory monsterFactory;
     private IWaveState currentState;  // 현재 웨이브 상태
     private StageSO stageData;  
     private int currentWaveIndex = 0;  // 현재 웨이브 인덱스
+    private WaveSpawningState waveSpawningState;
+
 
     void Start()
     {
@@ -50,9 +54,24 @@ public class StageManager : Singleton<StageManager>
         }
     }
 
+    public void PlayStageUIAnim()
+    {
+        stageUIAnim.Play("Effect");
+    }
+
     public void SetWaveCleared()
     {
         ChangeState(new WaveEndState(this));
+    }
+
+    public WaveSpawningState GetWaveSpawningState()
+    {
+        return this.waveSpawningState;
+    }
+
+    public void SetWaveSpawningState(WaveSpawningState waveSpawningState)
+    {
+        this.waveSpawningState = waveSpawningState;
     }
 
     public void SetStageData(int stageNumber)

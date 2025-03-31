@@ -6,8 +6,6 @@ using System.Collections;
 public class MonsterFactory
 {
     private Dictionary<string, MonsterPool> monsterPools;  // 몬스터 ID별 풀을 관리하는 딕셔너리
-    private int totalSpawnedMonsters = 0;
-    private int deadMonsters = 0;
     private GameObject spawnParticle;
 
     public MonsterFactory(GameObject[] prefabs, GameObject spawnParticle)
@@ -20,7 +18,6 @@ public class MonsterFactory
             Monster monster = prefab.GetComponent<Monster>();
             if (monster != null)
             {
-                totalSpawnedMonsters++;
                 string monsterID = monster.MonsterId;
                 monsterPools[monsterID] = new MonsterPool(prefab, 5);  // 풀의 초기 크기는 5로 설정
 
@@ -71,13 +68,6 @@ public class MonsterFactory
     // 풀에 몬스터를 반환하는 함수
     public void ReturnMonsterToPool(GameObject monster)
     {
-        deadMonsters++;  // 죽은 몬스터 수 증가
-
-        if (deadMonsters >= totalSpawnedMonsters)
-        {
-            StageManager.Instance.SetWaveCleared(); // 모든 몬스터가 죽으면 웨이브 종료
-        }
-
         monster.SetActive(false);  // 비활성화
         string monsterID = monster.GetComponent<Monster>().MonsterId;
 

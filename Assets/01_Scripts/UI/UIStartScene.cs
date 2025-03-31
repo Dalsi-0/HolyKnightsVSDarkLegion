@@ -16,7 +16,7 @@ public class UIStartScene : MonoBehaviour
     /// </summary>
     public void StageUpdate()
     {
-        stageText.text = $"(STAGE : {1})"; // 스테이지 값 {StageData} 기입 필요.
+        stageText.text = $"(STAGE : {GameManager.Instance.GetCurrentStageLevel()})"; // 스테이지 값 {StageData} 기입 필요.
     }
 
     
