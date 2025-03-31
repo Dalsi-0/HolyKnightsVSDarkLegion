@@ -1,6 +1,7 @@
 using Monsters;
 using UnityEngine;
 
+// 디버프를 적용하기 위한 데이터 인터페이스
 public interface DebuffData
 {
     DEBUFF_TYPE DebuffType { get; set; }
@@ -10,6 +11,7 @@ public interface DebuffData
     void RemoveDebuff(Monster target);
 }
 
+// 슬로우 디버프
 public class SlowDebuff : DebuffData
 {
     public DEBUFF_TYPE DebuffType { get; set; }
