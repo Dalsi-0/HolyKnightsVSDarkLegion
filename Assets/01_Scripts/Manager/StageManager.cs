@@ -7,6 +7,7 @@ public class StageManager : Singleton<StageManager>
 {
     [SerializeField] private GameObject[] monsterPrefabs; // 몬스터 프리팹들
     [SerializeField] private Transform[] spawnPoints; // 스폰 위치 배열
+    [SerializeField] private GameObject spawnParticle; // 스폰 파티클
     private MonsterFactory monsterFactory;
     private IWaveState currentState;  // 현재 웨이브 상태
     private StageSO stageData;  
@@ -15,12 +16,9 @@ public class StageManager : Singleton<StageManager>
     void Start()
     {
         // 팩토리 초기화
-        monsterFactory = new MonsterFactory(monsterPrefabs);
+        monsterFactory = new MonsterFactory(monsterPrefabs, spawnParticle);
 
         SetStageData(1);
-
-        // 처음엔 대기 상태로 시작
-        // ChangeState(new WaveWaitingState(this));
     }
 
     void Update()
@@ -46,6 +44,8 @@ public class StageManager : Singleton<StageManager>
         }
         else
         {
+            int level = GameManager.Instance.GetCurrentStageLevel();
+            GameManager.Instance.SetCurrentStageLevel(level++);
             Debug.Log("스테이지 클리어");
         }
     }

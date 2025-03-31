@@ -57,7 +57,7 @@ public class WaveSpawningState : IWaveState
         Transform spawnPoint = stageManager.GetSpawnPoints()[randomSpawnIndex];
 
         MonsterFactory monsterFactory = stageManager.GetMonsterFactory();
-        monsterFactory.SpawnMonster(monsterID, spawnPoint.position);
+        monsterFactory.SpawnMonster(monsterID, spawnPoint.position, GameManager.Instance);
 
         // 소환된 몬스터의 카운트를 1 감소
         waveData.monsterCounts[randomIndex]--;
