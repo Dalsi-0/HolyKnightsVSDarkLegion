@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -37,7 +38,13 @@ public class UnitManager : Singleton<UnitManager>
             unitDitionary[prefab.name] = prefab;
         }
     }
-
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            ChangeMoney(30);
+        }
+    }
     // 좌표로 가장 가까운 인덱스 반환
     public Vector2Int GetGridIndex(Vector3 pos)
     {
@@ -55,6 +62,20 @@ public class UnitManager : Singleton<UnitManager>
 
         return new Vector2Int(indexX, indexY);
     }
+
+    // 인덱스로 월드 좌표 반환
+    public Vector3 GetPosByGrid(int indexX, int indexY)
+    {
+        Vector3 pos = new Vector3();
+        // 범위 오버시 최소, 최대 적용
+        indexX = Mathf.Clamp(indexX, 0, tileSize.x - 1);
+        indexY = Mathf.Clamp(indexY, 0, tileSize.y - 1);
+        
+        pos.x = startPos.x + stepSize.x * indexX;
+        pos.y = startPos.y + stepSize.y * indexY;
+        return pos;
+    }
+
     public PlayerUnit IsOnUnit(int indexX, int indexY)
     {
         // 소환 가능한 칸인지 판별
@@ -90,16 +111,15 @@ public class UnitManager : Singleton<UnitManager>
         // 그리드 확인
         if (indexX < 0 || indexX >= tileSize.x) return false;
         if (indexY < 0 || indexY >= tileSize.y) return false;
-        if(IsOnUnit(indexX, indexY)) return false;
+        if (IsOnUnit(indexX, indexY)) return false;
         // id 확인
         if (unitDitionary.ContainsKey(unitID))
         {
             // 비용 자동 소모
             if (ChangeMoney(-unitDitionary[unitID].GetComponent<PlayerUnit>().GetUnitData().UnitSummonCost))
             {
-                Vector3 pos = new Vector3();
-                pos.x = startPos.x + stepSize.x * indexX;
-                pos.y = startPos.y + stepSize.y * indexY;
+                // 월드 좌표로 변환
+                Vector3 pos = GetPosByGrid(indexX, indexY);
 
                 // 근처의 중심에 엔티티 소환 
                 //PlayerUnit unit = Instantiate(unitPrefab, pos, Quaternion.identity).GetComponent<PlayerUnit>();

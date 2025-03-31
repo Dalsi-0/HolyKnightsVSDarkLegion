@@ -40,6 +40,8 @@ public class DeckEditor : MonoBehaviour
             for (int i = 0; i < ownedCards.Count; i++)
             {
                 unitCreator.SpawnUnitCard(ownedCards[i]);
+                // 비활성화 상태로 시작
+                unitCreator.ChangeMoney(0);
             }
         }
     }
