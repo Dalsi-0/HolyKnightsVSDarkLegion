@@ -236,7 +236,7 @@ MonoBehaviour:
   canUseBasicAttack: 1
   canUseSkill: 1
   manaRecoveryAmount: 20
-  knockbackForce: 3
+  knockbackForce: 1.5
   damageAmount: 12
   checkRadius: 1
 --- !u!61 &8393769014539338458
