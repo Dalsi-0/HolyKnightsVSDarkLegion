@@ -32,7 +32,7 @@ public class PlayerUnit : MonoBehaviour, IDamageable
     [Header("사제")]
     [SerializeField] private float manaRecoveryAmount = 10f;
     [Header("넉백 수치")]
-    [SerializeField] private float knockbackForce = 3f;
+    [SerializeField] private float knockbackForce = 1.5f;
     [SerializeField] private float damageAmount = 12f;
     [SerializeField] private float checkRadius = 1f;
 
