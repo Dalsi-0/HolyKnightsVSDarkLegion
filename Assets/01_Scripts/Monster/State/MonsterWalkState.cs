@@ -17,7 +17,8 @@ namespace Monsters
         {
             base.Update();
             
-            if (!monster.GridSensor.TriggerUnit) return; // 타겟이 없으면 리턴
+            // 타겟이 존재하고 목표 지점에 도착했다면 Idle 상태로 전환
+            if (!monster.GridSensor.TriggerUnit) return;
             if (monster.GridSensor.IsArrived)
             {
                 stateMachine.ChangeState(stateMachine.IdleState);

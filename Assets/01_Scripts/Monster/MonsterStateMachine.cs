@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace Monsters
 {
+    // 기본 동작들은 해당 클래스를 상속받아 사용하고, 공격 동작은 오버라이딩하여 사용
     public class MonsterStateMachine : StateMachine
     {
         public Monster Monster { get; private set; }

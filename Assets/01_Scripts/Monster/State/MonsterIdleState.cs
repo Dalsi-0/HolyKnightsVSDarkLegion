@@ -21,7 +21,7 @@ namespace Monsters
             if (monster.GridSensor.TriggerUnit && stateMachine.CanAttack())
                 stateMachine.ChangeState(stateMachine.AttackState);
             
-            // 앞을 막고 있는 유닛을 죽였는지 체크 -> 죽였으면 이동
+            // 타겟이 존재하지 않는다면 걷기 상태로 전환
             if (!monster.GridSensor.TriggerUnit)
                 stateMachine.ChangeState(stateMachine.WalkState);
         }

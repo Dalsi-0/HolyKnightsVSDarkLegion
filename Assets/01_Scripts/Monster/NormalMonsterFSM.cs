@@ -1,5 +1,6 @@
 namespace Monsters
 {
+    // 노말 공격 몬스터 FSM
     public class NormalMonsterFSM : MonsterStateMachine
     {
         public override void Init(Monster monster)
