@@ -15,6 +15,14 @@ public class SceneLoadManager : Singleton<SoundManager>
     }
 
     /// <summary>
+/// 메인 씬으로 전환
+/// </summary>
+    public void LoadMainScene()
+    {
+        StartCoroutine(Loading(0));
+    }
+
+    /// <summary>
     /// 로딩 (현재 게임 스케일이 작아서 바로 로딩되어 사용 X)
     /// </summary>
     /// <param name="sceneNum"> 씬 인덱스 번호 </param>
