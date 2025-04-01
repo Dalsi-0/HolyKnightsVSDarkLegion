@@ -50,7 +50,6 @@ public class DeckCard : MonoBehaviour
     }
     public void ActCallback()
     {
-        Debug.Log("unitID: " + unitID);
         ClickAction?.Invoke(unitID);
     }
 }

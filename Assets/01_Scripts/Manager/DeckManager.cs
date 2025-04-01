@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using Newtonsoft.Json;
+using System.Linq;
 
 /// <summary>
 /// 플레이어의 덱 데이터를 불러오고 저장하는 매니저
@@ -32,96 +33,121 @@ public class DeckManager : Singleton<DeckManager>
         inHandCard = new List<string>();
         deck = new Dictionary<string, bool>();
         string filePath = Path.Combine(Application.persistentDataPath, ownedCardName + ".json");
+
+
         // 파일 불러오기
         if (File.Exists(filePath))
         {
+            // 오류 확인용 변수
+            bool hasError = false;
             Debug.Log("파일 불러오기");
-            string jsonData = File.ReadAllText(filePath);
 
-            // 유효성 검사
-            PlayerInfo playerInfo = JsonUtility.FromJson<PlayerInfo>(jsonData);
-            if (playerInfo == null)
+            try
             {
-                //파일만 있고 데이터 없으면 기본값
-                Debug.Log("PlayerInfo 없음");
-                CreateDefalutFile();
-            }
-            else
-            {
-                // 기본 설정 불러오기
-                bool hasError = false;
+                // 저장된 파일 불러오기
+                string jsonData = File.ReadAllText(filePath);
+                PlayerInfo playerInfo = JsonUtility.FromJson<PlayerInfo>(jsonData);
+
+                // 기본 정보 불러오기
                 string json = Resources.Load<TextAsset>(defaultSettingPath).text;
                 PlayerInfo defalutInfo = JsonUtility.FromJson<PlayerInfo>(json);
-
-                // 기본정보 불러오기
-                List<CardCollection> defalutList = defalutInfo?.AllCard;
-
-                // 카드 목록 저장
-                List<CardCollection> cardList = playerInfo?.AllCard;
-                foreach (var card in cardList)
+                // 유효성 검사
+                if (playerInfo == null)
                 {
-                    deck[card.unitID] = card.canUse;
+                    //파일만 있고 데이터 없으면 기본값
+                    throw new Exception("데이터가 NULL임");
                 }
-
-                // 저장 후 갯수 부족하면 누락 확인
-                if (deck.Count < defalutList.Count)
+                else
                 {
-                    // 누락 되면 업데이트
-                    foreach (var defaultCard in defalutList)
+                    // 기본정보 불러오기
+                    List<CardCollection> defalutList = defalutInfo?.AllCard;
+
+                    // 카드 목록 저장
+                    List<CardCollection> cardList = playerInfo?.AllCard;
+                    foreach (var card in cardList)
                     {
-                        if (!deck.ContainsKey(defaultCard.unitID))
+                        deck[card.unitID] = card.canUse;
+                    }
+
+                    // 저장 후 갯수 부족하면 누락 확인
+                    if (deck.Count < defalutList.Count)
+                    {
+                        // 누락 되면 업데이트
+                        foreach (var defaultCard in defalutList)
                         {
-                            deck[defaultCard.unitID] = defaultCard.canUse;
+                            if (!deck.ContainsKey(defaultCard.unitID))
+                            {
+                                deck[defaultCard.unitID] = defaultCard.canUse;
+                                hasError = true;
+                            }
+                        }
+                    }
+
+                    // 유효값인지 확인
+                    foreach (var card in deck.ToArray())
+                    {
+                        bool isIndeck = false;
+                        for (int i = 0; i < defalutList.Count; i++)
+                        {
+                            // 기본값에 포함되면 유효한 값
+                            if (card.Key == defalutList[i].unitID)
+                            {
+                                isIndeck = true;
+                                continue;
+                            }
+                        }
+                        if (!isIndeck)
+                        {
+                            // 유효하지 않으면 제거
+                            deck.Remove(card.Key);
+                        }
+                    }
+
+
+                    // 사용 목록 불러오기
+                    List<string> loadedHands = playerInfo?.InHandCard;
+                    List<string> defaultHands = defalutInfo?.InHandCard;
+
+                    // 비어 있다면 기본값으로
+                    if (loadedHands.Count < 1)
+                    {
+                        loadedHands = defaultHands;
+                        hasError = true;
+                    }
+                    // 4개 초과하면 이후는 삭제
+                    else if (loadedHands.Count > 4)
+                    {
+                        loadedHands.RemoveRange(4, loadedHands.Count - 4);
+                        hasError = true;
+                    }
+
+                    // 유효한지 여부로 추가
+                    foreach (var card in loadedHands.ToArray())
+                    {
+                        // 가지고 있는 카드면 추가
+                        if (deck.ContainsKey(card))
+                        {
+                            inHandCard.Add(card);
+                        }
+                        else
+                        {
+                            loadedHands.Remove(card);
                             hasError = true;
                         }
                     }
                 }
-
-                // 유효한지 확인
-                List<string> errList = new();
-                // 유효값인지 확인
-                foreach (var card in deck)
-                {
-                    bool isError = true;
-                    for (int i = 0; i < defalutList.Count; i++)
-                    {
-                        // 기본값에 포함되면 유효한 값
-                        if (card.Key == defalutList[i].unitID)
-                        {
-                            isError = false;
-                            continue;
-                        }
-                    }
-                    if (isError)
-                    {
-                        // 유효한 값이 아니면오류 목룍에 추가
-                        // 딕셔너리는 한번에 처리하도록
-                        errList.Add(card.Key);
-                    }
-                }
-                // 유효하지 않은 요소 제거
-                for (int i = 0; i < errList.Count; i++)
-                {
-                    Debug.Log("유효하지 않은 요소 : " + errList[i]);
-                    deck.Remove(errList[i]);
-                    hasError = true;
-                }
-
-                // 사용 목록 불러오기
-                List<string> hands = playerInfo?.InHandCard;
-                for (int i = 0; i < hands.Count; i++)
-                {
-                    // 가지고 있는 카드면 추가
-                    if (deck[hands[i]])
-                        inHandCard.Add(hands[i]);
-                    else
-                        hands.Remove(hands[i]);
-                }
-                
-                // 수정 완료된 정보를 파일로 저장
-                if (hasError)
-                    SaveInfo();
             }
+            catch (Exception ex)
+            {
+                Debug.LogWarning("기타 오류: " + ex.Message);
+                // 파싱 오류 발생시 기본값 적용
+                Debug.Log("기본값 적용");
+                CreateDefalutFile();
+                return;
+            }
+            // 수정 완료된 정보를 파일로 저장
+            if (hasError)
+                SaveInfo();
         }
         else
         {
@@ -137,17 +163,23 @@ public class DeckManager : Singleton<DeckManager>
         File.WriteAllText(filePath, json);
         ApplyJson(json);
     }
-    public void SetUse(string unitName)
-    {
-        // 사용 가능
-        deck[unitName] = true;
-        DeckEditor.Reflash(unitName);
-    }
 
-    public void AddCard(string unitName, bool active = false)
+    // 특정 카드 덱에 추가 가능하도록(예: 스테이지 보상)
+    public void AddCard(string[] unitName, bool active = false)
     {
-        // 미사용 상태로 추가
-        deck[unitName] = active;
+        for (int i = 0; i < unitName.Length; i++)
+        {
+            // 미사용 상태로 추가
+            deck[unitName[i]] = active;
+            // 사용 가능하도록 UI 업데이트
+            if (active)
+                DeckEditor.Reflash(unitName[i]);
+        }
+        // 카드 팝업 생성
+        if (active)
+        {
+            UIManager.Instance.AddCard(unitName);
+        }
     }
 
     // 생성자에 데이터 세팅
@@ -166,6 +198,11 @@ public class DeckManager : Singleton<DeckManager>
         }
     }
 
+    // 최근에 사용한 카드 저장
+    public void SetInHand(List<string> newValue)
+    {
+        inHandCard = newValue;
+    }
     // 파일로 저장
     public void SaveInfo()
     {
@@ -177,6 +214,7 @@ public class DeckManager : Singleton<DeckManager>
         }
         newInfo.AllCard = cardList;
         newInfo.InHandCard = inHandCard;
+        Debug.Log("had:" + newInfo.InHandCard.Count);
         string newJson = JsonConvert.SerializeObject(newInfo, Formatting.Indented);
         string filePath = Path.Combine(Application.persistentDataPath, ownedCardName + ".json");
         File.WriteAllText(filePath, newJson);

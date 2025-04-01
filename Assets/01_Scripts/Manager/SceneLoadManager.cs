@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class SceneLoadManager : Singleton<SoundManager>
+public class SceneLoadManager : Singleton<SceneLoadManager>
 {
     /// <summary>
     /// 씬 번호로 씬 전환

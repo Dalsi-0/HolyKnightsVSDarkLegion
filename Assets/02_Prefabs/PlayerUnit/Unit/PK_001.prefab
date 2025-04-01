@@ -235,9 +235,8 @@ MonoBehaviour:
     m_Bits: 64
   canUseBasicAttack: 1
   canUseSkill: 1
-  skillCooldown: 5
-  manaRecoveryAmount: 10
-  knockbackForce: 3
+  manaRecoveryAmount: 20
+  knockbackForce: 1.5
   damageAmount: 12
   checkRadius: 1
 --- !u!61 &8393769014539338458

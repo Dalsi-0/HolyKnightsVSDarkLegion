@@ -5,20 +5,6 @@ using UnityEngine;
 using System;
 using UnityEngine.Events;
 
-public enum UnitState
-{
-    Idle,
-    Dead,
-    Hurt,
-    BasicAttack,
-    UsingSkill
-}
-
-public interface IDamageable
-{
-    void TakeDamage(float damage);
-}
-
 // 사망 데이터를 담을 클래스 정의
 [Serializable]
 public class PlayerDeathData
@@ -42,15 +28,16 @@ public class PlayerUnit : MonoBehaviour, IDamageable
     [Header("유닛 설정")]
     [SerializeField] private bool canUseBasicAttack = true;
     [SerializeField] private bool canUseSkill = true;
-    [SerializeField] private float skillCooldown = 5f;
+    
     [Header("사제")]
     [SerializeField] private float manaRecoveryAmount = 10f;
     [Header("넉백 수치")]
-    [SerializeField] private float knockbackForce = 3f;
+    [SerializeField] private float knockbackForce = 1.5f;
     [SerializeField] private float damageAmount = 12f;
     [SerializeField] private float checkRadius = 1f;
 
     private UnitState _currentState = UnitState.Idle;
+    private float skillCooldown;
     private float _currentHP;
     private Transform _currentTarget;
 
@@ -64,6 +51,7 @@ public class PlayerUnit : MonoBehaviour, IDamageable
 
     private void Awake()
     {
+        skillCooldown = unitData.UnitCoolDown;
         InitializeComponents();
     }
 
@@ -71,6 +59,7 @@ public class PlayerUnit : MonoBehaviour, IDamageable
     {
         ValidateReferences();
         _currentHP = unitData.UnitHP;
+        
     }
 
     private void Update()
