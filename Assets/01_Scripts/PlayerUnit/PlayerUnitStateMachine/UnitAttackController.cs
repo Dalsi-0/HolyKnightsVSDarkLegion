@@ -33,48 +33,51 @@ public class UnitAttackController : MonoBehaviour
         return _attackCooldown <= 0;
     }
 
+
     public void DetectAndAttackEnemy()
     {
-
         // 현재 유닛의 그리드 위치 가져오기
         Vector2Int currentGrid = UnitManager.Instance.GetGridIndex(transform.position);
-
         // UnitAtkRange를 그리드 거리로 해석
         int gridRange = Mathf.RoundToInt(_unitData.UnitAtkRange);
-
         // 먼저 넓은 원으로 적들을 검색 (최적화를 위해)
         Collider2D[] enemies = Physics2D.OverlapCircleAll(
             transform.position,
             gridRange * Mathf.Max(UnitManager.Instance.stepSize.x, UnitManager.Instance.stepSize.y) * 2, // 직선이므로 더 넓게 검사
             _enemyLayer
         );
-
         // 같은 행/열에 있는 가장 가까운 적 찾기
         float closestDistance = float.MaxValue;
         Transform closestEnemy = null;
-
         foreach (var enemy in enemies)
         {
             // 적의 그리드 위치 계산
             Vector2Int enemyGrid = UnitManager.Instance.GetGridIndex(enemy.transform.position);
-
             bool isInSameLine = false;
+            bool isInFrontDirection = false;
 
             if (_attackInRow)
             {
                 // 같은 행(y값이 같음)에 있고 공격 범위 내인지 확인
                 isInSameLine = (enemyGrid.y == currentGrid.y) &&
                               (Mathf.Abs(enemyGrid.x - currentGrid.x) <= gridRange);
+
+                // 오른쪽 방향에 있는지 확인 (왼쪽/뒤쪽은 공격하지 않음)
+                isInFrontDirection = enemyGrid.x > currentGrid.x;
             }
             else
             {
                 // 같은 열(x값이 같음)에 있고 공격 범위 내인지 확인  
                 isInSameLine = (enemyGrid.x == currentGrid.x) &&
                               (Mathf.Abs(enemyGrid.y - currentGrid.y) <= gridRange);
+
+                // 위쪽 방향에 있는지 확인 (아래쪽/뒤쪽은 공격하지 않음)
+                // 참고: Unity의 2D 좌표계에서 y가 더 클수록 위
+                isInFrontDirection = enemyGrid.y > currentGrid.y;
             }
 
-            // 직선 범위 내에 있고 더 가까운 적인 경우 업데이트
-            if (isInSameLine)
+            // 직선 범위 내에 있고, 앞쪽 방향에 있으며, 더 가까운 적인 경우 업데이트
+            if (isInSameLine && isInFrontDirection)
             {
                 // 실제 거리 계산 (우선순위 결정용)
                 float distance = Vector2.Distance(transform.position, enemy.transform.position);
@@ -85,7 +88,6 @@ public class UnitAttackController : MonoBehaviour
                 }
             }
         }
-
         // 적이 감지되면 공격 상태 설정
         if (closestEnemy != null)
         {
@@ -94,7 +96,7 @@ public class UnitAttackController : MonoBehaviour
             if (CanAttack())
             {
                 _playerUnit.GetAnimationController().SetAttackAnimation(true);
-                _attackCooldown = _unitData.UnitAtkDelay; // 공격 딜레이 설정
+                _attackCooldown = _unitData.UnitAtkDelay; // 공격 딜레이 설정 (별표 제거함)
             }
         }
         else
