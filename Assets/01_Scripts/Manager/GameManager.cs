@@ -16,11 +16,6 @@ public class GameManager : Singleton<GameManager>
         }
     }
 
-    public void GameOver()
-    {
-
-    }
-
     public int GetCurrentStageLevel()
     {
         return currentStageLevel;
@@ -32,5 +27,4 @@ public class GameManager : Singleton<GameManager>
         PlayerPrefs.SetInt("CurrentStageLevel", level); // 저장
         PlayerPrefs.Save();
     }
-
 }

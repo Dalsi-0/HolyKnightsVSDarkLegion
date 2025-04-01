@@ -95,6 +95,22 @@ public class StageManager : Singleton<StageManager>
         levels[stageNumber-1].gameObject.SetActive(true);
     }
 
+    public void StageEnd(bool isClear)
+    {
+        if (isClear)
+        {
+            int tmp = GameManager.Instance.GetCurrentStageLevel();
+            GameManager.Instance.SetCurrentStageLevel(tmp + 1);
+            stageUIAnim.Play("Clear");
+        }
+        else
+        {
+            stageUIAnim.Play("Lose");
+        }
+
+        ChangeState(new WaveResultState(this));
+    }
+
     public MonsterFactory GetMonsterFactory()
     {
         return monsterFactory;
