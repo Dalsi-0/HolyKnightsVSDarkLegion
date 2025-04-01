@@ -16,6 +16,11 @@ public class GameManager : Singleton<GameManager>
         }
     }
 
+    public void GameOver()
+    {
+
+    }
+
     public int GetCurrentStageLevel()
     {
         return currentStageLevel;
