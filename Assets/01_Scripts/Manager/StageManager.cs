@@ -9,6 +9,7 @@ public class StageManager : Singleton<StageManager>
     [SerializeField] private Transform[] spawnPoints; // 스폰 위치 배열
     [SerializeField] private GameObject spawnParticle; // 스폰 파티클
     [SerializeField] private Animator stageUIAnim;
+    [SerializeField] private Transform[] levels;
 
     private MonsterFactory monsterFactory;
     private IWaveState currentState;  // 현재 웨이브 상태
@@ -79,6 +80,12 @@ public class StageManager : Singleton<StageManager>
     public void SetStageData(int stageNumber)
     {
         stageData = DataManager.Instance.GetStageData(stageNumber);
+
+        for (int i = 0; i < levels.Length; i++)
+        {
+            levels[i].gameObject.SetActive(false);
+        }
+        levels[stageNumber-1].gameObject.SetActive(true);
     }
 
     public MonsterFactory GetMonsterFactory()
