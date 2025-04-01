@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -104,8 +105,8 @@ namespace Monsters
         {
             return UnitManager.Instance.GetPosByGrid(frontCell.x, frontCell.y);
         }
-        
-        public void StopCoroutine()
+
+        private void OnDisable()
         {
             StopAllCoroutines();
         }

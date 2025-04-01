@@ -115,9 +115,9 @@ namespace Monsters
 
         public void OnDead()
         {
-            Monster.GridSensor.StopCoroutine();
             MonsterFactory monsterFactory = StageManager.Instance.GetMonsterFactory();
             monsterFactory.ReturnMonsterToPool(gameObject);
+            StageManager.Instance.GetWaveSpawningState().OnMonsterDied();
         }
     }
 }

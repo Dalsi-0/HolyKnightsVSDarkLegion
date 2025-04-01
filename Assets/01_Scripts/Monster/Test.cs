@@ -41,7 +41,7 @@ public class Test : MonoBehaviour
         bigButtonStyle.fixedWidth = 150; 
         if (GUILayout.Button("Slow", bigButtonStyle))
         {
-            monster.DebuffHandler.ExecuteBuff(slow);
+            monster.DebuffHandler.ExecuteDebuff(slow);
         }
         
         if (GUILayout.Button("Hit", bigButtonStyle))

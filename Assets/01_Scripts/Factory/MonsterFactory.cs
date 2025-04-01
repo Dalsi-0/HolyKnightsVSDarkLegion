@@ -1,14 +1,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Monsters;
+using System.Collections;
 
 public class MonsterFactory
 {
     private Dictionary<string, MonsterPool> monsterPools;  // 몬스터 ID별 풀을 관리하는 딕셔너리
-    private int totalSpawnedMonsters = 0;
-    private int deadMonsters = 0;
+    private GameObject spawnParticle;
 
-    public MonsterFactory(GameObject[] prefabs)
+    public MonsterFactory(GameObject[] prefabs, GameObject spawnParticle)
     {
         monsterPools = new Dictionary<string, MonsterPool>();
 
@@ -18,44 +18,56 @@ public class MonsterFactory
             Monster monster = prefab.GetComponent<Monster>();
             if (monster != null)
             {
-                totalSpawnedMonsters++;
                 string monsterID = monster.MonsterId;
                 monsterPools[monsterID] = new MonsterPool(prefab, 5);  // 풀의 초기 크기는 5로 설정
 
             }
         }
+
+        this.spawnParticle = spawnParticle;
     }
 
+
     // 몬스터를 소환하는 함수
-    public GameObject SpawnMonster(string monsterID, Vector3 spawnPosition, Transform parent = null)
+    public void SpawnMonster(string monsterID, Vector3 spawnPosition, MonoBehaviour helper)
     {
         if (monsterPools.TryGetValue(monsterID, out MonsterPool pool))
         {
-            // 풀에서 몬스터를 가져온다
-            GameObject monster = pool.GetObject();
-            monster.transform.position = spawnPosition;
-            monster.transform.parent = parent;
-            monster.SetActive(true); 
-
-            return monster;
+            helper.StartCoroutine(SpawnMonsterCoroutine(pool, spawnPosition));
         }
         else
         {
-            Debug.Log("풀에서 찾을수가 없다.");
+            Debug.LogError("풀에서 찾을 수 없다.");
         }
-            return null;
     }
+
+    private IEnumerator SpawnMonsterCoroutine(MonsterPool pool, Vector3 spawnPosition)
+    {
+        // 스폰 파티클 생성
+        if (spawnParticle != null)
+        {
+            GameObject particle = Object.Instantiate(spawnParticle, spawnPosition, Quaternion.identity);
+            Animator particleAnim = particle.GetComponent<Animator>();
+
+            // 애니메이션 길이 계산 후 자동 삭제
+            float animTime = particleAnim != null ? particleAnim.GetCurrentAnimatorStateInfo(0).length : 1f;
+            Object.Destroy(particle, animTime);
+        }
+
+        // 0.5초 대기 후 몬스터 활성화
+        yield return new WaitForSeconds(0.5f);
+
+        GameObject monster = pool.GetObject();
+        monster.transform.position = spawnPosition;
+        monster.GetComponent<Monster>().Init();
+        monster.SetActive(true);
+    }
+
+
 
     // 풀에 몬스터를 반환하는 함수
     public void ReturnMonsterToPool(GameObject monster)
     {
-        deadMonsters++;  // 죽은 몬스터 수 증가
-
-        if (deadMonsters >= totalSpawnedMonsters)
-        {
-            StageManager.Instance.SetWaveCleared(); // 모든 몬스터가 죽으면 웨이브 종료
-        }
-
         monster.SetActive(false);  // 비활성화
         string monsterID = monster.GetComponent<Monster>().MonsterId;
 

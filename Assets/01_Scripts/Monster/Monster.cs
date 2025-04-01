@@ -22,7 +22,7 @@ namespace Monsters
         public Animator Animator => animator;
         public MonsterSO MonsterData { get; private set; }
 
-        private void Start()
+        public void Init()
         {
             MonsterData = DataManager.Instance.GetMonsterData(monsterId);
             stateMachine.Init(this);
