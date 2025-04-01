@@ -25,14 +25,14 @@ public class WaveResultState : IWaveState
     {
         yield return new WaitForSecondsRealtime(2f);
         canInput = true;
+
+        // 승리 했을 때만 팝업 생성
+        if (isContinue)
+            DeckManager.Instance.AddAllCard();
     }
 
     public void UpdateState()
     {
-        // 승리 했을 때만 팝업 생성
-        if (isContinue)
-            DeckManager.Instance.AddAllCard();
-
         if (!canInput || !Input.anyKeyDown) return;
 
         Time.timeScale = 1;
