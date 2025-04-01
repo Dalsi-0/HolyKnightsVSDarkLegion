@@ -2,13 +2,12 @@ using UnityEngine;
 
 namespace Monsters
 {
+    // 최초 1회 특수공격을 하는 웨어울프용 공격 상태
     public class WereWolfAttackState : MonsterAttackState
     {
         public WereWolfAttackState(MonsterStateMachine stateMachine) : base(stateMachine) { }
-
         private readonly int hashAttack = Animator.StringToHash("Attack");
         private readonly int hashSpecialAttack = Animator.StringToHash("SpecialAttack");
-
         private const string normalAttackName = "Attack";
         private const string specialAttackName = "SpecialAttack";
 
@@ -29,7 +28,6 @@ namespace Monsters
             }
 
             StartAnimation(hashAnim);
-            // stateMachine.OnAttack();
         }
 
         public override void Update()

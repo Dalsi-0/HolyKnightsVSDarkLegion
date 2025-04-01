@@ -1,5 +1,6 @@
 namespace Monsters
 {
+    // 웨어울프 FSM
     public class WereWolfStateMachine : MonsterStateMachine
     {
         public bool IsFirstAttack { get; private set; } = true;
