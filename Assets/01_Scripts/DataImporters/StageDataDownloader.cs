@@ -12,7 +12,7 @@ public class StageDataDownloader : MonoBehaviour
 {
     [SerializeField] private List<StageSO> stageSOData = new List<StageSO>();
 
-    private const string URL_StageDataSheet = "https://docs.google.com/spreadsheets/d/1tgEgtsQp0vTR3rbdCwYv_y4s_4LdsDHd-6RXWyvgk0Y/export?format=tsv&gid=566182702&range=A1:E61";
+    private const string URL_StageDataSheet = "https://docs.google.com/spreadsheets/d/1tgEgtsQp0vTR3rbdCwYv_y4s_4LdsDHd-6RXWyvgk0Y/export?format=tsv&gid=566182702&range=A1:E21";
 
     private const string stageSODataFolderPath = "Assets/01_Scripts/ScriptableObjects/Stage/Data";
     
