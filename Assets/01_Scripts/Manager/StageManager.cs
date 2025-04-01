@@ -28,8 +28,8 @@ public class StageManager : Singleton<StageManager>
         // 팩토리 초기화
         monsterFactory = new MonsterFactory(monsterPrefabs, spawnParticle);
 
+        SetDisplayStageWaveText();
         int currentStage = GameManager.Instance.GetCurrentStageLevel();
-        displayStageWaveText.text = $"[  Stage {currentStage}   |   Wave {currentWaveIndex+1}  ] ";
         SetStageData(currentStage);
     }
 
@@ -51,6 +51,7 @@ public class StageManager : Singleton<StageManager>
     {
         if (currentWaveIndex < stageData.Waves.Count)
         {
+            SetDisplayStageWaveText();
             ChangeState(new WaveSpawningState(this, stageData.Waves[currentWaveIndex]));
             currentWaveIndex++;
         }
@@ -83,6 +84,12 @@ public class StageManager : Singleton<StageManager>
     public void SetWaveSpawningState(WaveSpawningState waveSpawningState)
     {
         this.waveSpawningState = waveSpawningState;
+    }
+
+    private void SetDisplayStageWaveText()
+    {
+        int currentStage = GameManager.Instance.GetCurrentStageLevel();
+        displayStageWaveText.text = $"[  Stage {currentStage}   |   Wave {currentWaveIndex + 1}  ] ";
     }
 
     public void SetStageData(int stageNumber)
