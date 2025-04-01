@@ -1,4 +1,5 @@
 using System.Collections;
+using UnityEditor.Searcher;
 using UnityEngine;
 
 namespace Monsters
@@ -15,6 +16,7 @@ namespace Monsters
         public float SpeedModifier { get; private set; } = 1f;
         public float DebuffSpeedModifier { get; private set; } = 1f;
         public float AttackSpeedModifier { get; private set; } = 1f;
+        public bool IsDead { get; private set; } = false;
 
         protected const float hitDuration = 0.2f;
         protected float lastAttackTime = 0f;
@@ -29,17 +31,25 @@ namespace Monsters
         
         public virtual void Init(Monster monster)
         {
-            // Data
             Monster = monster;
-            currentHp = monster.MonsterData.MonsterHP;
-            
-            // State
             IdleState = new MonsterIdleState(this);
             WalkState = new MonsterWalkState(this);
             DeadState = new MonsterDeadState(this);
             
+            InitStat();
             ChangeState(WalkState);
             StartCoroutine(CheckAttackTime());
+        }
+
+        private void InitStat()
+        {
+            SpeedModifier = 1f;
+            DebuffSpeedModifier = 1f;
+            AttackSpeedModifier = 1f;
+            IsDead = false;
+            lastAttackTime = 0f;
+            currentHp = Monster.MonsterData.MonsterHP;
+            baseColor = Color.white;
         }
         
         private IEnumerator CheckAttackTime()
@@ -62,6 +72,7 @@ namespace Monsters
 
         public void OnHit(int damage)
         {
+            SoundManager.Instance.SetSfx(1);
             currentHp = Mathf.Max(0, currentHp - damage);
             if (currentHp <= 0)
             {
@@ -74,7 +85,6 @@ namespace Monsters
         
         private IEnumerator HitRoutine()
         {
-            Debug.Log("Hit" + baseColor);
             yield return LerpColor(baseColor, hitColor, hitDuration);
             yield return LerpColor(hitColor, baseColor, hitDuration);
 
@@ -116,6 +126,7 @@ namespace Monsters
 
         public void OnDead()
         {
+            IsDead = true;
             MonsterFactory monsterFactory = StageManager.Instance.GetMonsterFactory();
             monsterFactory.ReturnMonsterToPool(gameObject);
             StageManager.Instance.GetWaveSpawningState().OnMonsterDied();

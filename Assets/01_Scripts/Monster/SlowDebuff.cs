@@ -7,6 +7,7 @@ public interface DebuffData
     DEBUFF_TYPE DebuffType { get; set; }
     Color DebuffColor { get; set; }
     float Duration { get; set; }
+    float Amount { get; set; }
     void ApplyDebuff(Monster target);
     void RemoveDebuff(Monster target);
 }
@@ -17,20 +18,21 @@ public class SlowDebuff : DebuffData
     public DEBUFF_TYPE DebuffType { get; set; }
     public Color DebuffColor { get; set; }
     public float Duration { get; set; }
-    private float slowAmount = 0.5f;
+    public float Amount { get; set; }
 
-    public SlowDebuff(float duration, Color debuffColor)
+    public SlowDebuff(float duration, float amount, Color debuffColor)
     {
         DebuffType = DEBUFF_TYPE.SLOW;
-        DebuffColor = debuffColor;
         Duration = duration;
+        Amount = amount;
+        DebuffColor = debuffColor;
     }
 
     public void ApplyDebuff(Monster target)
     {
-        target.Animator.speed = slowAmount;
-        target.StateMachine.SetDebuffSpeedModifier(slowAmount);
-        target.StateMachine.SetAttackSpeedModifier(slowAmount);
+        target.Animator.speed = Amount;
+        target.StateMachine.SetDebuffSpeedModifier(Amount);
+        target.StateMachine.SetAttackSpeedModifier(Amount);
         target.StateMachine.SetBaseColor(DebuffColor);
     }
 

@@ -20,9 +20,8 @@ namespace Monsters
             // 타겟이 존재하고 공격 가능하다면 공격 상태로 전환
             if (monster.GridSensor.TriggerUnit && stateMachine.CanAttack())
                 stateMachine.ChangeState(stateMachine.AttackState);
-            
             // 타겟이 존재하지 않는다면 걷기 상태로 전환
-            if (!monster.GridSensor.TriggerUnit)
+            else if (!monster.GridSensor.TriggerUnit)
                 stateMachine.ChangeState(stateMachine.WalkState);
         }
         

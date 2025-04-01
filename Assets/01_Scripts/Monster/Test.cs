@@ -33,7 +33,7 @@ public class Test : MonoBehaviour
     {
         if (!onGUI) return;
         
-        var slow = new SlowDebuff(2f, new Color(0.35f, 0.82f, 1f));
+        var slow = new SlowDebuff(2f, 0.5f, new Color(0.35f, 0.82f, 1f));
         
         GUIStyle bigButtonStyle = new GUIStyle(GUI.skin.button);
         bigButtonStyle.fontSize = 35;

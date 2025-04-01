@@ -145,7 +145,7 @@ public class IceBrakeSkill : SkillBase
             monster.StateMachine.OnHit(damage);
 
             // SlowDebuff 생성 및 적용
-            SlowDebuff slow = new SlowDebuff(slowDuration, iceDebuffColor);
+            SlowDebuff slow = new SlowDebuff(slowDuration, slowAmount, iceDebuffColor);
             monster.DebuffHandler.ExecuteDebuff(slow);
         }
     }

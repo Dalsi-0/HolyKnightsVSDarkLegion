@@ -11,8 +11,8 @@ namespace Monsters
         public override void Enter()
         {
             stateMachine.SetSpeedModifier(0f);
-            stateMachine.OnAttack();
             StartAnimation(hashAttack);
+            stateMachine.OnAttack();
         }
 
         public override void Update()

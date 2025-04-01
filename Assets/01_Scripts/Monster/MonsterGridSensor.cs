@@ -108,6 +108,7 @@ namespace Monsters
 
         private void OnDisable()
         {
+            if (TriggerUnit) TriggerUnit.OnPlayerDeadAction -= FindTarget;
             StopAllCoroutines();
         }
     }

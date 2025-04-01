@@ -12,6 +12,7 @@ namespace Monsters
         public override void OnAttack()
         {
             var targets = Monster.GridSensor.Targets;
+            SoundManager.Instance.SetSfx(2);
             lastAttackTime = 0;
             for (int i = 0; i < targets.Length; i++)
             {
