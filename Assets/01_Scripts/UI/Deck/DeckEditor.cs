@@ -54,6 +54,7 @@ public class DeckEditor : MonoBehaviour
     {
         SetActive(false);
         StageManager.Instance.ChangeState(new WaveWaitingState(StageManager.Instance));
+        DeckManager.Instance.SetInHand(unitCreator.GetInHand());
         DeckManager.Instance.SaveInfo();
         // 사용 가능 갱신
         UnitManager.Instance.ChangeMoney(0);
@@ -66,9 +67,9 @@ public class DeckEditor : MonoBehaviour
     }
     public void Reflash(string unitID)
     {
-        foreach(var card in cards)
+        foreach (var card in cards)
         {
-            if(card.unitID == unitID)
+            if (card.unitID == unitID)
             {
                 card.SetUsable();
             }

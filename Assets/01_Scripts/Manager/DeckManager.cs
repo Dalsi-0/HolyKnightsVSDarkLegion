@@ -198,6 +198,11 @@ public class DeckManager : Singleton<DeckManager>
         }
     }
 
+    // 최근에 사용한 카드 저장
+    public void SetInHand(List<string> newValue)
+    {
+        inHandCard = newValue;
+    }
     // 파일로 저장
     public void SaveInfo()
     {
@@ -209,6 +214,7 @@ public class DeckManager : Singleton<DeckManager>
         }
         newInfo.AllCard = cardList;
         newInfo.InHandCard = inHandCard;
+        Debug.Log("had:" + newInfo.InHandCard.Count);
         string newJson = JsonConvert.SerializeObject(newInfo, Formatting.Indented);
         string filePath = Path.Combine(Application.persistentDataPath, ownedCardName + ".json");
         File.WriteAllText(filePath, newJson);
