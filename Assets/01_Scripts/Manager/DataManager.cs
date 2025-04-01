@@ -112,5 +112,10 @@ public class DataManager : Singleton<DataManager>
         return null;
     }
 
+    public int GetStageDictionaryLength()
+    {
+        return StageSODatas.Count;
+    }
+
 
 }

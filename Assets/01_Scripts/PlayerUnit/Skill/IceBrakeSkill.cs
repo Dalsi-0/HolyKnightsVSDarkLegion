@@ -4,7 +4,6 @@ using System.Collections.Generic;
 
 public class IceBrakeSkill : SkillBase
 {
-    private float slowAmount = 0.5f; // 50% 감속
     private float slowDuration = 1.5f; // 감속 지속 시간 (초)
     private float iceDropHeight = 5f; // 얼음이 떨어지는 높이
     private float iceDropSpeed = 10f; // 얼음이 떨어지는 속도
@@ -143,6 +142,8 @@ public class IceBrakeSkill : SkillBase
             // 데미지 적용
             int damage = (int)(owner.GetUnitData().UnitAtk * 1.5f);
             monster.StateMachine.OnHit(damage);
+            //SoundManager.Instance.SetSfx(1);
+            // 오디오 추가시 주석해제
 
             // SlowDebuff 생성 및 적용
             SlowDebuff slow = new SlowDebuff(slowDuration, iceDebuffColor);

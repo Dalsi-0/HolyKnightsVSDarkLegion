@@ -15,7 +15,7 @@ MonoBehaviour:
   monsterID: DL_009
   monsterName: "\uC2A4\uCF08\uB808\uD1A4 \uB098\uC774\uD2B8"
   monsterHP: 120
-  monsterAtk: 50
+  monsterAtk: 5
   monsterAtkRange: 2
   monsterAtkDelay: 2
   monsterAttackRangeType: 2

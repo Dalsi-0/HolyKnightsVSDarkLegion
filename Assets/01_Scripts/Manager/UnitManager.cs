@@ -7,6 +7,8 @@ public class UnitManager : Singleton<UnitManager>
     [Header("UnitPrefabs")]
     public GameObject[] unitPrefabs; // 유닛 프리팹 목록
     private Dictionary<string, GameObject> unitDitionary; // 유닛 이름별로 저장
+    public GameObject particlePrefab; // 생성시 파티클 프리팹
+    private ParticleSystem spawnParticle; // 재사용하기 위해 저장
     public int PlayerMoney; // 소지 자원
 
     [Header("Map Info")]
@@ -70,7 +72,7 @@ public class UnitManager : Singleton<UnitManager>
         // 범위 오버시 최소, 최대 적용
         indexX = Mathf.Clamp(indexX, 0, tileSize.x - 1);
         indexY = Mathf.Clamp(indexY, 0, tileSize.y - 1);
-        
+
         pos.x = startPos.x + stepSize.x * indexX;
         pos.y = startPos.y + stepSize.y * indexY;
         return pos;
@@ -130,10 +132,19 @@ public class UnitManager : Singleton<UnitManager>
                 // 배열에 저장
                 if (unit != null)
                 {
+                    Debug.Log("소환 성공");
                     unit.OnPlayerDeadAction += Remove;
                     tileInfo[indexX, indexY] = unit;
+                    // 파티클 생성, 재생
+                    if (spawnParticle == null)
+                    {
+                        ParticleSystem particle = Instantiate(particlePrefab, pos, Quaternion.identity).GetComponent<ParticleSystem>();
+                        if (particle != null)
+                            spawnParticle = particle;
+                    }
+                    spawnParticle.transform.localPosition = pos;
+                    spawnParticle.Play();
                 }
-                Debug.Log("소환 성공");
                 return true;
             }
             else

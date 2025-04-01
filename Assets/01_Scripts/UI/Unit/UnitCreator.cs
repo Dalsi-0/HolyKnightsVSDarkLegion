@@ -136,6 +136,11 @@ public class UnitCreator : MonoBehaviour
     public void ClearDeck()
     {
         deckNameList.Clear();
+        // 기존 카드 삭제
+        foreach (Transform child in cardLayout.transform)
+        {
+            Destroy(child.gameObject);
+        }
     }
 
     // 이름 목록에 추가
@@ -147,5 +152,16 @@ public class UnitCreator : MonoBehaviour
     public void SetActive(bool active)
     {
         gameObject.SetActive(active);
+    }
+
+    //  손에 있는 카드를 이름 목록으로 반환
+    public List<string> GetInHand()
+    {
+        List<string> res = new();
+        foreach(var card in handList)
+        {
+            res.Add(card.Key);
+        }
+        return res;
     }
 }
