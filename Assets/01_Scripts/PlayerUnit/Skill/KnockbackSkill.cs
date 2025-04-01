@@ -64,10 +64,12 @@ public class KnockbackSkill : SkillBase
                 enemy.transform.position += new Vector3(moveDistance, 0f, 0f);
             }
 
-            // 데미지 적용
-            if (damageable != null)
+            // 데미지 적용 - Monsters.Monster 컴포넌트의 OnHit 메서드 사용
+            Monsters.Monster monster = enemy.GetComponent<Monsters.Monster>();
+            if (monster != null)
             {
-                damageable.TakeDamage(damageAmount);
+                monster.StateMachine.OnHit((int)damageAmount);
+                SoundManager.Instance.SetSfx(2);
             }
         }
 
