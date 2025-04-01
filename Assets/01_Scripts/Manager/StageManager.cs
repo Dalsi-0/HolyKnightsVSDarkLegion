@@ -53,8 +53,7 @@ public class StageManager : Singleton<StageManager>
         }
         else
         {
-            int level = GameManager.Instance.GetCurrentStageLevel();
-            GameManager.Instance.SetCurrentStageLevel(level++);
+            StageEnd(true);
         }
     }
 
