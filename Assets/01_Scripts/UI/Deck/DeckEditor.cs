@@ -19,7 +19,7 @@ public class DeckEditor : MonoBehaviour
         startButton.onClick.AddListener(Submit);
         cards = new();
     }
-
+    
     // Start is called before the first frame update
     void Start()
     {

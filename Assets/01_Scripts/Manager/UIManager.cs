@@ -18,19 +18,21 @@ public class UIManager : Singleton<UIManager>
     }
     public LoadingThumbnail loadingThumbnail;
     [SerializeField] private GameObject PopupPrefab;
-    public void AddCard(string[] unitName)
+    public void AddCard(List<string> unitName)
     {
         // 카드 획득 팝업 생성
-        NewCardPopup popup = Instantiate(PopupPrefab, Canvas.transform).GetComponent<NewCardPopup>();
-        for (int i = 0; i < unitName.Length; i++)
+        if (unitName.Count > 0)
         {
-            if (popup != null)
+            NewCardPopup popup = Instantiate(PopupPrefab, Canvas.transform).GetComponent<NewCardPopup>();
+            for (int i = 0; i < unitName.Count; i++)
             {
-                UnitSO unit = DataManager.Instance.GetUnitData(unitName[i]);
-                Sprite sprite = DeckManager.Instance.GetSprite(unit.UnitID);
-                popup.AddCard(unit, sprite);
+                if (popup != null)
+                {
+                    UnitSO unit = DataManager.Instance.GetUnitData(unitName[i]);
+                    Sprite sprite = DeckManager.Instance.GetSprite(unit.UnitID);
+                    popup.AddCard(unit, sprite);
+                }
             }
         }
-
     }
 }
