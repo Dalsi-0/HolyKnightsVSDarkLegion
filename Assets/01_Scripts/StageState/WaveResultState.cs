@@ -1,12 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class WaveResultState : IWaveState
 {
     private StageManager stageManager;
-    private float leftTime = 0f;
-    private float waitTime = 2f; // 2초 후 키 입력 가능
+    private bool canInput = false; 
 
     public WaveResultState(StageManager stageManager)
     {
@@ -16,17 +16,21 @@ public class WaveResultState : IWaveState
     public void EnterState()
     {
         Time.timeScale = 0;
-        leftTime = 0f; // 타이머 초기화
+        stageManager.StartCoroutine(WaitBeforeAllowInput()); // 코루틴 실행
+    }
+
+    private IEnumerator WaitBeforeAllowInput()
+    {
+        yield return new WaitForSecondsRealtime(2f); 
+        canInput = true; 
     }
 
     public void UpdateState()
     {
-        leftTime += Time.deltaTime;
-
-        if (leftTime >= waitTime && Input.anyKeyDown)
+        if (canInput && Input.anyKeyDown)
         {
             Time.timeScale = 1;
-            SceneLoadManager.Instance.NumLoadScene(0);
+            SceneManager.LoadSceneAsync(0);
         }
     }
 }
