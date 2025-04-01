@@ -12,6 +12,7 @@ public class StageManager : Singleton<StageManager>
     [SerializeField] private Animator stageUIAnim;
     [SerializeField] private Transform[] levels;
     [SerializeField] private TextMeshProUGUI waveText;
+    [SerializeField] private TextMeshProUGUI displayStageWaveText;
 
     private MonsterFactory monsterFactory;
     private IWaveState currentState;  // 현재 웨이브 상태
@@ -27,7 +28,9 @@ public class StageManager : Singleton<StageManager>
         // 팩토리 초기화
         monsterFactory = new MonsterFactory(monsterPrefabs, spawnParticle);
 
-        SetStageData(1);
+        int currentStage = GameManager.Instance.GetCurrentStageLevel();
+        displayStageWaveText.text = $"[  Stage {currentStage}   |   Wave {currentWaveIndex+1}  ] ";
+        SetStageData(currentStage);
     }
 
     void Update()
