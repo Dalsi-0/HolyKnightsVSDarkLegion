@@ -146,7 +146,7 @@ public class IceBrakeSkill : SkillBase
             // 오디오 추가시 주석해제
 
             // SlowDebuff 생성 및 적용
-            SlowDebuff slow = new SlowDebuff(slowDuration, slowAmount, iceDebuffColor);
+            SlowDebuff slow = new SlowDebuff(slowDuration, 1, iceDebuffColor);
             monster.DebuffHandler.ExecuteDebuff(slow);
         }
     }

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UIManager : Singleton<UIManager>
 {
@@ -16,6 +17,20 @@ public class UIManager : Singleton<UIManager>
             return canvas;
         }
     }
+
+    private Button setting;
+    public Button Setting
+    {
+        get
+        {
+            if (setting == null)
+            {
+                setting = FindObjectOfType<Button>();
+            }
+            return setting;
+        }
+    }
+
     public LoadingThumbnail loadingThumbnail;
     [SerializeField] private GameObject PopupPrefab;
     public void AddCard(string[] unitName)
@@ -33,4 +48,5 @@ public class UIManager : Singleton<UIManager>
         }
 
     }
+
 }

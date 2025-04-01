@@ -19,7 +19,7 @@ public class SceneLoadManager : Singleton<SceneLoadManager>
 /// </summary>
     public void LoadMainScene()
     {
-        StartCoroutine(Loading(0));
+        SceneManager.LoadScene(0);
     }
 
     /// <summary>
