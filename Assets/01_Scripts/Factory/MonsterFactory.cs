@@ -59,8 +59,8 @@ public class MonsterFactory
 
         GameObject monster = pool.GetObject();
         monster.transform.position = spawnPosition;
-        monster.GetComponent<Monster>().Init();
         monster.SetActive(true);
+        monster.GetComponent<Monster>().Init();
     }
 
 
