@@ -129,6 +129,8 @@ public class UnitCreator : MonoBehaviour
                     cardList[i].ActiveTimer();
                 }
             }
+            // 사운드 재생
+            SoundManager.Instance.SetSfx(3);
         }
     }
 
@@ -158,7 +160,7 @@ public class UnitCreator : MonoBehaviour
     public List<string> GetInHand()
     {
         List<string> res = new();
-        foreach(var card in handList)
+        foreach (var card in handList)
         {
             res.Add(card.Key);
         }
