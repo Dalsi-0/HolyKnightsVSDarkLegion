@@ -117,7 +117,7 @@ public class DeckManager : Singleton<DeckManager>
                     else
                         hands.Remove(hands[i]);
                 }
-                
+
                 // 수정 완료된 정보를 파일로 저장
                 if (hasError)
                     SaveInfo();
@@ -137,17 +137,23 @@ public class DeckManager : Singleton<DeckManager>
         File.WriteAllText(filePath, json);
         ApplyJson(json);
     }
-    public void SetUse(string unitName)
+    
+    // 특정 카드 덱에 추가 가능하도록(예: 스테이지 보상)
+    public void AddCard(string[] unitName, bool active = false)
     {
-        // 사용 가능
-        deck[unitName] = true;
-        DeckEditor.Reflash(unitName);
-    }
-
-    public void AddCard(string unitName, bool active = false)
-    {
-        // 미사용 상태로 추가
-        deck[unitName] = active;
+        for (int i = 0; i < unitName.Length; i++)
+        {
+            // 미사용 상태로 추가
+            deck[unitName[i]] = active;
+            // 사용 가능하도록 UI 업데이트
+            if(active)
+                DeckEditor.Reflash(unitName[i]);
+        }
+        // 카드 팝업 생성
+        if (active)
+        {
+            UIManager.Instance.AddCard(unitName);
+        }
     }
 
     // 생성자에 데이터 세팅
