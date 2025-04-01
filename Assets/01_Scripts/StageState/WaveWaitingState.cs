@@ -3,7 +3,7 @@ using UnityEngine;
 public class WaveWaitingState : IWaveState
 {
     private StageManager stageManager;
-    private float waitTime = 3f;  // 다음 웨이브까지 대기 시간
+    private float waitTime = 5f;  // 다음 웨이브까지 대기 시간
 
     public WaveWaitingState(StageManager stageManager)
     {
@@ -12,6 +12,7 @@ public class WaveWaitingState : IWaveState
 
     public void EnterState()
     {
+        stageManager.PlayStageUIAnim();
         Debug.Log("웨이브 대기 상태 " + waitTime + "초 후 웨이브 시작");
     }
 

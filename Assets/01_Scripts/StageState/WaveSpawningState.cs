@@ -6,15 +6,21 @@ public class WaveSpawningState : IWaveState
     private WaveData waveData;
     private float spawnTimer = 0f;
     private float spawnVariance = 0.5f;
+    private int totalSpawnedMonsters = 0;
+    private int deadMonsters = 0;
+
 
     public WaveSpawningState(StageManager stageManager, WaveData waveData)
     {
         this.stageManager = stageManager;
         this.waveData = waveData.Clone(); // 복사본을 생성하여 사용
+        this.stageManager.SetWaveSpawningState(this);
     }
 
     public void EnterState()
     {
+        totalSpawnedMonsters = 0;
+        deadMonsters = 0;
         Debug.Log("웨이브 시작 몬스터 소환 중");
     }
 
@@ -31,15 +37,9 @@ public class WaveSpawningState : IWaveState
             SpawnMonster();
             spawnTimer = 0f;
         }
-
-        /*
-        // 모든 몬스터가 소환되었고, 처치되었을 때 웨이브 클리어
-        if (stageManager.IsAllMonstersDead())
-        {
-            stageManager.SetWaveCleared(true); // 웨이브 클리어
-        }*/
     }
-    public void SpawnMonster()
+
+    private void SpawnMonster()
     {
         // 남은 몬스터 중에서 하나를 랜덤하게 소환
         int randomIndex = Random.Range(0, waveData.monsterIDs.Length);
@@ -57,7 +57,8 @@ public class WaveSpawningState : IWaveState
         Transform spawnPoint = stageManager.GetSpawnPoints()[randomSpawnIndex];
 
         MonsterFactory monsterFactory = stageManager.GetMonsterFactory();
-        monsterFactory.SpawnMonster(monsterID, spawnPoint.position);
+        monsterFactory.SpawnMonster(monsterID, spawnPoint.position, GameManager.Instance);
+        totalSpawnedMonsters++;
 
         // 소환된 몬스터의 카운트를 1 감소
         waveData.monsterCounts[randomIndex]--;
@@ -65,6 +66,15 @@ public class WaveSpawningState : IWaveState
         Debug.Log($"{monsterID} 소환 / 남은 수 {waveData.monsterCounts[randomIndex]}");
     }
 
+    public void OnMonsterDied()
+    {
+        deadMonsters++;
+
+        if (deadMonsters >= totalSpawnedMonsters)
+        {
+            StageManager.Instance.SetWaveCleared(); // 모든 몬스터가 죽으면 웨이브 종료
+        }
+    }
 
     // 모든 몬스터가 소환되었는지 확인하는 함수
     private bool AllMonstersSpawned()
@@ -78,5 +88,7 @@ public class WaveSpawningState : IWaveState
         }
         return true; 
     }
+
+
 }
 

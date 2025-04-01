@@ -53,7 +53,7 @@ public class DeckEditor : MonoBehaviour
     public void Submit()
     {
         SetActive(false);
-        StageManager.Instance.StartNextWave();
+        StageManager.Instance.ChangeState(new WaveWaitingState(StageManager.Instance));
         DeckManager.Instance.SaveInfo();
         // 사용 가능 갱신
         unitCreator.ChangeMoney(0);

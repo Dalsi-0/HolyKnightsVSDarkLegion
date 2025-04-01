@@ -7,20 +7,24 @@ public class StageManager : Singleton<StageManager>
 {
     [SerializeField] private GameObject[] monsterPrefabs; // 몬스터 프리팹들
     [SerializeField] private Transform[] spawnPoints; // 스폰 위치 배열
+    [SerializeField] private GameObject spawnParticle; // 스폰 파티클
+    [SerializeField] private Animator stageUIAnim;
+
     private MonsterFactory monsterFactory;
     private IWaveState currentState;  // 현재 웨이브 상태
     private StageSO stageData;  
     private int currentWaveIndex = 0;  // 현재 웨이브 인덱스
+    private WaveSpawningState waveSpawningState;
+
 
     void Start()
     {
+        stageUIAnim.Play("FadeIn");
+
         // 팩토리 초기화
-        monsterFactory = new MonsterFactory(monsterPrefabs);
+        monsterFactory = new MonsterFactory(monsterPrefabs, spawnParticle);
 
         SetStageData(1);
-
-        // 처음엔 대기 상태로 시작
-        // ChangeState(new WaveWaitingState(this));
     }
 
     void Update()
@@ -46,13 +50,30 @@ public class StageManager : Singleton<StageManager>
         }
         else
         {
+            int level = GameManager.Instance.GetCurrentStageLevel();
+            GameManager.Instance.SetCurrentStageLevel(level++);
             Debug.Log("스테이지 클리어");
         }
+    }
+
+    public void PlayStageUIAnim()
+    {
+        stageUIAnim.Play("Effect");
     }
 
     public void SetWaveCleared()
     {
         ChangeState(new WaveEndState(this));
+    }
+
+    public WaveSpawningState GetWaveSpawningState()
+    {
+        return this.waveSpawningState;
+    }
+
+    public void SetWaveSpawningState(WaveSpawningState waveSpawningState)
+    {
+        this.waveSpawningState = waveSpawningState;
     }
 
     public void SetStageData(int stageNumber)

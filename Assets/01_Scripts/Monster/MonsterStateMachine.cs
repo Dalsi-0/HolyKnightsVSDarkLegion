@@ -118,6 +118,7 @@ namespace Monsters
         {
             MonsterFactory monsterFactory = StageManager.Instance.GetMonsterFactory();
             monsterFactory.ReturnMonsterToPool(gameObject);
+            StageManager.Instance.GetWaveSpawningState().OnMonsterDied();
         }
     }
 }
