@@ -1,9 +1,9 @@
-using System;
 using System.Collections;
 using UnityEngine;
 
 namespace Monsters
 {
+    // 그리드에 존재하는 유닛을 감지하는 센서
     public class MonsterGridSensor : MonoBehaviour
     {
         private Vector2Int currentCell;

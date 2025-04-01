@@ -12,6 +12,7 @@ public class WaveWaitingState : IWaveState
 
     public void EnterState()
     {
+        stageManager.SetWaveTextValue();
         stageManager.PlayStageUIAnim();
         Debug.Log("웨이브 대기 상태 " + waitTime + "초 후 웨이브 시작");
     }
