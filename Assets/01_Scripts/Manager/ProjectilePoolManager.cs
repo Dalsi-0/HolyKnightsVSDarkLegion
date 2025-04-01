@@ -22,12 +22,7 @@ public class ProjectilePoolManager : Singleton<ProjectilePoolManager>
         public PoolType poolType = PoolType.Projectile;
     }
 
-    public enum PoolType
-    {
-        Projectile,
-        SkillEffect
-    }
-
+ 
     // 인스펙터에서 설정 가능한 초기 풀 정보
     public List<PoolInfo> initialPools = new List<PoolInfo>();
 

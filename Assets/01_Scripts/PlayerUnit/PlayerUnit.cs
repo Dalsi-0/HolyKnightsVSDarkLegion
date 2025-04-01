@@ -5,20 +5,6 @@ using UnityEngine;
 using System;
 using UnityEngine.Events;
 
-public enum UnitState
-{
-    Idle,
-    Dead,
-    Hurt,
-    BasicAttack,
-    UsingSkill
-}
-
-public interface IDamageable
-{
-    void TakeDamage(float damage);
-}
-
 // 사망 데이터를 담을 클래스 정의
 [Serializable]
 public class PlayerDeathData
