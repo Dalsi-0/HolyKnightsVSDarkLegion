@@ -55,7 +55,6 @@ public class StageManager : Singleton<StageManager>
         {
             int level = GameManager.Instance.GetCurrentStageLevel();
             GameManager.Instance.SetCurrentStageLevel(level++);
-            Debug.Log("스테이지 클리어");
         }
     }
 
@@ -97,18 +96,17 @@ public class StageManager : Singleton<StageManager>
 
     public void StageEnd(bool isClear)
     {
+        stageUIAnim.Play(isClear ? "Clear" : "Lose");
+
         if (isClear)
         {
-            int tmp = GameManager.Instance.GetCurrentStageLevel();
-            GameManager.Instance.SetCurrentStageLevel(tmp + 1);
-            stageUIAnim.Play("Clear");
-        }
-        else
-        {
-            stageUIAnim.Play("Lose");
+            int currentStage = GameManager.Instance.GetCurrentStageLevel();
+            int totalStages = DataManager.Instance.GetStageDictionaryLength();
+
+            GameManager.Instance.SetCurrentStageLevel(currentStage >= totalStages ? 1 : currentStage + 1);
         }
 
-        ChangeState(new WaveResultState(this));
+        ChangeState(new WaveResultState(this, isClear));
     }
 
     public MonsterFactory GetMonsterFactory()

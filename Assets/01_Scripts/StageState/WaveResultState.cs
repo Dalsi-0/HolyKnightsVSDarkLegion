@@ -6,11 +6,13 @@ using UnityEngine.SceneManagement;
 public class WaveResultState : IWaveState
 {
     private StageManager stageManager;
-    private bool canInput = false; 
+    private bool canInput = false;
+    private bool isContinue;
 
-    public WaveResultState(StageManager stageManager)
+    public WaveResultState(StageManager stageManager, bool isContinue)
     {
         this.stageManager = stageManager;
+        this.isContinue = isContinue;
     }
 
     public void EnterState()
@@ -27,10 +29,9 @@ public class WaveResultState : IWaveState
 
     public void UpdateState()
     {
-        if (canInput && Input.anyKeyDown)
-        {
-            Time.timeScale = 1;
-            SceneManager.LoadSceneAsync(0);
-        }
+        if (!canInput || !Input.anyKeyDown) return;
+
+        Time.timeScale = 1;
+        SceneManager.LoadSceneAsync(isContinue ? 1 : 0);
     }
 }

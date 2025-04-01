@@ -920,7 +920,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30d72ea3fe5093440a1d943789fcb922, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 1.5
+  moveSpeed: 2
   moveDistance: 0.3
 --- !u!1 &2544643324837220720
 GameObject:
@@ -1560,7 +1560,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30d72ea3fe5093440a1d943789fcb922, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 1.5
+  moveSpeed: 2
   moveDistance: 0.3
 --- !u!1 &5068101942817260526
 GameObject:
@@ -2048,7 +2048,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30d72ea3fe5093440a1d943789fcb922, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 1.5
+  moveSpeed: 2
   moveDistance: 0.3
 --- !u!1 &8212159082246461422
 GameObject:
@@ -2329,7 +2329,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30d72ea3fe5093440a1d943789fcb922, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 1.5
+  moveSpeed: 2
   moveDistance: 0.3
 --- !u!1 &9021350908041768534
 GameObject:
@@ -2452,7 +2452,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30d72ea3fe5093440a1d943789fcb922, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 1.5
+  moveSpeed: 2
   moveDistance: 0.3
 --- !u!1 &9215300786010830952
 GameObject:
