@@ -52,7 +52,6 @@ public class SceneLoadManager : Singleton<SoundManager>
     {
         UIManager.Instance.loadingThumbnail.gameObject.SetActive(true);
         float progress = 0f;
-        int i = 0;
         WaitForSeconds waitForSeconds = new WaitForSeconds(1);
         while (progress <= 100)
         {
@@ -60,7 +59,6 @@ public class SceneLoadManager : Singleton<SoundManager>
             progress = Mathf.Min(progress, 97);
             UIManager.Instance.loadingThumbnail.scrollbar.value = progress / 100;
             UIManager.Instance.loadingThumbnail.text.text = progress + "%";
-            Debug.Log(++i);
             yield return waitForSeconds;
 
             if (progress == 97)
