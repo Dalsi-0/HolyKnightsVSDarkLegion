@@ -1223,6 +1223,10 @@ PrefabInstance:
       value: StageManager
       objectReference: {fileID: 0}
     - target: {fileID: 2926771612219586752, guid: b59e82cc94100184f84a270ea44b73e9, type: 3}
+      propertyPath: waveText
+      value: 
+      objectReference: {fileID: 1906002062}
+    - target: {fileID: 2926771612219586752, guid: b59e82cc94100184f84a270ea44b73e9, type: 3}
       propertyPath: stageUIAnim
       value: 
       objectReference: {fileID: 1625209370}
@@ -1496,7 +1500,7 @@ GameObject:
   - component: {fileID: 1714842596}
   - component: {fileID: 1714842595}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: Battle Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1739,7 +1743,7 @@ GameObject:
   - component: {fileID: 1906002063}
   - component: {fileID: 1906002062}
   m_Layer: 5
-  m_Name: Text (TMP) (1)
+  m_Name: Wave Text (TMP) (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2087,7 +2091,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7725493253646801838, guid: 01b98aed325618942beaf68b632af37a, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
