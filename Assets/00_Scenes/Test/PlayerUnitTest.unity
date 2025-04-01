@@ -4683,6 +4683,34 @@ PrefabInstance:
       propertyPath: useLocalList
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5821481273368145265, guid: 17c9bfce26cc0a445a3fd00e7830f6a9, type: 3}
+      propertyPath: deckNameList.Array.size
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 5821481273368145265, guid: 17c9bfce26cc0a445a3fd00e7830f6a9, type: 3}
+      propertyPath: deckNameList.Array.data[1]
+      value: PK_002
+      objectReference: {fileID: 0}
+    - target: {fileID: 5821481273368145265, guid: 17c9bfce26cc0a445a3fd00e7830f6a9, type: 3}
+      propertyPath: deckNameList.Array.data[2]
+      value: PK_003
+      objectReference: {fileID: 0}
+    - target: {fileID: 5821481273368145265, guid: 17c9bfce26cc0a445a3fd00e7830f6a9, type: 3}
+      propertyPath: deckNameList.Array.data[3]
+      value: PK_004
+      objectReference: {fileID: 0}
+    - target: {fileID: 5821481273368145265, guid: 17c9bfce26cc0a445a3fd00e7830f6a9, type: 3}
+      propertyPath: deckNameList.Array.data[4]
+      value: PK_005
+      objectReference: {fileID: 0}
+    - target: {fileID: 5821481273368145265, guid: 17c9bfce26cc0a445a3fd00e7830f6a9, type: 3}
+      propertyPath: deckNameList.Array.data[5]
+      value: PK_006
+      objectReference: {fileID: 0}
+    - target: {fileID: 5821481273368145265, guid: 17c9bfce26cc0a445a3fd00e7830f6a9, type: 3}
+      propertyPath: deckNameList.Array.data[6]
+      value: PK_007
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
