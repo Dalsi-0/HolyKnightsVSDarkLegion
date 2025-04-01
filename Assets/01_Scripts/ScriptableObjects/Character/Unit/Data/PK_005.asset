@@ -14,11 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unitID: PK_005
   unitName: "\uAC80\uC0AC"
-  unitHP: 100
-  unitAtk: 13
+  unitHP: 150
+  unitAtk: 35
   unitAtkRange: 1
   unitAtkDelay: 1
   unitSummonCost: 150
-  unitCoolDown: 3
+  unitCoolDown: 7
   unitAtkType: 0
   unitSprite: {fileID: 0}

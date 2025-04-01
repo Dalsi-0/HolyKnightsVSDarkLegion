@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unitID: PK_009
   unitName: "\uAD81\uC218"
-  unitHP: 100
-  unitAtk: 9
+  unitHP: 75
+  unitAtk: 15
   unitAtkRange: 50
   unitAtkDelay: 1
   unitSummonCost: 200
