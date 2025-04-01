@@ -18,7 +18,7 @@ public class WaveResultState : IWaveState
     public void EnterState()
     {
         Time.timeScale = 0;
-        stageManager.StartCoroutine(WaitBeforeAllowInput()); // 코루틴 실행
+        stageManager.StartCoroutine(WaitBeforeAllowInput());
     }
 
     private IEnumerator WaitBeforeAllowInput()
@@ -32,6 +32,16 @@ public class WaveResultState : IWaveState
         if (!canInput || !Input.anyKeyDown) return;
 
         Time.timeScale = 1;
-        SceneManager.LoadSceneAsync(isContinue ? 1 : 0);
+
+        if (isContinue)
+        {
+            SceneManager.LoadSceneAsync(1);
+        }
+        else
+        {
+            SceneManager.LoadSceneAsync(0);
+
+            stageManager.DestroyThis();
+        }
     }
 }

@@ -109,6 +109,11 @@ public class StageManager : Singleton<StageManager>
         ChangeState(new WaveResultState(this, isClear));
     }
 
+    public void DestroyThis()
+    {
+        Destroy(gameObject);
+    }
+
     public MonsterFactory GetMonsterFactory()
     {
         return monsterFactory;
