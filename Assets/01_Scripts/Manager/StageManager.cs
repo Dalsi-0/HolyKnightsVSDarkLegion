@@ -42,12 +42,6 @@ public class StageManager : Singleton<StageManager>
     void Update()
     {
         currentState?.UpdateState();
-
-        if (Input.GetKeyDown(KeyCode.G))
-        {
-            currentWaveIndex++;
-            SetDisplayStageWaveText();
-        }
     }
 
     /// <summary>
