@@ -1,9 +1,26 @@
 using System.Collections;
+using System.IO;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Video;
 
 public class SceneLoadManager : Singleton<SceneLoadManager>
 {
+    [SerializeField] private VideoPlayer videoPlayer;
+    [SerializeField] private string videoFileName = "tutorial.mp4"; // 비디오 파일명
+
+    private void Start()
+    {
+        SetVideo();
+    }
+
+    private void SetVideo()
+    {
+        string videoPath = Path.Combine(Application.streamingAssetsPath, videoFileName);
+
+        videoPlayer.url = videoPath;
+    }
+
     /// <summary>
     /// 씬 번호로 씬 전환
     /// </summary>

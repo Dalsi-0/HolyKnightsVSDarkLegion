@@ -41,12 +41,14 @@ public class AnimationEventReceiver : MonoBehaviour
     {
         if (_playerUnit != null)
             _playerUnit.OnPriestEvent();
+            SoundManager.Instance.SetSfx(11);
     }
 
     public void OnAttack()
     {
         if (_playerUnit != null)
             _playerUnit.OnAttackBaseEvent();
+            SoundManager.Instance.SetSfx(9);
     }
 
 
@@ -54,12 +56,25 @@ public class AnimationEventReceiver : MonoBehaviour
     {
         if (_playerUnit != null)
             _playerUnit.OnSoldierEvent();
+            SoundManager.Instance.SetSfx(3);
     }
 
     public void OnWizardSkill()
     {
         if (_playerUnit != null)
             _playerUnit.OnWizardEvent();
+            SoundManager.Instance.SetSfx(11);
+    }
+
+    public void OnWizardSound()
+    {
+        if (_playerUnit != null)
+            SoundManager.Instance.SetSfx(10);
+    }
+    public void OnArrowSound()
+    {
+        if (_playerUnit != null)
+            SoundManager.Instance.SetSfx(8);
     }
 
 

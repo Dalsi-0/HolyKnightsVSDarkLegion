@@ -26,6 +26,8 @@ public class StageManager : Singleton<StageManager>
     /// </summary>
     void Start()
     {
+        UnitManager.Instance.SetMoney(350);
+
         stageUIAnim.Play("FadeIn");
 
         monsterFactory = new MonsterFactory(monsterPrefabs, spawnParticle);

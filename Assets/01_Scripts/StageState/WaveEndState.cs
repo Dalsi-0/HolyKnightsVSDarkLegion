@@ -16,6 +16,7 @@ public class WaveEndState : IWaveState
     {
         if (!isClear)
         {
+            SoundManager.Instance.SetSfx(14);
             stageManager.SetWaveTextValue();
             stageManager.PlayStageUIAnim();
         }

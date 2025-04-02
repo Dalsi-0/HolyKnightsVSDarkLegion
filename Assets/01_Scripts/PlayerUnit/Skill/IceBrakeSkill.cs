@@ -143,8 +143,7 @@ public class IceBrakeSkill : SkillBase
             // 데미지 적용
             int damage = (int)(owner.GetUnitData().UnitAtk * 1.5f);
             monster.StateMachine.OnHit(damage);
-            //SoundManager.Instance.SetSfx(1);
-            // 오디오 추가시 주석해제
+            SoundManager.Instance.SetSfx(7);
 
             // SlowDebuff 생성 및 적용
             SlowDebuff slow = new SlowDebuff(slowDuration, slowAmount, iceDebuffColor);

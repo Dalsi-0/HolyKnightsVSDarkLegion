@@ -19,6 +19,6 @@ MonoBehaviour:
   unitAtkRange: 50
   unitAtkDelay: 1
   unitSummonCost: 100
-  unitCoolDown: 3
+  unitCoolDown: 8
   unitAtkType: 1
   unitSprite: {fileID: 0}

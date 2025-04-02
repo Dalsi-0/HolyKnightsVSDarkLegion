@@ -27,19 +27,12 @@
     {
       "unitID": "PK_007",
       "canUse": false
-    },
-    {
-      "unitID": "PK_008",
-      "canUse": false
-    },
-    {
-      "unitID": "PK_009",
-      "canUse": false
     }
   ],
   "InHandCard": [
     "PK_001",
     "PK_002",
     "PK_003"
-  ]
+  ],
+  "HandSize" : 4
 }

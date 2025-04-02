@@ -10,6 +10,8 @@ using System.Linq;
 /// </summary>
 public class DeckManager : Singleton<DeckManager>
 {
+    private int maxSize = 5; // 최대 패 수
+    public int nowSize = 4; // 현재 최대 패 수
     [SerializeField] private List<CardThumbnail> images; // 이미지 목록
     private static string ownedCardName = "PlayerData";
     private static string defaultSettingPath = "DefaultSetting";
@@ -103,6 +105,11 @@ public class DeckManager : Singleton<DeckManager>
                         }
                     }
 
+                    // 최대 패 갯수 가져오기, 최소 치 4
+                    int handSize = playerInfo.HandSize;
+                    if (handSize < 4)
+                        handSize = 4;
+                    nowSize = handSize;
 
                     // 사용 목록 불러오기
                     List<string> loadedHands = playerInfo?.InHandCard;
@@ -114,10 +121,10 @@ public class DeckManager : Singleton<DeckManager>
                         loadedHands = defaultHands;
                         hasError = true;
                     }
-                    // 4개 초과하면 이후는 삭제
-                    else if (loadedHands.Count > 4)
+                    // 최대갯수 초과하면 이후는 삭제
+                    else if (loadedHands.Count > nowSize)
                     {
-                        loadedHands.RemoveRange(4, loadedHands.Count - 4);
+                        loadedHands.RemoveRange(nowSize, loadedHands.Count - nowSize);
                         hasError = true;
                     }
 
@@ -192,7 +199,7 @@ public class DeckManager : Singleton<DeckManager>
                 // 정보 갱신
                 deck[cardName] = active;
                 // 사용 가능하도록 UI 업데이트
-                if(DeckEditor != null)
+                if (DeckEditor != null)
                     DeckEditor.Reflash(cardName);
             }
         }
@@ -235,6 +242,7 @@ public class DeckManager : Singleton<DeckManager>
         }
         newInfo.AllCard = cardList;
         newInfo.InHandCard = inHandCard;
+        newInfo.HandSize = nowSize;
         string newJson = JsonConvert.SerializeObject(newInfo, Formatting.Indented);
         string filePath = Path.Combine(Application.persistentDataPath, ownedCardName + ".json");
         File.WriteAllText(filePath, newJson);
@@ -244,9 +252,21 @@ public class DeckManager : Singleton<DeckManager>
     {
         return deck;
     }
+
+    // 패에 있는 카드 반환
     public List<string> GetInHand()
     {
         return inHandCard;
+    }
+
+    // 패 갯수 증가
+    public void AddHandSize()
+    {
+        // 최대 갯수는 안 넘게 증가
+        nowSize += 1;
+        if (nowSize > maxSize)
+            nowSize = maxSize;
+        SaveInfo();
     }
     // JSON 파일을 덱에 적용
     public void ApplyJson(string jsonData)
@@ -287,6 +307,7 @@ public class PlayerInfo
 {
     public List<CardCollection> AllCard; // 전체 카드 목록
     public List<string> InHandCard; // 전체 카드 목록
+    public int HandSize; // 패 최대 갯수
 }
 
 // JSON 변환용 클래스

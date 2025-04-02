@@ -28,12 +28,18 @@ public class WaveResultState : IWaveState
 
         // 승리 했을 때만 팝업 생성
         if (isContinue)
+        {
             DeckManager.Instance.AddAllCard();
+            DeckManager.Instance.AddHandSize();
+        }
     }
 
     public void UpdateState()
     {
         if (!canInput || !Input.anyKeyDown) return;
+
+        stageManager.GetMonsterFactory().ReturnAllMonstersToPool();
+        UnitManager.Instance.RemoveAll();
 
         Time.timeScale = 1;
 

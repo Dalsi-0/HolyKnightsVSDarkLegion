@@ -3,7 +3,6 @@ using UnityEngine;
 public class UnitManager : Singleton<UnitManager>
 {
     [Header("UnitPrefabs")]
-    public int maxSize = 4;
     public GameObject[] unitPrefabs; // 유닛 프리팹 목록
     private Dictionary<string, GameObject> unitDitionary; // 유닛 이름별로 저장
     public GameObject particlePrefab; // 생성시 파티클 프리팹
@@ -168,6 +167,11 @@ public class UnitManager : Singleton<UnitManager>
         // 반올림 적용
         return ChangeMoney((int)Mathf.Round(amount));
     }
+    // 자원을 강제로 바꾸는 함수
+    public void SetMoney(int newValue)
+    {
+        PlayerMoney = newValue;
+    }
 
     // 목록에서 유닛 정보 삭제
     public void Remove(PlayerUnit unit)
@@ -176,6 +180,20 @@ public class UnitManager : Singleton<UnitManager>
         Vector3 pos = unit.transform.position;
         Vector2Int grid = GetGridIndex(pos);
         tileInfo[grid.x, grid.y] = null;
+    }
+
+    // 전부 삭제
+    public void RemoveAll()
+    {
+        //tileInfo = new PlayerUnit[tileSize.x, tileSize.y];
+        foreach(var unit in tileInfo)
+        {
+            if(unit != null)
+            {
+                Remove(unit);
+                Destroy(unit.gameObject);
+            }
+        }
     }
     public bool IsOnGrid(Vector3 pos)
     {

@@ -69,5 +69,6 @@ MonoBehaviour:
     monsterIDs:
     - DL_003
     - DL_004
-    monsterCounts: 0500000003000000
+    - DL_005
+    monsterCounts: 050000000300000001000000
     spawnInterval: 1.5

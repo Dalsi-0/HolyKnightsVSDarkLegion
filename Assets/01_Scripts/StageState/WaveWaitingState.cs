@@ -12,6 +12,7 @@ public class WaveWaitingState : IWaveState
 
     public void EnterState()
     {
+        SoundManager.Instance.SetSfx(14);
         stageManager.SetWaveTextValue();
         stageManager.PlayStageUIAnim();
     }
