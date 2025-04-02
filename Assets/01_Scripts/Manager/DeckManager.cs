@@ -166,18 +166,35 @@ public class DeckManager : Singleton<DeckManager>
 
     public void AddAllCard()
     {
-        
+        // 미소지 카드 전부 획득
+        List<string> target = new();
+        foreach (var card in deck)
+        {
+            if (!card.Value)
+                target.Add(card.Key);
+        }
+        AddCard(target, true);
     }
     // 특정 카드 덱에 추가 가능하도록(예: 스테이지 보상)
-    public void AddCard(string[] unitName, bool active = false)
+    public void AddCard(List<string> unitName, bool active = false)
     {
-        for (int i = 0; i < unitName.Length; i++)
+        // 미소지 카드만 분별
+        foreach (var cardName in unitName.ToList())
         {
-            // 미사용 상태로 추가
-            deck[unitName[i]] = active;
-            // 사용 가능하도록 UI 업데이트
-            if (active)
-                DeckEditor.Reflash(unitName[i]);
+            // 이미 가지고 있는 정보면 제외
+            if (!deck.ContainsKey(cardName) && deck[cardName])
+            {
+                // 올바르지 않은값, 이미 가지고 있으면 제외
+                unitName.Remove(cardName);
+            }
+            else
+            {
+                // 정보 갱신
+                deck[cardName] = active;
+                // 사용 가능하도록 UI 업데이트
+                if(DeckEditor != null)
+                    DeckEditor.Reflash(cardName);
+            }
         }
         // 카드 팝업 생성
         if (active)

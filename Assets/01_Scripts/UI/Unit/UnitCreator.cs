@@ -130,7 +130,7 @@ public class UnitCreator : MonoBehaviour
                 }
             }
             // 사운드 재생
-            SoundManager.Instance.SetSfx(3);
+            SoundManager.Instance.SetSfx(6);
         }
     }
 
