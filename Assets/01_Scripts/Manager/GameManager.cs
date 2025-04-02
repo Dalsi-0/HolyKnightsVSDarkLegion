@@ -28,4 +28,9 @@ public class GameManager : Singleton<GameManager>
         PlayerPrefs.SetInt("CurrentStageLevel", level); // 저장
         PlayerPrefs.Save();
     }
+
+    public void SetTimeScale(float value)
+    {
+        Time.timeScale = value;
+    }
 }
