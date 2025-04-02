@@ -1,13 +1,11 @@
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using UnityEditor;
 using UnityEngine;
 
+#if UNITY_EDITOR
 public class DataDownloaderWindow : EditorWindow
 {
-#if UNITY_EDITOR
-
-    private List<GameObject> myObj = new List<GameObject>();
-
     [MenuItem("Tools/Data Downloader Tool")]
     public static void ShowWindow()
     {
@@ -16,37 +14,16 @@ public class DataDownloaderWindow : EditorWindow
 
     private void OnGUI()
     {
-        GUILayout.Label("Clear TmpObjects", EditorStyles.boldLabel);
-
-        if (GUILayout.Button("Clear TmpObjects Button"))
-        {
-            DestroyTmpObj();
-        }
-
-        GUILayout.Space(20);
-
         GUILayout.Label("Download Unit/Monster Data", EditorStyles.boldLabel);
 
         if (GUILayout.Button("Download Unit Data"))
         {
-            GameObject obj = new GameObject("tmpUnitDataDownloader");
-            CharacterDataDownloader downloader = obj.AddComponent<CharacterDataDownloader>();
-            if (downloader != null)
-            {
-                downloader.StartDownload(true);
-            }
-            myObj.Add(obj);
+            DownloadUnitData(true).Forget();
         }
 
         if (GUILayout.Button("Download Monster Data"))
         {
-            GameObject obj = new GameObject("tmpMonsterDataDownloader");
-            CharacterDataDownloader downloader = obj.AddComponent<CharacterDataDownloader>();
-            if (downloader != null)
-            {
-                downloader.StartDownload(false);
-            }
-            myObj.Add(obj);
+            DownloadUnitData(false).Forget();
         }
 
         GUILayout.Space(10);
@@ -55,27 +32,41 @@ public class DataDownloaderWindow : EditorWindow
 
         if (GUILayout.Button("Download Stage Data"))
         {
-            GameObject obj = new GameObject("tmpStageDataDownloader");
-            StageDataDownloader downloader = obj.AddComponent<StageDataDownloader>();
-            if (downloader != null)
-            {
-                downloader.StartDownload();
-            }
-            myObj.Add(obj);
+            DownloadStageData().Forget();
         }
     }
 
-    private void DestroyTmpObj()
+
+    /// <summary>
+    /// 유닛 또는 몬스터 데이터를 다운로드하고 완료되면 자동 삭제
+    /// </summary>
+    private async UniTaskVoid DownloadUnitData(bool isUnit)
     {
-        for (int i = 0; i < myObj.Count; i++)
+        GameObject obj = new GameObject(isUnit ? "tmpUnitDataDownloader" : "tmpMonsterDataDownloader");
+        CharacterDataDownloader downloader = obj.AddComponent<CharacterDataDownloader>();
+
+        if (downloader != null)
         {
-            if (myObj[i] != null)
-            {
-                DestroyImmediate(myObj[i]);
-            }
+            await downloader.StartDownload(isUnit);
         }
-        myObj.Clear();
+
+        Object.DestroyImmediate(obj);
     }
 
-#endif
+    /// <summary>
+    /// 스테이지 데이터를 다운로드하고 완료되면 자동 삭제
+    /// </summary>
+    private async UniTaskVoid DownloadStageData()
+    {
+        GameObject obj = new GameObject("tmpStageDataDownloader");
+        StageDataDownloader downloader = obj.AddComponent<StageDataDownloader>();
+
+        if (downloader != null)
+        {
+            await downloader.StartDownload();
+        }
+
+        Object.DestroyImmediate(obj);
+    }
 }
+#endif
