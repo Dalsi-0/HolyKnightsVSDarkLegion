@@ -23,7 +23,7 @@ namespace Monsters
             FindTarget();
         }
 
-        private void FindTarget(PlayerUnit target = null)
+        public void FindTarget(PlayerUnit target = null)
         {
             if (TriggerUnit) TriggerUnit.OnPlayerDeadAction -= FindTarget;
                 

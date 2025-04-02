@@ -1,5 +1,4 @@
 using System.Collections;
-using UnityEditor.Searcher;
 using UnityEngine;
 
 namespace Monsters
@@ -127,7 +126,7 @@ namespace Monsters
         public void OnDead()
         {
             IsDead = true;
-            SoundManager.Instance.SetSfx(99);
+            // SoundManager.Instance.SetSfx(99);
             MonsterFactory monsterFactory = StageManager.Instance.GetMonsterFactory();
             monsterFactory.ReturnMonsterToPool(gameObject);
             StageManager.Instance.GetWaveSpawningState().OnMonsterDied();
