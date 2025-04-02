@@ -39,6 +39,7 @@ public class WaveResultState : IWaveState
         if (!canInput || !Input.anyKeyDown) return;
 
         stageManager.GetMonsterFactory().ReturnAllMonstersToPool();
+        UnitManager.Instance.RemoveAll();
 
         Time.timeScale = 1;
 
