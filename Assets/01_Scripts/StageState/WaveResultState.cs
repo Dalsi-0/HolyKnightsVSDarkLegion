@@ -35,27 +35,27 @@ public class WaveResultState : IWaveState
             DeckManager.Instance.AddHandSize();
         }
 
-        // 카드가 추가되지 않았다면 자동으로 씬 전환
-        if (!isCardAdded)
+        if (isContinue && !isCardAdded)
         {
             LoadNextScene();
         }
     }
 
+
     public void UpdateState()
     {
         if (!canInput) return;
 
-        if (isCardAdded && !Input.anyKeyDown) return;
-
-        LoadNextScene();
+        if (Input.anyKeyDown)
+        {
+            LoadNextScene();
+        }
     }
 
     private void LoadNextScene()
     {
         stageManager.GetMonsterFactory().ReturnAllMonstersToPool();
         UnitManager.Instance.RemoveAll();
-
         Time.timeScale = 1;
 
         if (isContinue)
@@ -66,6 +66,7 @@ public class WaveResultState : IWaveState
         {
             SceneLoadManager.Instance.LoadMainScene();
         }
+
         stageManager.DestroyForNextScene();
     }
 }
