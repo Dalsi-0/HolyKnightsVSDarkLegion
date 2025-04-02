@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -8,6 +9,7 @@ public class WaveResultState : IWaveState
     private StageManager stageManager;
     private bool canInput = false;
     private bool isContinue;
+    private bool isCardAdded;
 
     public WaveResultState(StageManager stageManager, bool isContinue)
     {
@@ -29,15 +31,28 @@ public class WaveResultState : IWaveState
         // 승리 했을 때만 팝업 생성
         if (isContinue)
         {
-            DeckManager.Instance.AddAllCard();
+            isCardAdded = DeckManager.Instance.AddAllCard();
             DeckManager.Instance.AddHandSize();
+        }
+
+        // 카드가 추가되지 않았다면 자동으로 씬 전환
+        if (!isCardAdded)
+        {
+            LoadNextScene();
         }
     }
 
     public void UpdateState()
     {
-        if (!canInput || !Input.anyKeyDown) return;
+        if (!canInput) return;
 
+        if (isCardAdded && !Input.anyKeyDown) return;
+
+        LoadNextScene();
+    }
+
+    private void LoadNextScene()
+    {
         stageManager.GetMonsterFactory().ReturnAllMonstersToPool();
         UnitManager.Instance.RemoveAll();
 

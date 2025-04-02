@@ -7,11 +7,12 @@ public class MonsterFactory
 {
     private Dictionary<string, MonsterPool> monsterPools;  // 몬스터 ID별 풀을 관리하는 딕셔너리
     private GameObject spawnParticle;
-    private List<GameObject> activeMonsters;  // 현재 활성화된 몬스터 목록
+    private List<GameObject> activeMonsters; // 현재 활성화된 몬스터 목록
 
     public MonsterFactory(GameObject[] prefabs, GameObject spawnParticle)
     {
         monsterPools = new Dictionary<string, MonsterPool>();
+        activeMonsters = new List<GameObject>(); // 활성화된 몬스터 리스트 초기화
 
         // 각 몬스터 프리팹에 대해 풀을 생성
         foreach (var prefab in prefabs)
@@ -63,6 +64,7 @@ public class MonsterFactory
         monster.transform.position = spawnPosition;
         monster.SetActive(true);
         monster.GetComponent<Monster>().Init();
+        activeMonsters.Add(monster);
     }
 
 
@@ -76,6 +78,7 @@ public class MonsterFactory
         if (monsterPools.TryGetValue(monsterID, out MonsterPool pool))
         {
             pool.ReturnObject(monster);  // 풀에 반환
+            activeMonsters.Remove(monster); // 활성화된 목록에서 제거
         }
         else
         {
