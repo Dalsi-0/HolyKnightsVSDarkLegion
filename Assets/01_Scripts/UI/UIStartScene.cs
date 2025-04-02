@@ -22,7 +22,7 @@ public class UIStartScene : MonoBehaviour
         }
 
         buttons[2].onClick.AddListener(() => SetOptionsBtn());
-        
+        StageUpdate();
     }
 
     public void SetButton(int stageIndex, int bgmIndex)
