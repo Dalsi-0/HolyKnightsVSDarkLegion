@@ -1,24 +1,24 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-public class KnockbackSkill : SkillBase
+public class PowerStrikeSkill : SkillBase
 {
-    private float knockbackForce;  // 넉백 힘
     private float damageAmount;    // 데미지 양
     private float checkRadius;     // 적 감지 범위
     private LayerMask enemyLayer;  // 적 레이어
     private bool attackInRow = true; // 기본적으로 행 방향으로 공격 (가로)
+    private float strikeForce;     // 강한 타격감을 위한 이펙트 강도
 
-    public KnockbackSkill(PlayerUnit owner, float cooldown, GameObject effectPrefab,
-                         float knockbackForce, float damageAmount, float checkRadius,
+    public PowerStrikeSkill(PlayerUnit owner, float cooldown, GameObject effectPrefab,
+                         float damageAmount, float checkRadius, float strikeForce = 1.0f,
                          bool attackInRow = true)
         : base(owner, cooldown, effectPrefab)
     {
-        this.knockbackForce = knockbackForce;
         this.damageAmount = damageAmount;
         this.checkRadius = checkRadius;
         this.enemyLayer = LayerMask.GetMask("Enemy");
         this.attackInRow = attackInRow;
+        this.strikeForce = strikeForce;
     }
 
     public override bool CanUse()
@@ -38,52 +38,69 @@ public class KnockbackSkill : SkillBase
         // 그리드 기반 방향성 고려하여 적 탐지
         Collider2D closestEnemy = FindDirectionalEnemy();
 
-        // 가까운 적이 있으면 해당 적에게만 넉백 및 데미지 적용
+        // 가까운 적이 있으면 해당 적에게 강력한 타격 효과 및 데미지 적용
         if (closestEnemy != null)
         {
             // 적 컴포넌트 가져오기
             GameObject enemy = closestEnemy.gameObject;
-            Rigidbody2D enemyRb = enemy.GetComponent<Rigidbody2D>();
 
-            // 이동 방향 계산 (그리드 방향성 고려)
-            Vector2 moveDirection;
+            // 타격 방향 계산 (그리드 방향성 고려)
+            Vector2 strikeDirection;
             if (attackInRow)
             {
-                // 행 방향(가로) 공격일 경우 오른쪽으로 넉백
-                moveDirection = new Vector2(knockbackForce * 0.5f, 0f);
+                // 행 방향(가로) 공격
+                strikeDirection = new Vector2(1f, 0f);
             }
             else
             {
-                // 열 방향(세로) 공격일 경우 위쪽으로 넉백
-                moveDirection = new Vector2(0f, knockbackForce * 0.5f);
+                // 열 방향(세로) 공격
+                strikeDirection = new Vector2(0f, 1f);
             }
 
-            // 넉백 적용
-            if (enemyRb != null)
-            {
-                // 물리 영향 초기화 후 직접 위치 변경
-                enemyRb.velocity = Vector2.zero;
-
-                // isTrigger가 true인 경우에도 작동하도록 직접 위치 변경
-                enemyRb.position = enemyRb.position + moveDirection;
-            }
-            else
-            {
-                // Rigidbody가 없는 경우도 Transform으로 직접 이동
-                enemy.transform.position += new Vector3(moveDirection.x, moveDirection.y, 0f);
-            }
+            // 시각적 타격 효과 (약간의 흔들림 애니메이션 등이 추가될 수 있음)
+            PlayStrikeAnimation(enemy, strikeDirection);
 
             // 데미지 적용
             Monsters.Monster monster = enemy.GetComponent<Monsters.Monster>();
             if (monster != null)
             {
-                monster.StateMachine.OnHit((int)damageAmount);
-                //SoundManager.Instance.SetSfx(2);
+                // 강력한 타격감을 위해 추가 데미지 보너스 적용 (선택적)
+                float finalDamage = damageAmount * (1.0f + (strikeForce * 0.2f));
+                monster.StateMachine.OnHit((int)finalDamage);
+
+                // 타격 사운드 효과 (주석 해제 필요)
+                //SoundManager.Instance.SetSfx(4); // 더 강한 타격음으로 변경 (인덱스 조정 필요)
             }
         }
 
-        // 이펙트 생성
+        // 강력한 타격 이펙트 생성
         SpawnEffect();
+    }
+
+    // 강력한 타격 애니메이션 효과를 재생하는 함수 
+    private void PlayStrikeAnimation(GameObject target, Vector2 direction)
+    {
+        // 타격시 짧은 시각적 효과 (흔들림, 번쩍임 등)
+        // 애니메이션 컨트롤러나 셰이더에 접근하여 타격 효과 재생
+
+        // 예시: 타격 위치에 파티클 효과 생성
+        if (effectPrefab != null)
+        {
+            GameObject strikeEffect = GameObject.Instantiate(
+                effectPrefab,
+                target.transform.position,
+                Quaternion.identity
+            );
+
+            // 효과 크기를 타격 강도에 비례하게 조정
+            strikeEffect.transform.localScale *= strikeForce;
+
+            // 3초 후 자동 제거
+            GameObject.Destroy(strikeEffect, 3.0f);
+        }
+
+        // 필요한 경우 카메라 흔들림 효과 추가
+        //CameraShake.Instance.ShakeCamera(strikeForce * 0.2f, 0.2f);
     }
 
     // 그리드 기반 방향성을 고려하여 적을 찾는 함수

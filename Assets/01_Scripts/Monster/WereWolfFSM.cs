@@ -15,6 +15,8 @@ namespace Monsters
         {
             if (IsFirstAttack)
             {
+                SoundManager.Instance.SetSfx(3);
+                
                 // Front Cell Center에 위치하도록 이동
                 var destination = Monster.GridSensor.GetFrontCellCenter();
                 Monster.transform.position = destination;
@@ -22,6 +24,10 @@ namespace Monsters
                 // Current Cell 기준으로 타겟을 설정
                 Monster.GridSensor.SetTarget();
                 IsFirstAttack = false;
+            }
+            else
+            {
+                SoundManager.Instance.SetSfx(2);
             }
             
             // 공격

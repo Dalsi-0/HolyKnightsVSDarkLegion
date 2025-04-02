@@ -11,30 +11,30 @@ public class UnitSkillController : MonoBehaviour
     private float _currentSkillCooldown = 5f;
     private LayerMask _enemyLayer;
     private DivinePowerRecoverySkill _divinePowerRecoverySkill;
-    private KnockbackSkill _knockbackSkill;
+    private PowerStrikeSkill _powerstrikeSkill;
     private IceBrakeSkill _icebrakeSkill;
-    private float _knockbackForce;
+    private float _powerstrikeForce;
     private float _damageAmount;
     private float _checkRadius;
 
     // 초기화 메서드
-    public void Initialize(PlayerUnit playerUnit, UnitSO unitData, GameObject skillEffectPrefab, float manaRecoveryAmount, float skillCooldown,float knockbackForce, float damageAmount, float checkRadius, LayerMask enemyLayer)
+    public void Initialize(PlayerUnit playerUnit, UnitSO unitData, GameObject skillEffectPrefab, float manaRecoveryAmount, float skillCooldown,float powerstrikeForce, float damageAmount, float checkRadius, LayerMask enemyLayer)
     {
         _playerUnit = playerUnit;
         _unitData = unitData;
         _skillEffectPrefab = skillEffectPrefab;
         _manaRecoveryAmount = manaRecoveryAmount;
         _skillCooldown = skillCooldown;
-        _knockbackForce = knockbackForce;
+        _powerstrikeForce = powerstrikeForce;
         _damageAmount = damageAmount;
         _checkRadius = checkRadius;
         _enemyLayer = enemyLayer;
 
         // ManaRecoverySkill 인스턴스 생성
         _divinePowerRecoverySkill = new DivinePowerRecoverySkill(_playerUnit, _skillCooldown, _skillEffectPrefab, _manaRecoveryAmount);
-        // KnockbackSkill 인스턴스 생성
-        _knockbackSkill = new KnockbackSkill(_playerUnit, _skillCooldown, _skillEffectPrefab,
-                                            _knockbackForce, _damageAmount, _checkRadius);
+        // powerstrikeSkill 인스턴스 생성
+        _powerstrikeSkill = new PowerStrikeSkill(_playerUnit, _skillCooldown, _skillEffectPrefab,
+                                            _powerstrikeForce, _damageAmount, _checkRadius);
         _icebrakeSkill = new IceBrakeSkill(_playerUnit, _skillCooldown, _skillEffectPrefab);
     }
 
@@ -62,7 +62,7 @@ public class UnitSkillController : MonoBehaviour
         _playerUnit.GetAnimationController().SetSkillAnimation(true);
 
         // 스킬 활성화
-        _knockbackSkill.Activate();
+        _powerstrikeSkill.Activate();
 
         // 쿨다운 초기화
         _currentSkillCooldown = _skillCooldown;
@@ -81,7 +81,7 @@ public class UnitSkillController : MonoBehaviour
     }
     public void OnSoldierSkill()
     {
-        KnockBackSwing();
+        powerstrikeSwing();
     }
     public void OnWizardSkill()
     {
@@ -107,14 +107,14 @@ public class UnitSkillController : MonoBehaviour
             }
         }
     }
-    private void KnockBackSwing()
+    private void powerstrikeSwing()
     {
         if (_playerUnit.CurrentState == UnitState.UsingSkill)
         {
             // ManaRecoverySkill 효과 실행
-            if (_knockbackSkill != null)
+            if (_powerstrikeSkill != null)
             {
-                _knockbackSkill.ExecuteEffect();
+                _powerstrikeSkill.ExecuteEffect();
             }
         }
     }

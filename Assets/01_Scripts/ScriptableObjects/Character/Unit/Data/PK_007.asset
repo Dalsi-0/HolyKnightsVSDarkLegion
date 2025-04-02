@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unitID: PK_007
   unitName: "\uAE30\uBCD1"
-  unitHP: 150
+  unitHP: 250
   unitAtk: 17
   unitAtkRange: 1
   unitAtkDelay: 3
