@@ -127,6 +127,7 @@ namespace Monsters
         public void OnDead()
         {
             IsDead = true;
+            SoundManager.Instance.SetSfx(99);
             MonsterFactory monsterFactory = StageManager.Instance.GetMonsterFactory();
             monsterFactory.ReturnMonsterToPool(gameObject);
             StageManager.Instance.GetWaveSpawningState().OnMonsterDied();

@@ -28,5 +28,10 @@ namespace Monsters
             gridSensor.Init(MonsterData);
             debuffHandler.Init(this);
         }
+        
+        private void SetOrderInLayer(int order)
+        {
+            spriteRenderer.sortingOrder = order;
+        }
     }
 }
