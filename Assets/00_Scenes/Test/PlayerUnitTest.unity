@@ -2217,6 +2217,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c0c13d2086486b48a1767f8d9f60a12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxSize: 4
   unitPrefabs:
   - {fileID: 4644417527521517400, guid: 4df3a365cc1f50f47b9616e396489566, type: 3}
   - {fileID: 4644417527521517400, guid: fdc654505bc909847b4191a1a56fd99a, type: 3}
@@ -2368,6 +2369,12 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 16d328e1c54353140a9ac90dd911ae05, type: 3}
   - {fileID: 8300000, guid: 023ea3ddeaa8dd146b7633a0800e5a0e, type: 3}
   - {fileID: 8300000, guid: df7087e4d8a8bb546bc08ce68632903f, type: 3}
+  - {fileID: 8300000, guid: f11db4559b3ffff45b62e9327fc5535d, type: 3}
+  - {fileID: 8300000, guid: a652877b012108e41871f867ada9f176, type: 3}
+  - {fileID: 8300000, guid: 1d74880bed4586644a16a79a2d9dc8af, type: 3}
+  - {fileID: 8300000, guid: 101fba5d2ad00564c8e5518f2b0bc92f, type: 3}
+  - {fileID: 8300000, guid: a512d08f36b176744996f9fd9c24cfba, type: 3}
+  - {fileID: 8300000, guid: 515a05e1cc4e5d044adf6760c9f3204e, type: 3}
   audioMixer: {fileID: 24100000, guid: aea9b18d4e39ce24c89f79a1e0861d43, type: 2}
   audioSlider:
   - {fileID: 1116308221}
@@ -2762,11 +2769,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5821481273368145265, guid: 17c9bfce26cc0a445a3fd00e7830f6a9, type: 3}
       propertyPath: loadOnStart
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5821481273368145265, guid: 17c9bfce26cc0a445a3fd00e7830f6a9, type: 3}
       propertyPath: useLocalList
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5821481273368145265, guid: 17c9bfce26cc0a445a3fd00e7830f6a9, type: 3}
       propertyPath: deckNameList.Array.size

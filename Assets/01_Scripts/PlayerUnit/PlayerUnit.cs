@@ -114,6 +114,7 @@ public class PlayerUnit : MonoBehaviour, IDamageable
     {
         _currentHP -= damage;
         _animationController.SetHitAnimation();
+        SoundManager.Instance.SetSfx(8);
         if (_currentHP <= 0)
         {
             Die();
