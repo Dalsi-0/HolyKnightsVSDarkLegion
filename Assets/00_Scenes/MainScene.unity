@@ -1034,6 +1034,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1625209370}
     - target: {fileID: 2926771612219586752, guid: b59e82cc94100184f84a270ea44b73e9, type: 3}
+      propertyPath: displayStageWaveText
+      value: 
+      objectReference: {fileID: 3865856763108168351}
+    - target: {fileID: 2926771612219586752, guid: b59e82cc94100184f84a270ea44b73e9, type: 3}
       propertyPath: levels.Array.data[0]
       value: 
       objectReference: {fileID: 2078602587}
@@ -1464,13 +1468,24 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3239627875862470138, guid: ce10dbeca6871a44ab8de0a2de3bc5b1, type: 3}
       propertyPath: m_Name
-      value: EffectCanvas
+      value: StageWaveCanvas
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ce10dbeca6871a44ab8de0a2de3bc5b1, type: 3}
+--- !u!114 &3865856763108168351 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7222402977836729173, guid: ce10dbeca6871a44ab8de0a2de3bc5b1, type: 3}
+  m_PrefabInstance: {fileID: 3865856763108168350}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

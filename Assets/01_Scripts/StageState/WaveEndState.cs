@@ -14,7 +14,6 @@ public class WaveEndState : IWaveState
     {
         stageManager.SetWaveTextValue();
         stageManager.PlayStageUIAnim();
-        Debug.Log("웨이브 종료 다음 웨이브까지 대기");
     }
 
     public void UpdateState()
