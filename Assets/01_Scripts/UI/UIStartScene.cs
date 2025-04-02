@@ -18,21 +18,22 @@ public class UIStartScene : MonoBehaviour
 
         for(int i=0; i<buttons.Length-1; i++)
         {
-            buttons[i].onClick.AddListener(() => SetButton(1, 1));
+            buttons[i].onClick.AddListener(() => SetButton(1, 4));
         }
 
-        buttons[2].onClick.AddListener(() => SetOptionsBtn());
+        buttons[2].onClick.AddListener(() => SetOptionsBtn(4));
         
     }
 
-    public void SetButton(int stageIndex, int bgmIndex)
+    public void SetButton(int stageIndex, int sfxIndex)
     {
+        SoundManager.Instance.SetSfx(sfxIndex);
         SceneLoadManager.Instance.NumLoadScene(stageIndex);
-        SoundManager.Instance.SetBgm(bgmIndex);
     }
 
-    public void SetOptionsBtn()
+    public void SetOptionsBtn(int sfxIndex)
     {
+        SoundManager.Instance.SetSfx(sfxIndex);
         OptionsBtn.SetActive(true);
     }
 
