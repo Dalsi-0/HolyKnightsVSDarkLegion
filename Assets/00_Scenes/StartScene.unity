@@ -1443,6 +1443,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   loadingThumbnail: {fileID: 1764553886}
   PopupPrefab: {fileID: 6411278624132514209, guid: 0ea692fd34b8a1a4ca0ccad7cb2537a0, type: 3}
+  TooltipPrefab: {fileID: 4268385287990252667, guid: 6c0da91991cf4aa49b03d95a404889fe, type: 3}
 --- !u!4 &570474062
 Transform:
   m_ObjectHideFlags: 0
@@ -3017,6 +3018,10 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 16d328e1c54353140a9ac90dd911ae05, type: 3}
   - {fileID: 8300000, guid: 023ea3ddeaa8dd146b7633a0800e5a0e, type: 3}
   - {fileID: 8300000, guid: df7087e4d8a8bb546bc08ce68632903f, type: 3}
+  - {fileID: 8300000, guid: 77f57dc6b9341f8419a0f146eb940c74, type: 3}
+  - {fileID: 8300000, guid: f54f9ea9413227d4389576da484ef7ce, type: 3}
+  - {fileID: 8300000, guid: eadb413a272e3344f94caf29d2671190, type: 3}
+  - {fileID: 8300000, guid: 00635ddd4587b934db36039c64ee320d, type: 3}
   audioMixer: {fileID: 24100000, guid: aea9b18d4e39ce24c89f79a1e0861d43, type: 2}
   audioSlider:
   - {fileID: 1116308221}

@@ -59,7 +59,7 @@ public class DeckEditor : MonoBehaviour
         // 사용 가능 갱신
         UnitManager.Instance.ChangeMoney(0);
         // 사운드 재생
-        SoundManager.Instance.SetSfx(1);
+        SoundManager.Instance.SetSfx(4);
     }
     public void SetActive(bool active)
     {
