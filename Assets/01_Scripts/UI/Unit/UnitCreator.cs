@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -69,8 +67,6 @@ public class UnitCreator : MonoBehaviour
 
         // 이름으로 데이터 불러오기
         UnitSO unit = DataManager.Instance.GetUnitData(unitName);
-        if (unit.UnitID == null)
-            Debug.LogError($"Datamanager에 {unitName} 데이터가 존재하지 않습니다.");
         handList[unit.UnitID] = unit;
 
         // 카드 생성 및 세팅
@@ -109,6 +105,10 @@ public class UnitCreator : MonoBehaviour
                     {
                         Destroy(cardList[i].gameObject);
                         cardList.RemoveAt(i);
+                    }
+                    else
+                    {
+                        cardList[i].Reposition();
                     }
                 }
             }
@@ -160,9 +160,9 @@ public class UnitCreator : MonoBehaviour
     public List<string> GetInHand()
     {
         List<string> res = new();
-        foreach (var card in handList)
+        foreach (var card in cardList)
         {
-            res.Add(card.Key);
+            res.Add(card.unitID);
         }
         return res;
     }
