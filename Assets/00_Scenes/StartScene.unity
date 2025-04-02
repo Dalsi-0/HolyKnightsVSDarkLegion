@@ -1249,7 +1249,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 696998857}
   m_HandleRect: {fileID: 696998856}
   m_Direction: 0
@@ -1897,16 +1897,16 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -7661500594123716598, guid: 90d873b220e465948a908e7324d01439, type: 3}
-  m_Type: 0
+  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  m_Type: 1
   m_PreserveAspect: 0
-  m_FillCenter: 1
+  m_FillCenter: 0
   m_FillMethod: 4
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
+  m_PixelsPerUnitMultiplier: 100
 --- !u!222 &696998858
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3372,7 +3372,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\rHoly Night  VS  DarkLegion"
+  m_text: "\rHolyKnight  VS  DarkLegion"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 42673bcb4332f384aad40e56e4545421, type: 2}
   m_sharedMaterial: {fileID: -867878037596295584, guid: 42673bcb4332f384aad40e56e4545421, type: 2}

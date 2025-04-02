@@ -30,6 +30,7 @@ public class SoundManager : Singleton<SoundManager>
         volume[typeIndex] = audioSlider[typeIndex].value;
         if (volume[typeIndex] == -40f)
         {
+            if(!muteBox[typeIndex].gameObject.activeSelf) SetMute(typeIndex);
             SetMute(typeIndex);
             SliderVolume[typeIndex] = true;
 
