@@ -27,14 +27,6 @@
     {
       "unitID": "PK_007",
       "canUse": false
-    },
-    {
-      "unitID": "PK_008",
-      "canUse": false
-    },
-    {
-      "unitID": "PK_009",
-      "canUse": false
     }
   ],
   "InHandCard": [
