@@ -235,7 +235,6 @@ public class DeckManager : Singleton<DeckManager>
         }
         newInfo.AllCard = cardList;
         newInfo.InHandCard = inHandCard;
-        Debug.Log("had:" + newInfo.InHandCard.Count);
         string newJson = JsonConvert.SerializeObject(newInfo, Formatting.Indented);
         string filePath = Path.Combine(Application.persistentDataPath, ownedCardName + ".json");
         File.WriteAllText(filePath, newJson);

@@ -22,7 +22,7 @@ namespace Monsters
                 Monster.transform.position = destination;
                 
                 // Current Cell 기준으로 타겟을 설정
-                Monster.GridSensor.SetTarget();
+                Monster.GridSensor.FindTarget();
                 IsFirstAttack = false;
             }
             else

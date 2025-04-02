@@ -1,7 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 /// <summary>
@@ -17,9 +15,10 @@ public class DeckEditor : MonoBehaviour
     void Awake()
     {
         startButton.onClick.AddListener(Submit);
+        startButton.onClick.AddListener(() => SoundManager.Instance.SetBgm(2));
         cards = new();
     }
-    
+
     // Start is called before the first frame update
     void Start()
     {
@@ -60,6 +59,7 @@ public class DeckEditor : MonoBehaviour
         UnitManager.Instance.ChangeMoney(0);
         // 사운드 재생
         SoundManager.Instance.SetSfx(4);
+        SoundManager.Instance.SetBgm(2);
     }
     public void SetActive(bool active)
     {
