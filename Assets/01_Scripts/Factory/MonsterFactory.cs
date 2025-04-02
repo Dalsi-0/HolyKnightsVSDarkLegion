@@ -7,6 +7,7 @@ public class MonsterFactory
 {
     private Dictionary<string, MonsterPool> monsterPools;  // 몬스터 ID별 풀을 관리하는 딕셔너리
     private GameObject spawnParticle;
+    private List<GameObject> activeMonsters;  // 현재 활성화된 몬스터 목록
 
     public MonsterFactory(GameObject[] prefabs, GameObject spawnParticle)
     {
@@ -80,6 +81,17 @@ public class MonsterFactory
         {
             Debug.LogError("이 몬스터의 풀을 찾을 수 없습니다.");
         }
+    }
+
+    // 모든 활성화된 몬스터를 풀로 반환하는 함수
+    public void ReturnAllMonstersToPool()
+    {
+        for (int i = activeMonsters.Count - 1; i >= 0; i--)
+        {
+            ReturnMonsterToPool(activeMonsters[i]);
+        }
+
+        activeMonsters.Clear(); 
     }
 }
 
