@@ -39,11 +39,11 @@ public class WaveResultState : IWaveState
 
         if (isContinue)
         {
-            SceneManager.LoadSceneAsync(1);
+            SceneLoadManager.Instance.NumLoadScene(1);
         }
         else
         {
-            SceneManager.LoadSceneAsync(0);
+            SceneLoadManager.Instance.LoadMainScene();
 
             stageManager.DestroyThis();
         }
