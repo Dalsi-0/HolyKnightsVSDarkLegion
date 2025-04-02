@@ -47,8 +47,8 @@ public class UnitCreator : MonoBehaviour
     private void Init()
     {
         coastText.text = UnitManager.Instance.PlayerMoney.ToString();
-        handList = new(handSize);
-        cardList = new(handSize);
+        handList = new(DeckManager.Instance.nowSize);
+        cardList = new(DeckManager.Instance.nowSize);
         isInited = true;
     }
 
@@ -61,7 +61,7 @@ public class UnitCreator : MonoBehaviour
             Init();
         }
         // 갯수 검사
-        if (handList.Count >= handSize) return;
+        if (handList.Count >= DeckManager.Instance.nowSize) return;
         // 중복 검사
         if (handList.ContainsKey(unitName)) return;
 
@@ -77,6 +77,8 @@ public class UnitCreator : MonoBehaviour
         CoastAction += card.UpdateCoast;
         card.OnEndDragActin += DragEndCard;
         cardList.Add(card);
+        // 위치 저장
+        card.Reposition();
     }
     public void ChangeMoney(int newValue)
     {
@@ -106,10 +108,11 @@ public class UnitCreator : MonoBehaviour
                         Destroy(cardList[i].gameObject);
                         cardList.RemoveAt(i);
                     }
-                    else
-                    {
-                        cardList[i].Reposition();
-                    }
+                }
+                // 재배치
+                for (int i = 0; i < cardList.Count; i++)
+                {
+                    cardList[i].Reposition();
                 }
             }
             return;
