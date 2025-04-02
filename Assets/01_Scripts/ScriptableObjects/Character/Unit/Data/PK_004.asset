@@ -15,7 +15,7 @@ MonoBehaviour:
   unitID: PK_004
   unitName: "\uB9C8\uBC95\uC0AC"
   unitHP: 80
-  unitAtk: 20
+  unitAtk: 17
   unitAtkRange: 4
   unitAtkDelay: 3
   unitSummonCost: 200
