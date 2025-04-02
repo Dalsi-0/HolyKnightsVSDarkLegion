@@ -31,13 +31,15 @@ public class WaveResultState : IWaveState
         {
             DeckManager.Instance.AddAllCard();
             DeckManager.Instance.AddHandSize();
-            UnitManager.Instance.SetMoney(350);
         }
     }
 
     public void UpdateState()
     {
         if (!canInput || !Input.anyKeyDown) return;
+
+        stageManager.GetMonsterFactory().ReturnAllMonstersToPool();
+        UnitManager.Instance.RemoveAll();
 
         Time.timeScale = 1;
 

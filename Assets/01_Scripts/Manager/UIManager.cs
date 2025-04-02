@@ -66,6 +66,8 @@ public class UIManager : Singleton<UIManager>
             );
             tooltip.Setup(unit);
             tooltipTransform.anchoredPosition = localPoint;
+            // 항상 맨 앞에 배치
+            tooltipTransform.SetAsLastSibling();
         }
     }
     public void HideTooltip()
