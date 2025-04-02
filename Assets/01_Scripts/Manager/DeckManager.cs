@@ -164,6 +164,10 @@ public class DeckManager : Singleton<DeckManager>
         ApplyJson(json);
     }
 
+    public void AddAllCard()
+    {
+        
+    }
     // 특정 카드 덱에 추가 가능하도록(예: 스테이지 보상)
     public void AddCard(string[] unitName, bool active = false)
     {

@@ -23,8 +23,12 @@ public class WaveResultState : IWaveState
 
     private IEnumerator WaitBeforeAllowInput()
     {
-        yield return new WaitForSecondsRealtime(2f); 
-        canInput = true; 
+        yield return new WaitForSecondsRealtime(2.2f);
+        canInput = true;
+
+        // 승리 했을 때만 팝업 생성
+        if (isContinue)
+            DeckManager.Instance.AddAllCard();
     }
 
     public void UpdateState()

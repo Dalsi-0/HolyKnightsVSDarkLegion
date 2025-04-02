@@ -1,14 +1,39 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UIStartScene : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI stageText;
+    [SerializeField] Button[] buttons;
+    GameObject OptionsBtn;
+
     public void Start()
     {
+        OptionsBtn = SoundManager.Instance.transform.GetChild(0).gameObject;
         SoundManager.Instance.SetBgm(0);
+
+        for(int i=0; i<buttons.Length-1; i++)
+        {
+            buttons[i].onClick.AddListener(() => SetButton(1, 1));
+        }
+
+        buttons[2].onClick.AddListener(() => SetOptionsBtn());
+        
+    }
+
+    public void SetButton(int stageIndex, int bgmIndex)
+    {
+        SceneLoadManager.Instance.NumLoadScene(stageIndex);
+        SoundManager.Instance.SetBgm(bgmIndex);
+    }
+
+    public void SetOptionsBtn()
+    {
+        OptionsBtn.SetActive(true);
     }
 
     /// <summary>

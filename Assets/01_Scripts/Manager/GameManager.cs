@@ -9,11 +9,12 @@ public class GameManager : Singleton<GameManager>
 
     private void Start()
     {
-        // 저장된 스테이지 레벨 불러오기
-        if (PlayerPrefs.HasKey("CurrentStageLevel"))
-        {
-            currentStageLevel = PlayerPrefs.GetInt("CurrentStageLevel", 1);
-        }
+        LoadStageLevel();
+    }
+
+    private void LoadStageLevel()
+    {
+        currentStageLevel = PlayerPrefs.GetInt("CurrentStageLevel", 1);
     }
 
     public int GetCurrentStageLevel()
