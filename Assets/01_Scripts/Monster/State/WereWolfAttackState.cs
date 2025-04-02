@@ -26,6 +26,10 @@ namespace Monsters
                 hashAnim = hashSpecialAttack;
                 currentAttackName = specialAttackName;
             }
+            else
+            {
+                stateMachine.OnAttack();
+            }
 
             StartAnimation(hashAnim);
         }
