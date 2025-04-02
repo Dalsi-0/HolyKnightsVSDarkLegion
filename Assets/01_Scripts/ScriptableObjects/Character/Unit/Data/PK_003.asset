@@ -15,9 +15,9 @@ MonoBehaviour:
   unitID: PK_003
   unitName: "\uC131\uAE30\uC0AC"
   unitHP: 150
-  unitAtk: 5
+  unitAtk: 17
   unitAtkRange: 1
-  unitAtkDelay: 3
+  unitAtkDelay: 5
   unitSummonCost: 50
   unitCoolDown: 7
   unitAtkType: 0

@@ -23,7 +23,7 @@ public class WaveResultState : IWaveState
 
     private IEnumerator WaitBeforeAllowInput()
     {
-        yield return new WaitForSecondsRealtime(2f);
+        yield return new WaitForSecondsRealtime(2.2f);
         canInput = true;
 
         // 승리 했을 때만 팝업 생성
