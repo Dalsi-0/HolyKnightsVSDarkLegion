@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections;
@@ -25,7 +26,7 @@ public class CharacterDataDownloader : MonoBehaviour
 
 #if UNITY_EDITOR
 
-    public void StartDownload(bool forUnit)
+    public async UniTask StartDownload(bool forUnit)
     {
         dataManager = FindObjectOfType<DataManager>();
         isUnit = forUnit;
@@ -38,8 +39,35 @@ public class CharacterDataDownloader : MonoBehaviour
             return;
         }
 
-        StartCoroutine(DownloadData(useURL));
+        await DownloadData();
     }
+    private async UniTask DownloadData()
+    {
+        using (UnityWebRequest www = UnityWebRequest.Get(useURL))
+        {
+            await www.SendWebRequest().ToUniTask();
+
+            if (www.result == UnityWebRequest.Result.Success)
+            {
+                string tsvText = www.downloadHandler.text;
+                string json = ConvertTSVToJson(tsvText);
+                JArray jsonData = JArray.Parse(json);
+
+                ClearSOData();
+
+                if (isUnit)
+                    ApplyUnitDataToSO(jsonData);
+                else
+                    ApplyMonsterDataToSO(jsonData);
+            }
+
+            if (isUnit)
+                dataManager.SetDatas(unitSOData);
+            else
+                dataManager.SetDatas(monsterSOData);
+        }
+    }
+
     private string ConvertTSVToJson(string tsv)
     {
         string[] lines = tsv.Split('\n');
@@ -63,31 +91,6 @@ public class CharacterDataDownloader : MonoBehaviour
         }
 
         return jsonArray.ToString();
-    }
-
-    IEnumerator DownloadData(string url)
-    {
-        UnityWebRequest www = UnityWebRequest.Get(url);
-        yield return www.SendWebRequest();
-
-        if (www.result == UnityWebRequest.Result.Success)
-        {
-            string tsvText = www.downloadHandler.text;
-            string json = ConvertTSVToJson(tsvText);
-            JArray jsonData = JArray.Parse(json);
-
-            ClearSOData();
-
-            if (isUnit)
-                ApplyUnitDataToSO(jsonData);
-            else
-                ApplyMonsterDataToSO(jsonData);
-        }
-
-        if (isUnit)
-            dataManager.SetDatas(unitSOData);
-        else
-            dataManager.SetDatas(monsterSOData);
     }
 
     private void ClearSOData()
