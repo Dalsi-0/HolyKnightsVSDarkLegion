@@ -171,7 +171,7 @@ public class DeckManager : Singleton<DeckManager>
         ApplyJson(json);
     }
 
-    public void AddAllCard()
+    public bool AddAllCard()
     {
         // 미소지 카드 전부 획득
         List<string> target = new();
@@ -180,11 +180,12 @@ public class DeckManager : Singleton<DeckManager>
             if (!card.Value)
                 target.Add(card.Key);
         }
-        AddCard(target, true);
+        return AddCard(target, true);
     }
     // 특정 카드 덱에 추가 가능하도록(예: 스테이지 보상)
-    public void AddCard(List<string> unitName, bool active = false)
+    public bool AddCard(List<string> unitName, bool active = false)
     {
+        bool success = false;
         // 미소지 카드만 분별
         foreach (var cardName in unitName.ToList())
         {
@@ -198,6 +199,7 @@ public class DeckManager : Singleton<DeckManager>
             {
                 // 정보 갱신
                 deck[cardName] = active;
+                success = true;
                 // 사용 가능하도록 UI 업데이트
                 if (DeckEditor != null)
                     DeckEditor.Reflash(cardName);
@@ -206,8 +208,19 @@ public class DeckManager : Singleton<DeckManager>
         // 카드 팝업 생성
         if (active)
         {
-            UIManager.Instance.AddCard(unitName);
+            // 새로운 내용이 있다면 생성
+            if (unitName.Count > 0)
+            {
+                UIManager.Instance.AddCard(unitName);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
+        else
+            return success;
     }
 
     // 생성자에 데이터 세팅
