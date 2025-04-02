@@ -95,92 +95,147 @@
 
 ## 🛠 **개발 및 기술적 접근**
 
-### 📊 데이터 연동 – Google Spreadsheet  
-이 프로젝트에서는 Google Spreadsheet를 이용하여 스트레스 진행에 사용되는 대화 데이터를 관리하고, 이를 코드에서 불러와 활용합니다.
+### 🔄 데이터 테이블 변환 & 자동 정리 시스템   
+구글 스프레드시트에서 데이터를 다운로드하여 ScriptableObject로 변환하는 Editor Tool을 개발하였습니다.  
+이 과정에서 UniTask를 활용하여 ScriptableObject로 변환하는데 사용되는 임시 객체를 자동 삭제하는 기능을 포함했습니다.  
 
-**Google Sheets To Unity 에셋 활용**  
-Google Sheets To Unity 에셋을 사용하여 Google Sheet의 데이터를 JSON으로 변환하는 과정 없이 바로 Unity에서 사용할 데이터로 가공할 수 있도록 구현하였습니다.  
-  
-    
 **사용된 스프레드시트 데이터**
-- 대화 데이터 [(보기)](https://docs.google.com/spreadsheets/d/1M_9bD-lXn9BubHhOxKe_PDYnQMD7g540m2OHiKCczQs/edit?gid=0#gid=0)
+- 데이터 [(보기)](https://docs.google.com/spreadsheets/d/1tgEgtsQp0vTR3rbdCwYv_y4s_4LdsDHd-6RXWyvgk0Y/edit?gid=0#gid=0)
+
+✅ 스프레드시트 데이터 다운로드 (유닛, 몬스터, 스테이지 데이터)  
+✅ ScriptableObject로 변환하여 게임 내에서 활용  
   
-| 사용 코드 | Scriptable Object |
-|---|---|
-|<img src="https://github.com/Dalsi-0/Factory404/blob/main/Readme/googleScript.png?raw=true" width="500"/>|<img src="https://github.com/Dalsi-0/Factory404/blob/main/Readme/googleSO.png?raw=true" width="500"/>|
+**📄 관련 클래스**   
+DataDownloaderWindow.cs  
+CharacterDataDownloader.cs  
+StageDataDownloader.cs  
+
+|데이터 다운로드 툴|
+|:---:|
+|<img src="https://github.com/Dalsi-0/HolyKnightsVSDarkLegion/blob/main/Readme/Tool.png?raw=true" width="300"/>|
 
 <br /><br />
 
-### 🏃 그리드 기반 몬스터 센서 시스템
-기존의 물리 충돌 방식(Trigger) 대신 UnitManager의 그리드 데이터를 기반으로 몬스터 감지 시스템을 구현하였습니다.
-몬스터는 자신의 현재 위치(currentCell)와 앞 칸(frontCell)의 상태를 지속적으로 체크하여 유닛이 존재하는 경우에만 공격 상태로 전환됩니다.
-이를 통해 물리 충돌 연산을 최소화하고, 퍼포먼스를 최적화할 수 있었습니다.
+### 📌 스테이지 진행 관리: 상태 패턴 적용  
+스테이지의 흐름을 Wave 상태별로 분리하여 관리하는 상태 패턴(State Pattern) 을 적용하였습니다.  
+이를 통해 유지보수성을 높이고 확장성을 고려한 설계를 구현하였습니다.  
 
-🔹 최적화 요소
-✅ Update() 대신 0.01초 간격의 Coroutine으로 체크 루프 구성 → 불필요한 연산 감소
-✅ IAttackRangeCalc 인터페이스 기반의 범위 계산 시스템 적용 → 몬스터별 범위 공격을 유연하게 처리
+✅ WaveSpawningState → 적을 스폰하고 웨이브를 시작  
+✅ WaveEndState → 남은 적을 체크하고 다음 웨이브를 준비  
+✅ WaveResultState → 승리 또는 패배 연출 실행  
+
+**📄 관련 클래스**   
+WaveSpawningState.cs  
+WaveEndState.cs  
+WaveResultState.cs  
+
+|웨이브 진행을 관리하는 상태 패턴 구조|
+|:---:|
+|<img src="https://github.com/Dalsi-0/HolyKnightsVSDarkLegion/blob/main/Readme/StageState.png?raw=true" width="300"/>|
+
+<br /><br />
+
+### 📌 몬스터 소환 시스템: 팩토리 패턴과 오브젝트 풀링  
+팩토리 패턴을 활용해 몬스터를 동적으로 생성하고, 오브젝트 풀링을 적용해 메모리 사용을 최적화하였습니다.  
+  
+✅ 팩토리 패턴 → 몬스터 ID에 따라 적절한 몬스터를 생성  
+✅ 오브젝트 풀링 → 기존 객체 재사용으로 성능 최적화    
+
+**📄 관련 클래스**    
+MonsterFactory.cs  
+
+|팩토리 패턴 기반 몬스터 풀링 설정|
+|:---:|
+|<img src="https://github.com/Dalsi-0/HolyKnightsVSDarkLegion/blob/main/Readme/Factory.png?raw=true" width="500"/>|
+
+<br /><br />
+
+### 🏃 그리드 기반 몬스터 센서 시스템  
+기존의 물리 충돌 방식(Trigger) 대신 UnitManager의 그리드 데이터를 기반으로 몬스터 감지 시스템을 구현하였습니다.  
+몬스터는 자신의 현재 위치(currentCell)와 앞 칸(frontCell)의 상태를 지속적으로 체크하여 유닛이 존재하는 경우에만 공격 상태로 전환됩니다.  
+이를 통해 물리 충돌 연산을 최소화하고, 퍼포먼스를 최적화할 수 있었습니다.  
+
+**🔹 최적화 요소**    
+✅ Update() 대신 0.01초 간격의 Coroutine으로 체크 루프 구성 → 불필요한 연산 감소  
+✅ IAttackRangeCalc 인터페이스 기반의 범위 계산 시스템 적용 → 몬스터별 범위 공격을 유연하게 처리  
+
+**📄 관련 클래스**   
+MonsterGridSensor.cs
 
 |몬스터의 그리드 기반 감지 시스템|
 |:---:|
-|<img src="https://github.com/Dalsi-0/Factory404/blob/main/Readme/Slope.png?raw=true" width="500"/>|
+|<img src="https://github.com/Dalsi-0/HolyKnightsVSDarkLegion/blob/main/Readme/DridSensor.png?raw=true" width="500"/>|
 
 <br /><br />
 
-### ❄ 디버프 전용 핸들러 시스템 (MonsterDebuffHandler)
-몬스터의 상태이상 처리를 전담하는 MonsterDebuffHandler 클래스를 구성하여 책임 분리(SRP 준수) 및 코드 가독성을 개선하였습니다.
-모든 디버프는 DebuffData 클래스로 추상화하여 타입별 분기 없이 적용이 가능하도록 설계되었습니다.
+### ❄ 디버프 전용 핸들러 시스템 (MonsterDebuffHandler)  
+몬스터의 상태이상 처리를 전담하는 MonsterDebuffHandler 클래스를 구성하여 책임 분리(SRP 준수) 및 코드 가독성을 개선하였습니다.  
+모든 디버프는 DebuffData 클래스로 추상화하여 타입별 분기 없이 적용이 가능하도록 설계되었습니다.  
 
-🔹 최적화 요소
-✅ 코루틴 기반의 비동기 처리로 시간 기반 효과를 자연스럽게 관리
-✅ Dictionary<DEBUFF_TYPE, Coroutine>을 사용하여 중복 적용 방지
-✅ Action 델리게이트 활용으로 디버프 종료 시점의 클린한 처리
+**🔹 최적화 요소**    
+✅ 코루틴 기반의 비동기 처리로 시간 기반 효과를 자연스럽게 관리  
+✅ Dictionary<DEBUFF_TYPE, Coroutine>을 사용하여 중복 적용 방지  
+✅ Action 델리게이트 활용으로 디버프 종료 시점의 클린한 처리  
+
+**📄 관련 클래스**   
+MonsterDebuffHandler.cs
 
 |몬스터 디버프 적용 화면|
 |:---:|
-|<img src="https://github.com/Dalsi-0/Factory404/blob/main/Readme/Slope.png?raw=true" width="500"/>|
+|<img src="https://github.com/Dalsi-0/HolyKnightsVSDarkLegion/blob/main/Readme/SlowDebuff.gif?raw=true" width="500"/>|
 
 <br /><br />
 
-### 🔄 확장성 중심의 인터페이스 기반 구조
-게임 내 다양한 기능을 확장 가능하도록 인터페이스 기반의 유연한 설계를 적용하였습니다.
-예를 들어, 공격 방식(IAttackRangeCalc)과 디버프(DebuffData) 등을 인터페이스화하여, 조건 분기(switch, if)를 최소화하고 새로운 타입을 쉽게 추가할 수 있도록 구현했습니다.
+### 🔄 확장성 중심의 인터페이스 기반 구조  
+게임 내 다양한 기능을 확장 가능하도록 인터페이스 기반의 유연한 설계를 적용하였습니다.  
+예를 들어, 공격 방식(IAttackRangeCalc)과 디버프(DebuffData) 등을 인터페이스화하여, 조건 분기(switch, if)를 최소화하고 새로운 타입을 쉽게 추가할 수 있도록 구현했습니다.  
 
-✅ 예시: 세로 공격/가로 공격/십자 공격 등은 새로운 클래스만 추가하면 자동 적용
+✅ 예시: 세로 공격/가로 공격/십자 공격 등은 새로운 클래스만 추가하면 자동 적용  
 
 |인터페이스 기반의 확장 가능 구조|
 |:---:|
-|<img src="https://github.com/Dalsi-0/Factory404/blob/main/Readme/Slope.png?raw=true" width="500"/>|
+|<img src="https://github.com/Dalsi-0/HolyKnightsVSDarkLegion/blob/main/Readme/iattackrangecalc.png?raw=true" width="500"/>|
 
 <br /><br />
 
-### 💾 Application.persistentDataPath와 JSON을 이용한 저장, 불러오기
-게임 데이터의 저장 및 불러오기를 위해 Application.persistentDataPath와 JSON 직렬화(Serialization) 방식을 활용하였습니다. 이를 통해 게임 종료 후에도 플레이어의 진행 상태를 유지할 수 있으며, 플랫폼에 관계없이 안정적인 데이터 관리를 할 수 있습니다.
+### 💾 Application.persistentDataPath와 JSON을 이용한 저장, 불러오기  
+게임 데이터의 저장 및 불러오기를 위해 Application.persistentDataPath와 JSON 직렬화(Serialization) 방식을 활용하였습니다. 이를 통해 게임 종료 후에도 플레이어의 진행 상태를 유지할 수 있으며, 플랫폼에 관계없이 안정적인 데이터 관리를 할 수 있습니다.  
 
-🔹 구현 방식
-✅ Application.persistentDataPath를 사용하여 플랫폼별 저장 경로를 자동 지정
-✅ JSON 직렬화를 활용하여 데이터를 읽고 쓸 때 가독성을 유지
-✅ **파일 시스템(IO)**을 최소화하기 위해 데이터 변경 시점에만 저장
+**🔹 구현 방식**  
+✅ Application.persistentDataPath를 사용하여 플랫폼별 저장 경로를 자동 지정  
+✅ JSON 직렬화를 활용하여 데이터를 읽고 쓸 때 가독성을 유지  
+✅ **파일 시스템(IO)**을 최소화하기 위해 데이터 변경 시점에만 저장  
 
-🔹 저장 데이터 예시
+**🔹 저장 데이터 예시**  
 ```
 {
-  "playerLevel": 10,
-  "highScore": 25000,
-  "settings": {
-    "bgmVolume": 0.8,
-    "sfxVolume": 0.7
-  }
+  "AllCard": [
+    {
+      "unitID": "PK_001",
+      "canUse": true
+    },
+    {
+      "unitID": "PK_002",
+      "canUse": true
+    }
+  ],
+  "InHandCard": [
+    "PK_001",
+    "PK_002",
+    "PK_003"
+  ],
+  "HandSize": 5
 }
 ```
 
-🔹 최적화 요소
-✅ 게임 시작 시 비동기 로드(Async Load) 적용 → 로딩 속도 향상
-✅ 저장 주기를 조정하여 불필요한 디스크 접근 최소화
-✅ Dictionary 기반 데이터 관리로 빠른 탐색 및 수정 가능
+**🔹 최적화 요소**    
+✅ 게임 시작 시 비동기 로드(Async Load) 적용 → 로딩 속도 향상  
+✅ 저장 주기를 조정하여 불필요한 디스크 접근 최소화  
+✅ Dictionary 기반 데이터 관리로 빠른 탐색 및 수정 가능  
 
 |데이터 저장 및 불러오기 구조|
 |:---:|
-|<img src="https://github.com/Dalsi-0/Factory404/blob/main/Readme/Slope.png?raw=true" width="500"/>|
+|<img src="https://github.com/Dalsi-0/HolyKnightsVSDarkLegion/blob/main/Readme/SaveEx.png?raw=true" width="500"/>|
 
 <br /><br />
 
@@ -196,6 +251,6 @@ Google Sheets To Unity 에셋을 사용하여 Google Sheet의 데이터를 JSON�
 
 ## 📹 플레이 영상
 
-**[![유튜브](https://github.com/Dalsi-0/HolyKnightsVSDarkLegion/blob/main/Readme/Thumbnail.png?raw=true?raw=true)](https://youtu.be/YG0Hfr0dvWE)** 
+**[![유튜브](https://github.com/Dalsi-0/HolyKnightsVSDarkLegion/blob/main/Readme/Thumbnail.png?raw=true)](https://youtu.be/YG0Hfr0dvWE)** 
 
 ---
