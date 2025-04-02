@@ -68,7 +68,8 @@ public class StageManager : Singleton<StageManager>
 
     public void SetWaveCleared()
     {
-        ChangeState(new WaveEndState(this));
+        bool isLastWave = currentWaveIndex >= stageData.Waves.Count;
+        ChangeState(new WaveEndState(this, isLastWave));
     }
 
     public void SetWaveTextValue()
