@@ -1,10 +1,9 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 public class UnitManager : Singleton<UnitManager>
 {
     [Header("UnitPrefabs")]
+    public int maxSize = 4;
     public GameObject[] unitPrefabs; // 유닛 프리팹 목록
     private Dictionary<string, GameObject> unitDitionary; // 유닛 이름별로 저장
     public GameObject particlePrefab; // 생성시 파티클 프리팹
@@ -42,10 +41,12 @@ public class UnitManager : Singleton<UnitManager>
     }
     void Update()
     {
+#if UNITY_EDITOR
         if (Input.GetKeyDown(KeyCode.Alpha3))
         {
             ChangeMoney(30);
         }
+#endif
     }
     // 좌표로 가장 가까운 인덱스 반환
     public Vector2Int GetGridIndex(Vector3 pos)
@@ -85,7 +86,6 @@ public class UnitManager : Singleton<UnitManager>
         // 소환 가능한 칸인지 판별
         if (tileInfo[indexX, indexY] != null)
         {
-            Debug.Log("이미 있는 위치");
             return tileInfo[indexX, indexY];
         }
         return null;
@@ -101,10 +101,6 @@ public class UnitManager : Singleton<UnitManager>
             // 그리드 인덱스 알고 생성
             Vector2Int grid = GetGridIndex(pos);
             return Spawn(unitID, grid.x, grid.y);
-        }
-        else
-        {
-            Debug.Log("좌표가 그리드 밖에 있습니다.");
         }
         return false;
     }
@@ -132,7 +128,6 @@ public class UnitManager : Singleton<UnitManager>
                 // 배열에 저장
                 if (unit != null)
                 {
-                    Debug.Log("소환 성공");
                     unit.OnPlayerDeadAction += Remove;
                     tileInfo[indexX, indexY] = unit;
                     // 파티클 생성, 재생
@@ -149,12 +144,12 @@ public class UnitManager : Singleton<UnitManager>
             }
             else
             {
-                Debug.LogWarning("비용 부족");
+                //"비용 부족";
             }
         }
         else
         {
-            Debug.LogError($"프리팹 목록에 {unitID} 없음");
+           //프리팹 목록에 {unitID} 없음;
         }
         return false;
     }
@@ -188,25 +183,21 @@ public class UnitManager : Singleton<UnitManager>
         if (pos.x < startPos.x - stepSize.x / 2)
         {
             // x 범위 부족
-            Debug.Log("x 범위 부족");
             return false;
         }
         else if (pos.x > startPos.x + stepSize.x * (tileSize.x - 1) + stepSize.x / 2)
         {
             // x 범위 초과
-            Debug.Log(" x 범위 초과");
             return false;
         }
         else if (pos.y > startPos.y + stepSize.y * (tileSize.y - 1) + stepSize.y / 2)
         {
             // y 범위 초과
-            Debug.Log("y 범위 초과");
             return false;
         }
         else if (pos.y < startPos.y - stepSize.y / 2)
         {
             // y 범위 부족
-            Debug.Log("y 범위 부족");
             return false;
         }
         return true;

@@ -4,7 +4,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.Events;
 using System.Collections;
 using TMPro;
-public class UnitCard : MonoBehaviour, IDragHandler, IPointerEnterHandler, IPointerExitHandler, IEndDragHandler, IBeginDragHandler
+public class UnitCard : MonoBehaviour, IDragHandler, IEndDragHandler, IBeginDragHandler
 {
     [SerializeField] private Image shadowImage;
     [SerializeField] private Image unitImage;
@@ -37,7 +37,7 @@ public class UnitCard : MonoBehaviour, IDragHandler, IPointerEnterHandler, IPoin
     {
         // 시작 위치 저장
         // layout의 자식으로 들어가므로 1 프레임후 위치 저장
-        StartCoroutine(InitializeOriginPosition());
+        Reposition();
         if (shadowImage != null)
             shadowImage.enabled = false;
     }
@@ -69,6 +69,10 @@ public class UnitCard : MonoBehaviour, IDragHandler, IPointerEnterHandler, IPoin
                 }
             }
         }
+    }
+    public void Reposition()
+    {
+        StartCoroutine(InitializeOriginPosition());
     }
     public void SetData(UnitSO unitSO, Sprite image)
     {
@@ -142,17 +146,6 @@ public class UnitCard : MonoBehaviour, IDragHandler, IPointerEnterHandler, IPoin
 
 
     #region MouseAction
-    // 마우스 포인터 진입
-    public void OnPointerEnter(PointerEventData eventData)
-    {
-        //Debug.Log("enter : " + gameObject.name);
-    }
-
-    // 마우스 포인터 탈출
-    public void OnPointerExit(PointerEventData eventData)
-    {
-        //Debug.Log("exit : " + gameObject.name);
-    }
     // 드래그 시작
     public void OnBeginDrag(PointerEventData eventData)
     {
