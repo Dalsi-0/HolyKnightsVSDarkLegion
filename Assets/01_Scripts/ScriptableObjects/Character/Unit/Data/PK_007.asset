@@ -15,7 +15,7 @@ MonoBehaviour:
   unitID: PK_007
   unitName: "\uAE30\uBCD1"
   unitHP: 250
-  unitAtk: 17
+  unitAtk: 14
   unitAtkRange: 1
   unitAtkDelay: 3
   unitSummonCost: 200

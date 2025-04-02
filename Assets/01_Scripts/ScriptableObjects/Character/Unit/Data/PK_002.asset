@@ -15,10 +15,10 @@ MonoBehaviour:
   unitID: PK_002
   unitName: "\uC6A9\uBCD1"
   unitHP: 100
-  unitAtk: 9
+  unitAtk: 11
   unitAtkRange: 50
   unitAtkDelay: 1
-  unitSummonCost: 100
-  unitCoolDown: 8
+  unitSummonCost: 90
+  unitCoolDown: 9
   unitAtkType: 1
   unitSprite: {fileID: 0}

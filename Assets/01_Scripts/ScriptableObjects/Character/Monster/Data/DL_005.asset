@@ -19,5 +19,5 @@ MonoBehaviour:
   monsterAtkRange: 1
   monsterAtkDelay: 3
   monsterAttackRangeType: 0
-  monsterMoveSpeed: 1.2
+  monsterMoveSpeed: 1.4
   monsterAtkType: 2

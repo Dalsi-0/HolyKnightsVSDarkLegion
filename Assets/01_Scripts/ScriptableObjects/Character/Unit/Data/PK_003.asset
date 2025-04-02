@@ -17,8 +17,8 @@ MonoBehaviour:
   unitHP: 150
   unitAtk: 17
   unitAtkRange: 1
-  unitAtkDelay: 5
-  unitSummonCost: 50
-  unitCoolDown: 7
+  unitAtkDelay: 3
+  unitSummonCost: 75
+  unitCoolDown: 9
   unitAtkType: 0
   unitSprite: {fileID: 0}
