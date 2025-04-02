@@ -576,7 +576,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c0c13d2086486b48a1767f8d9f60a12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxSize: 4
   unitPrefabs:
   - {fileID: 4644417527521517400, guid: 4df3a365cc1f50f47b9616e396489566, type: 3}
   - {fileID: 4644417527521517400, guid: fdc654505bc909847b4191a1a56fd99a, type: 3}
@@ -586,7 +585,7 @@ MonoBehaviour:
   - {fileID: 6296775655719951952, guid: a52970faebdece547b87f3d2e6dd636b, type: 3}
   - {fileID: 6296775655719951952, guid: e2e22b570c711ec4aa4d3be30e627999, type: 3}
   particlePrefab: {fileID: 1074499135857699082, guid: dd8a0b3ebbd15c84e9b7e8673b27a623, type: 3}
-  PlayerMoney: 0
+  PlayerMoney: 350
   startPos: {x: -11.5, y: -7.5}
   tileSize: {x: 9, y: 5}
   stepSize: {x: 3, y: 3}
