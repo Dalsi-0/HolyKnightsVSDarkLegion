@@ -181,6 +181,20 @@ public class UnitManager : Singleton<UnitManager>
         Vector2Int grid = GetGridIndex(pos);
         tileInfo[grid.x, grid.y] = null;
     }
+
+    // 전부 삭제
+    public void RemoveAll()
+    {
+        //tileInfo = new PlayerUnit[tileSize.x, tileSize.y];
+        foreach(var unit in tileInfo)
+        {
+            if(unit != null)
+            {
+                Remove(unit);
+                Destroy(unit.gameObject);
+            }
+        }
+    }
     public bool IsOnGrid(Vector3 pos)
     {
         // 좌표 범위가 유효한지 검사
