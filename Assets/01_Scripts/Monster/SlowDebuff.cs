@@ -4,12 +4,12 @@ using UnityEngine;
 // 디버프를 적용하기 위한 데이터 인터페이스
 public interface DebuffData
 {
+    void ApplyDebuff(Monster target);
+    void RemoveDebuff(Monster target);
     DEBUFF_TYPE DebuffType { get; set; }
     Color DebuffColor { get; set; }
     float Duration { get; set; }
     float Amount { get; set; }
-    void ApplyDebuff(Monster target);
-    void RemoveDebuff(Monster target);
 }
 
 // 슬로우 디버프

@@ -48,9 +48,11 @@ namespace Monsters
             var unitManager = UnitManager.Instance;
             while (true)
             {
+                // Unit Manager를 통해 자신의 현재 셀을 체크
                 currentCell = unitManager.GetGridIndex(transform.position);
                 frontCell = currentCell + Vector2Int.left;
                 
+                // 앞에 유닛이 존재하면 타겟 설정 후 종료
                 var target = unitManager.IsOnUnit(frontCell.x, frontCell.y);
                 if (target)
                 {
@@ -91,14 +93,6 @@ namespace Monsters
 
                 yield return checkDelay;
             }
-        }
-
-        // 현재 cell을 기준으로 타겟을 다시 설정
-        public void SetTarget()
-        {
-            currentCell = UnitManager.Instance.GetGridIndex(transform.position);
-            frontCell = currentCell + Vector2Int.left;
-            GetTargets();
         }
         
         public Vector3 GetFrontCellCenter()
