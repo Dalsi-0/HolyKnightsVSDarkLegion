@@ -1,10 +1,10 @@
+using Cysharp.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using UnityEditor;
-using UnityEditor.U2D.Aseprite;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -19,19 +19,39 @@ public class StageDataDownloader : MonoBehaviour
     private DataManager dataManager;
 
 #if UNITY_EDITOR
-    
-    public void StartDownload()
+    public async UniTask StartDownload()
     {
         dataManager = FindObjectOfType<DataManager>();
 
         if (dataManager == null)
         {
-            Debug.LogError("there is no DataManager in the scene.");
+            Debug.LogError("DataManager가 씬에 없습니다.");
             return;
         }
 
-        StartCoroutine(DownloadData());
+        await DownloadData();
     }
+
+    private async UniTask DownloadData()
+    {
+        using (UnityWebRequest www = UnityWebRequest.Get(URL_StageDataSheet))
+        {
+            await www.SendWebRequest().ToUniTask();
+
+            if (www.result == UnityWebRequest.Result.Success)
+            {
+                string tsvText = www.downloadHandler.text;
+                string json = ConvertTSVToJson(tsvText);
+                JArray jsonData = JArray.Parse(json);
+
+                ClearSOData();
+                ApplyStageDataToSO(jsonData);
+            }
+        }
+
+        dataManager.SetDatas(stageSOData);
+    }
+
     private string ConvertTSVToJson(string tsv)
     {
         string[] lines = tsv.Split('\n');
@@ -55,25 +75,6 @@ public class StageDataDownloader : MonoBehaviour
         }
 
         return jsonArray.ToString();
-    }
-
-    IEnumerator DownloadData()
-    {
-        UnityWebRequest www = UnityWebRequest.Get(URL_StageDataSheet);
-        yield return www.SendWebRequest();
-
-        if (www.result == UnityWebRequest.Result.Success)
-        {
-            string tsvText = www.downloadHandler.text;
-            string json = ConvertTSVToJson(tsvText);
-            JArray jsonData = JArray.Parse(json);
-
-            ClearSOData();
-
-            ApplyStageDataToSO(jsonData);
-        }
-
-        dataManager.SetDatas(stageSOData);
     }
 
     private void ClearSOData()
