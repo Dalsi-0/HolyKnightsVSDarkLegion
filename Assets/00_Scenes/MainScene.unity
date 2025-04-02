@@ -312,7 +312,7 @@ MonoBehaviour:
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 1920, y: 1080}
-  m_ScreenMatchMode: 0
+  m_ScreenMatchMode: 1
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
@@ -583,6 +583,8 @@ MonoBehaviour:
   - {fileID: 4644417527521517400, guid: e4bf44a689e70e7498cc17b243c4a976, type: 3}
   - {fileID: 6296775655719951952, guid: b46dcb2680d9f694bbe8f541a653c7db, type: 3}
   - {fileID: 6296775655719951952, guid: d1c8b02d0a918b94c9ed861d9a72b410, type: 3}
+  - {fileID: 6296775655719951952, guid: a52970faebdece547b87f3d2e6dd636b, type: 3}
+  - {fileID: 6296775655719951952, guid: e2e22b570c711ec4aa4d3be30e627999, type: 3}
   particlePrefab: {fileID: 1074499135857699082, guid: dd8a0b3ebbd15c84e9b7e8673b27a623, type: 3}
   PlayerMoney: 0
   startPos: {x: -11.5, y: -7.5}
@@ -1483,6 +1485,10 @@ PrefabInstance:
     - target: {fileID: 3239627875862470138, guid: ce10dbeca6871a44ab8de0a2de3bc5b1, type: 3}
       propertyPath: m_Name
       value: StageWaveCanvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 3876015992509198537, guid: ce10dbeca6871a44ab8de0a2de3bc5b1, type: 3}
+      propertyPath: m_ScreenMatchMode
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

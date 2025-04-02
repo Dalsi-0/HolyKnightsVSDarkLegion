@@ -7,6 +7,8 @@ public class FixedAspectRatio : MonoBehaviour
     private void Start()
     {
         SetAspectRatio(16f / 9f);
+        Camera cam = GetComponent<Camera>();
+        cam.orthographicSize = 10; 
     }
 
     private void SetAspectRatio(float targetAspect)
