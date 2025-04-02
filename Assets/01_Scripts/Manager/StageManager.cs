@@ -21,32 +21,39 @@ public class StageManager : Singleton<StageManager>
     private WaveSpawningState waveSpawningState;
 
 
+    /// <summary>
+    /// 초기 설정
+    /// </summary>
     void Start()
     {
         stageUIAnim.Play("FadeIn");
 
-        // 팩토리 초기화
         monsterFactory = new MonsterFactory(monsterPrefabs, spawnParticle);
 
         SetDisplayStageWaveText();
-        int currentStage = GameManager.Instance.GetCurrentStageLevel();
-        SetStageData(currentStage);
+        SetStageData(GameManager.Instance.GetCurrentStageLevel());
     }
 
+    /// <summary>
+    /// 현재 상태 업데이트.
+    /// </summary>
     void Update()
     {
-        if(currentState != null)
-        {
-            currentState?.UpdateState();
-        }
+        currentState?.UpdateState();
     }
 
+    /// <summary>
+    /// 현재 웨이브 상태를 변경하고 새 상태를 실행.
+    /// </summary>
     public void ChangeState(IWaveState newState)
     {
         currentState = newState;
         currentState.EnterState();
     }
 
+    /// <summary>
+    /// 다음 웨이브를 시작.
+    /// </summary>
     public void StartNextWave()
     {
         if (currentWaveIndex < stageData.Waves.Count)
@@ -61,38 +68,55 @@ public class StageManager : Singleton<StageManager>
         }
     }
 
-    public void PlayStageUIAnim()
-    {
-        stageUIAnim.Play("Effect");
-    }
-
+    /// <summary>
+    /// 현재 웨이브를 클리어 처리.
+    /// </summary>
     public void SetWaveCleared()
     {
-        bool isLastWave = currentWaveIndex >= stageData.Waves.Count;
-        ChangeState(new WaveEndState(this, isLastWave));
+        ChangeState(new WaveEndState(this, currentWaveIndex >= stageData.Waves.Count));
     }
 
+    /// <summary>
+    /// 현재 웨이브 번호를 UI에 표시.
+    /// </summary>
     public void SetWaveTextValue()
     {
         waveText.text = $"Wave {currentWaveIndex + 1}";
     }
 
-    public WaveSpawningState GetWaveSpawningState()
+    /// <summary>
+    /// 스테이지 UI 애니메이션 실행.
+    /// </summary>
+    public void PlayStageUIAnim()
     {
-        return this.waveSpawningState;
+        stageUIAnim.Play("Effect");
     }
 
+    /// <summary>
+    /// 웨이브 스포닝 상태 설정.
+    /// </summary>
     public void SetWaveSpawningState(WaveSpawningState waveSpawningState)
     {
         this.waveSpawningState = waveSpawningState;
     }
 
+    /// <summary>
+    /// 현재 웨이브 스포닝 상태 반환.
+    /// </summary>
+    public WaveSpawningState GetWaveSpawningState() => waveSpawningState;
+
+    /// <summary>
+    /// 현재 스테이지와 웨이브 정보를 UI에 표시.
+    /// </summary>
     private void SetDisplayStageWaveText()
     {
         int currentStage = GameManager.Instance.GetCurrentStageLevel();
         displayStageWaveText.text = $"[  Stage {currentStage}   |   Wave {currentWaveIndex + 1}  ] ";
     }
 
+    /// <summary>
+    /// 현재 스테이지 데이터를 설정하고 UI를 업데이트.
+    /// </summary>
     public void SetStageData(int stageNumber)
     {
         stageData = DataManager.Instance.GetStageData(stageNumber);
@@ -104,6 +128,9 @@ public class StageManager : Singleton<StageManager>
         levels[stageNumber-1].gameObject.SetActive(true);
     }
 
+    /// <summary>
+    /// 스테이지 종료 시 처리 (승리 또는 패배).
+    /// </summary>
     public void StageEnd(bool isClear)
     {
         stageUIAnim.Play(isClear ? "Clear" : "Lose");
@@ -119,18 +146,22 @@ public class StageManager : Singleton<StageManager>
         ChangeState(new WaveResultState(this, isClear));
     }
 
-    public void DestroyThis()
+    /// <summary>
+    /// 씬 변경을 위한 오브젝트 제거.
+    /// </summary>
+    public void DestroyForNextScene()
     {
-        Destroy(gameObject);
+        DestroyImmediate(gameObject);
+        DestroyImmediate(stageUIAnim.gameObject);
     }
 
-    public MonsterFactory GetMonsterFactory()
-    {
-        return monsterFactory;
-    }
+    /// <summary>
+    /// 몬스터 팩토리 반환.
+    /// </summary>
+    public MonsterFactory GetMonsterFactory() => monsterFactory;
 
-    public Transform[] GetSpawnPoints()
-    {
-        return spawnPoints;
-    }
+    /// <summary>
+    /// 몬스터 스폰 위치 배열 반환.
+    /// </summary>
+    public Transform[] GetSpawnPoints() => spawnPoints;
 }

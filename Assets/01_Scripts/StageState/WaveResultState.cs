@@ -44,8 +44,7 @@ public class WaveResultState : IWaveState
         else
         {
             SceneLoadManager.Instance.LoadMainScene();
-
-            stageManager.DestroyThis();
         }
+        stageManager.DestroyForNextScene();
     }
 }
