@@ -3175,6 +3175,9 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 515a05e1cc4e5d044adf6760c9f3204e, type: 3}
   - {fileID: 8300000, guid: a652877b012108e41871f867ada9f176, type: 3}
   - {fileID: 8300000, guid: 1d74880bed4586644a16a79a2d9dc8af, type: 3}
+  - {fileID: 8300000, guid: 566d2ea6240b489479a6e9fd608c2621, type: 3}
+  - {fileID: 8300000, guid: e7e5b1821fe006f4ea40214e221a1c5b, type: 3}
+  - {fileID: 8300000, guid: 2d91f0a3c46e6f8479a66e171beecd3c, type: 3}
   audioMixer: {fileID: 24100000, guid: aea9b18d4e39ce24c89f79a1e0861d43, type: 2}
   audioSlider:
   - {fileID: 1116308221}

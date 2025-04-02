@@ -46,6 +46,7 @@ public class MonsterFactory
         // 스폰 파티클 생성
         if (spawnParticle != null)
         {
+            SoundManager.Instance.SetSfx(13);
             GameObject particle = Object.Instantiate(spawnParticle, spawnPosition, Quaternion.identity);
             Animator particleAnim = particle.GetComponent<Animator>();
 
