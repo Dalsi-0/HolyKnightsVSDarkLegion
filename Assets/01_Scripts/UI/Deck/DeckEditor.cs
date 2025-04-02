@@ -11,6 +11,7 @@ public class DeckEditor : MonoBehaviour
     [SerializeField] private RectTransform deckLayout; // 레이아웃 위치 content
     [SerializeField] private Button startButton; // 완료버튼
     [SerializeField] private UnitCreator unitCreator; // 유닛 생성자
+    [SerializeField] private GameObject stopButton;
     private List<DeckCard> cards;
     void Awake()
     {
@@ -57,6 +58,8 @@ public class DeckEditor : MonoBehaviour
         DeckManager.Instance.SaveInfo();
         // 사용 가능 갱신
         UnitManager.Instance.ChangeMoney(0);
+        // 버튼 활성화
+        stopButton.SetActive(true);
         // 사운드 재생
         SoundManager.Instance.SetSfx(4);
         SoundManager.Instance.SetBgm(2);
