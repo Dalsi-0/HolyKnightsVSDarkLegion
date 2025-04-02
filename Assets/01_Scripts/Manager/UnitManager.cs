@@ -44,7 +44,6 @@ public class UnitManager : Singleton<UnitManager>
         if (Input.GetKeyDown(KeyCode.Alpha3))
         {
             ChangeMoney(30);
-            DeckManager.Instance.AddHandSize();
         }
 #endif
     }
