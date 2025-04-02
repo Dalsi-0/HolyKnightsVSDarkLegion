@@ -46,7 +46,8 @@ public class SceneLoadManager : Singleton<SceneLoadManager>
     /// <returns></returns>
     IEnumerator LoadingScene(int sceneNum)
     {
-        UIManager.Instance.loadingThumbnail.gameObject.SetActive(true);
+        
+
         AsyncOperation asyncOper = SceneManager.LoadSceneAsync(sceneNum);
         asyncOper.allowSceneActivation = false;
         float progress = 0f;
@@ -76,8 +77,12 @@ public class SceneLoadManager : Singleton<SceneLoadManager>
     IEnumerator Loading(int sceneNum)
     {
         UIManager.Instance.loadingThumbnail.gameObject.SetActive(true);
-        float progress = 0f;
+
         WaitForSeconds waitForSeconds = new WaitForSeconds(1);
+        yield return waitForSeconds;
+
+        float progress = 0f;
+        
         while (progress <= 100)
         {
             progress += Random.Range(5, 10);

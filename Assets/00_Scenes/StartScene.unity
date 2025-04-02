@@ -1249,7 +1249,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 696998857}
   m_HandleRect: {fileID: 696998856}
   m_Direction: 0
@@ -1897,16 +1897,16 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -7661500594123716598, guid: 90d873b220e465948a908e7324d01439, type: 3}
-  m_Type: 0
+  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  m_Type: 1
   m_PreserveAspect: 0
-  m_FillCenter: 1
+  m_FillCenter: 0
   m_FillMethod: 4
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
+  m_PixelsPerUnitMultiplier: 10
 --- !u!222 &696998858
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -5038,6 +5038,13 @@ MonoBehaviour:
   animator: {fileID: 696998859}
   text: {fileID: 2119867629}
   scrollbar: {fileID: 434172850}
+  sprites:
+  - {fileID: -7659822880515040232, guid: 0efa7b34659081c4f884bf9046c04790, type: 3}
+  - {fileID: 1854214234, guid: 399cb7aee14493b44b7fc086d52431a1, type: 3}
+  - {fileID: -5346061831448750162, guid: ba3746eb152521a419c1adfc25aa15d1, type: 3}
+  - {fileID: -7397252373605818671, guid: 9a245e4dd645d9b4daa891c8ccc57b36, type: 3}
+  - {fileID: -7661500594123716598, guid: 90d873b220e465948a908e7324d01439, type: 3}
+  characterImage: {fileID: 696998857}
 --- !u!1 &1813760603
 GameObject:
   m_ObjectHideFlags: 0
