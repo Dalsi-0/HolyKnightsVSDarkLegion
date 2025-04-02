@@ -2914,7 +2914,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f20fb547c7524f647811dbef49ba6b9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  videoPlayer: {fileID: 2139808520}
+  videoPlayer: {fileID: 0}
   videoFileName: tutorial.mp4
 --- !u!4 &1065395762
 Transform:
@@ -3164,9 +3164,9 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 10daa45fc5368df4aaac4fcd2ee3923d, type: 3}
   sfxClip:
   - {fileID: 8300000, guid: 16d328e1c54353140a9ac90dd911ae05, type: 3}
-  - {fileID: 8300000, guid: 023ea3ddeaa8dd146b7633a0800e5a0e, type: 3}
-  - {fileID: 8300000, guid: df7087e4d8a8bb546bc08ce68632903f, type: 3}
-  - {fileID: 8300000, guid: 77f57dc6b9341f8419a0f146eb940c74, type: 3}
+  - {fileID: 8300000, guid: c99a203ef84a43c4396d8a7580db1fc6, type: 3}
+  - {fileID: 8300000, guid: c54d405df26186440b58d80f05d41c7d, type: 3}
+  - {fileID: 8300000, guid: e3c3ee91dcef80947884d866a77ac6e0, type: 3}
   - {fileID: 8300000, guid: f54f9ea9413227d4389576da484ef7ce, type: 3}
   - {fileID: 8300000, guid: eadb413a272e3344f94caf29d2671190, type: 3}
   - {fileID: 8300000, guid: 00635ddd4587b934db36039c64ee320d, type: 3}
@@ -3175,7 +3175,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 515a05e1cc4e5d044adf6760c9f3204e, type: 3}
   - {fileID: 8300000, guid: a652877b012108e41871f867ada9f176, type: 3}
   - {fileID: 8300000, guid: 1d74880bed4586644a16a79a2d9dc8af, type: 3}
-  - {fileID: 8300000, guid: 566d2ea6240b489479a6e9fd608c2621, type: 3}
+  - {fileID: 8300000, guid: 54f68a0904e8a7b4b871e256d5aa9797, type: 3}
   - {fileID: 8300000, guid: e7e5b1821fe006f4ea40214e221a1c5b, type: 3}
   - {fileID: 8300000, guid: 2d91f0a3c46e6f8479a66e171beecd3c, type: 3}
   audioMixer: {fileID: 24100000, guid: aea9b18d4e39ce24c89f79a1e0861d43, type: 2}
