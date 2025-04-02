@@ -21,16 +21,22 @@ public class UIStartScene : MonoBehaviour
             buttons[i].onClick.AddListener(() => SetButton(1, 4));
         }
 
-        buttons[2].onClick.AddListener(() => SetOptionsBtn());
+        buttons[2].onClick.AddListener(() => SetOptionsBtn(4));
         StageUpdate();
     }
 
+    /// <summary>
+    /// 게임시작버튼에 등록할 이벤트
+    /// </summary>
     public void SetButton(int stageIndex, int sfxIndex)
     {
         SoundManager.Instance.SetSfx(sfxIndex);
         SceneLoadManager.Instance.NumLoadScene(stageIndex);
     }
 
+    /// <summary>
+    /// 세팅버튼에 등록할 이벤트
+    /// </summary>
     public void SetOptionsBtn(int sfxIndex)
     {
         SoundManager.Instance.SetSfx(sfxIndex);
