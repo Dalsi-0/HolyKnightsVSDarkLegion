@@ -31,7 +31,6 @@ public class WaveResultState : IWaveState
         {
             DeckManager.Instance.AddAllCard();
             DeckManager.Instance.AddHandSize();
-            UnitManager.Instance.SetMoney(350);
         }
     }
 
