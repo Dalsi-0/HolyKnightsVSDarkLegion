@@ -22,6 +22,6 @@ public class NewCardPopup : MonoBehaviour
     }
     void OnClikOk()
     {
-        Destroy(gameObject);
+        //Destroy(gameObject);
     }
 }
