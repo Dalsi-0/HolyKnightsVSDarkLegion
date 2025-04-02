@@ -21,8 +21,8 @@ public class UIStartScene : MonoBehaviour
             buttons[i].onClick.AddListener(() => SetButton(1, 4));
         }
 
-        buttons[2].onClick.AddListener(() => SetOptionsBtn(4));
-        
+        buttons[2].onClick.AddListener(() => SetOptionsBtn());
+        StageUpdate();
     }
 
     public void SetButton(int stageIndex, int sfxIndex)

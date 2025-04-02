@@ -4,16 +4,21 @@ public class WaveEndState : IWaveState
 {
     private StageManager stageManager;
     private float endWaitTime = 5f;  // 다음 웨이브 전 대기 시간
+    private bool isClear;
 
-    public WaveEndState(StageManager stageManager)
+    public WaveEndState(StageManager stageManager, bool isClear)
     {
         this.stageManager = stageManager;
+        this.isClear = isClear;
     }
 
     public void EnterState()
     {
-        stageManager.SetWaveTextValue();
-        stageManager.PlayStageUIAnim();
+        if (!isClear)
+        {
+            stageManager.SetWaveTextValue();
+            stageManager.PlayStageUIAnim();
+        }
     }
 
     public void UpdateState()
