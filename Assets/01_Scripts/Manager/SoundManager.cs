@@ -1,3 +1,6 @@
+using System.Collections;
+using System.Collections.Generic;
+using Cysharp.Threading.Tasks.Triggers;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
@@ -13,7 +16,10 @@ public class SoundManager : Singleton<SoundManager>
     [SerializeField] Image[] muteBox;
 
     private float[] volume = new float[3];
-    private bool[] SliderVolume = new bool[3] {false, false, false};
+    private bool[] SliderVolume = new bool[3] { false, false, false };
+
+    Dictionary<AudioClip, List<int>> soundOneShot = new Dictionary<AudioClip, List<int>>();
+    private int MaxDuplicateOneShotClips = 5;
 
     /// <summary>
     /// 사운드 옵션 세팅
@@ -84,7 +90,34 @@ public class SoundManager : Singleton<SoundManager>
     /// <param name="index">SFX 클립 번호 입력</param>
     public void SetSfx(int index)
     {
+        
+        if (!soundOneShot.ContainsKey(sfxClip[index]))
+        {
+            soundOneShot[sfxClip[index]] = new List<int>() { 0 };
+        }
+        else
+        {
+            int count = soundOneShot[sfxClip[index]].Count;
+            //한클립당 현재 재생수가 10개 넘으면 리턴한다
+            if (count == MaxDuplicateOneShotClips) return;
+
+            soundOneShot[sfxClip[index]].Add(0);
+        }
+
         audioSfx.PlayOneShot(sfxClip[index]);
+        StartCoroutine(RemoveSfx(index));
+
+    }
+
+    public IEnumerator RemoveSfx(int index)
+    {
+        yield return new WaitForSeconds(sfxClip[index].length);
+
+        List<int> volumes;
+        if (soundOneShot.TryGetValue(sfxClip[index], out volumes))
+        {
+            volumes.RemoveAt(0);
+        }
     }
 
     /// <summary>
