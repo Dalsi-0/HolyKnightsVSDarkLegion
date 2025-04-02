@@ -3372,7 +3372,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\rHoly Night  VS  DarkLegion"
+  m_text: "\rHolyKnight  VS  DarkLegion"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 42673bcb4332f384aad40e56e4545421, type: 2}
   m_sharedMaterial: {fileID: -867878037596295584, guid: 42673bcb4332f384aad40e56e4545421, type: 2}
@@ -5038,13 +5038,6 @@ MonoBehaviour:
   animator: {fileID: 696998859}
   text: {fileID: 2119867629}
   scrollbar: {fileID: 434172850}
-  sprites:
-  - {fileID: -7659822880515040232, guid: 0efa7b34659081c4f884bf9046c04790, type: 3}
-  - {fileID: 1854214234, guid: 399cb7aee14493b44b7fc086d52431a1, type: 3}
-  - {fileID: -5346061831448750162, guid: ba3746eb152521a419c1adfc25aa15d1, type: 3}
-  - {fileID: -7397252373605818671, guid: 9a245e4dd645d9b4daa891c8ccc57b36, type: 3}
-  - {fileID: -7661500594123716598, guid: 90d873b220e465948a908e7324d01439, type: 3}
-  characterImage: {fileID: 696998857}
 --- !u!1 &1813760603
 GameObject:
   m_ObjectHideFlags: 0
