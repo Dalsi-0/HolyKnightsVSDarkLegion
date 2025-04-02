@@ -3,7 +3,6 @@ using UnityEngine;
 public class UnitManager : Singleton<UnitManager>
 {
     [Header("UnitPrefabs")]
-    public int maxSize = 4;
     public GameObject[] unitPrefabs; // 유닛 프리팹 목록
     private Dictionary<string, GameObject> unitDitionary; // 유닛 이름별로 저장
     public GameObject particlePrefab; // 생성시 파티클 프리팹
@@ -45,6 +44,7 @@ public class UnitManager : Singleton<UnitManager>
         if (Input.GetKeyDown(KeyCode.Alpha3))
         {
             ChangeMoney(30);
+            DeckManager.Instance.AddHandSize();
         }
 #endif
     }
@@ -167,6 +167,11 @@ public class UnitManager : Singleton<UnitManager>
     {
         // 반올림 적용
         return ChangeMoney((int)Mathf.Round(amount));
+    }
+    // 자원을 강제로 바꾸는 함수
+    public void SetMoney(int newValue)
+    {
+        PlayerMoney = newValue;
     }
 
     // 목록에서 유닛 정보 삭제

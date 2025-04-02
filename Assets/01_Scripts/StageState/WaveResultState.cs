@@ -28,7 +28,11 @@ public class WaveResultState : IWaveState
 
         // 승리 했을 때만 팝업 생성
         if (isContinue)
+        {
             DeckManager.Instance.AddAllCard();
+            DeckManager.Instance.AddHandSize();
+            UnitManager.Instance.SetMoney(350);
+        }
     }
 
     public void UpdateState()
