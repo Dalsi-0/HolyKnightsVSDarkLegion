@@ -17,6 +17,7 @@ public class DeckEditor : MonoBehaviour
     void Awake()
     {
         startButton.onClick.AddListener(Submit);
+        startButton.onClick.AddListener(() => SoundManager.Instance.SetBgm(2));
         cards = new();
     }
     
