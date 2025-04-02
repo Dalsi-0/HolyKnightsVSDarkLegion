@@ -84,8 +84,8 @@ public class SoundManager : Singleton<SoundManager>
     /// <param name="index">SFX 클립 번호 입력</param>
     public void SetSfx(int index)
     {
-        if (audioSfx.isPlaying)
-            audioSfx.Stop();
+        //if (audioSfx.isPlaying)
+            //audioSfx.Stop();
 
         audioSfx.PlayOneShot(sfxClip[index]);
     }
