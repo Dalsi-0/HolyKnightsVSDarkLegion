@@ -2914,7 +2914,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f20fb547c7524f647811dbef49ba6b9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  videoPlayer: {fileID: 0}
+  videoPlayer: {fileID: 2139808520}
   videoFileName: tutorial.mp4
 --- !u!4 &1065395762
 Transform:
