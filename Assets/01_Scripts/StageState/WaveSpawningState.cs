@@ -21,7 +21,6 @@ public class WaveSpawningState : IWaveState
     {
         totalSpawnedMonsters = 0;
         deadMonsters = 0;
-        Debug.Log("웨이브 시작 몬스터 소환 중");
     }
 
     public void UpdateState()
@@ -62,8 +61,6 @@ public class WaveSpawningState : IWaveState
 
         // 소환된 몬스터의 카운트를 1 감소
         waveData.monsterCounts[randomIndex]--;
-
-        Debug.Log($"{monsterID} 소환 / 남은 수 {waveData.monsterCounts[randomIndex]}");
     }
 
     public void OnMonsterDied()

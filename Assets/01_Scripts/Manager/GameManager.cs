@@ -7,7 +7,7 @@ public class GameManager : Singleton<GameManager>
     private int currentStageLevel;
 
 
-    private void Start()
+    private void Awake()
     {
         LoadStageLevel();
     }
